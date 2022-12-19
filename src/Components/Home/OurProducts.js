@@ -23,4 +23,4 @@ const OutProducts = () => {
     )
 }
 
-export default OutProducts;
+export default OutProducts
