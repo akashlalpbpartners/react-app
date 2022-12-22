@@ -7,7 +7,7 @@ import Footer from "./Components/Home/Footer";
 
 const Home = () => {
 
-  const [toggleForm, setToggleForm] = useState(false);
+  const [toggleForm, setToggleForm] = useState(true);
 
   return (
     <>

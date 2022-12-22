@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import logo from "../../../src/images/logo.png";
 
 const Header = (props) => {
-  const [isShown, setIsShown] = useState(false);
+  const [isShown, setIsShown] = useState(true);
 
   const handleClick = () => {
     setIsShown((current) => !current);
 
-    props.setToggleForm(isShown)
+    props.setToggleForm(!isShown)
   };
 
   return (

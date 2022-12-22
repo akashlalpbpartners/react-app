@@ -8,7 +8,7 @@ const OutProducts = () => {
                 <h2 className="heading heading-product">Our Products</h2>
                 <div className="row">
                     {
-                        ProductsList.map(products => {
+                        ProductsList.map((products, index) => {
                             return <div className="col-md-4">
                                     <div className="card text-center">
                                         <img src={products.imgSrc} alt="" />
