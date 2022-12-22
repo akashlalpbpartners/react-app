@@ -1,62 +1,17 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
-.Not-Found-Label {
-  text-align: center;
-  margin-top: 15%
-}
-
-/* CSS from FinPbBazaar */
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
+
 body {
   font-family: "Roboto", sans-serif;
 }
 
 .hide {
-  display: none !important;
+  display: none;
 }
 
 .container-fluid {
   width: 100%;
   max-width: 1366px;
-  padding: 0 50px !important;
+  padding: 0 50px;
   margin: 0 auto;
 }
 
@@ -95,7 +50,7 @@ option {
 
 .pb-form-floating .form-control:focus {
   -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
 }
 
 .pb-form-floating label {
@@ -127,14 +82,14 @@ option {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   height: 90px;
   -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
+  flex-wrap: nowrap;
 }
 
 .wrapper .header .btn-outline-primary {
@@ -191,7 +146,7 @@ option {
   width: 450px;
   background: #ffffff 0% 0% no-repeat padding-box;
   -webkit-box-shadow: 0px 3px 6px #00000029;
-          box-shadow: 0px 3px 6px #00000029;
+  box-shadow: 0px 3px 6px #00000029;
   border: 1px solid #b6b7b9;
   border-radius: 16px;
   float: right;
@@ -211,8 +166,8 @@ option {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
   padding-left: 0;
 }
 
@@ -247,10 +202,10 @@ option {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
   -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .wrapper .what-we-offer .offer-cards .offer-card {
@@ -264,8 +219,8 @@ option {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   padding-left: 30px;
   padding-right: 30px;
 }
@@ -310,6 +265,7 @@ option {
 }
 
 @media (min-width: 992px) {
+
   .wrapper #kycModal .modal-lg,
   .wrapper #kycModal .modal-xl {
     max-width: 1010px;
@@ -324,7 +280,7 @@ option {
   padding: 0;
 }
 
-.wrapper #kycModal .modal-content .pb-form-floating > .form-select {
+.wrapper #kycModal .modal-content .pb-form-floating>.form-select {
   height: 58px;
   border-radius: 8px;
 }
@@ -339,8 +295,8 @@ option {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 .wrapper #kycModal .modal-content .modal-footer .btn {
@@ -383,7 +339,7 @@ option {
   line-height: 18px;
   font-weight: 500;
   -webkit-columns: #07294a;
-          columns: #07294a;
+  columns: #07294a;
 }
 
 .wrapper #kycModal .custom-radio-btn .form-check.form-check-inline {
@@ -414,56 +370,69 @@ option {
   .wrapper .container-fluid {
     padding: 0 15px;
   }
+
   .wrapper .our-product .auth-form {
     width: auto;
     float: unset;
   }
+
   .wrapper .our-product .col-md-4 {
     width: 50%;
   }
+
   .wrapper .our-product .card {
     max-width: 100%;
   }
+
   .wrapper .our-product .row-reverse {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: reverse;
-        -ms-flex-direction: row-reverse;
-            flex-direction: row-reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
   }
+
   .wrapper .our-product h2.heading-product {
     margin-top: 30px;
   }
+
   .wrapper .what-we-offer .offer-cards .offer-card {
     margin-top: 15px;
     margin-bottom: 15px;
   }
+
   .wrapper #kycModal .modal-dialog {
     max-width: 100%;
   }
+
   .wrapper #kycModal .modal-dialog .modal-body .d-flex {
     display: unset !important;
   }
+
   .wrapper #kycModal .modal-dialog .modal-body div#v-pills-tab {
     width: 100%;
     padding-top: 35px;
     -ms-flex-pack: distribute;
-        justify-content: space-around;
+    justify-content: space-around;
   }
+
   .wrapper #kycModal .modal-dialog .modal-body div#v-pills-tab .nav-link {
     background: #f1f1f1;
     border-radius: 8px;
   }
+
   .wrapper #kycModal .modal-dialog .modal-body div#v-pills-tab .nav-link.active {
     background: 0% 0% no-repeat padding-box padding-box #e0edff;
   }
+
   .wrapper #kycModal .modal-dialog .modal-body div#v-pills-tabContent {
     padding-right: unset;
   }
+
   .wrapper #kycModal .modal-dialog .modal-body .flex-column {
     -webkit-box-orient: horizontal !important;
     -webkit-box-direction: normal !important;
-        -ms-flex-direction: row !important;
-            flex-direction: row !important;
+    -ms-flex-direction: row !important;
+    flex-direction: row !important;
   }
 }
 
@@ -471,8 +440,8 @@ option {
   .wrapper .our-product .row-reverse {
     -webkit-box-orient: vertical;
     -webkit-box-direction: reverse;
-        -ms-flex-direction: column-reverse;
-            flex-direction: column-reverse;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
   }
 }
 
@@ -480,8 +449,10 @@ option {
   .wrapper .header-left .navbar-brand img {
     width: 150px;
   }
+
   .wrapper .our-product .auth-form {
     padding: 40px 20px;
   }
 }
+
 /*# sourceMappingURL=style.css.map */
