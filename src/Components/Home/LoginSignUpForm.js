@@ -1,23 +1,28 @@
 import React from "react";
 
-const LoginSignUpForm = () => {
+const LoginSignUpForm = ({toggleForm}) => {
+
+  console.log(toggleForm)
+
   return (
     <>
       <div className="col-md-6">
         <div className="auth-form">
           <h2 className="heading login-heading">
-            Login to your seller account
+            {toggleForm ? "Login to your seller account" : "Register for seller account" }
           </h2>
           <p className="login-info">
-            If you have an account, sign in with your <br /> mobile number.
+            {/* If you have an account, sign in with your <br /> mobile number. */}
+            {toggleForm ? "If you have an account, sign in with your <br /> mobile number." : `If you don't have an account, register with your
+             mobile number` }
           </p>
-          <h2 className="heading register-heading hide">
+          {/* <h2 className="heading register-heading hide">
             Register for seller account
           </h2>
           <p className="register-info hide">
             If you don't have an account, register with your <br /> mobile
             number.
-          </p>
+          </p> */}
 
           <form action="">
             <div className="pb-form-floating mt-5 mb-4">
