@@ -13,7 +13,8 @@ const LoginSignUpForm = ({toggleForm}) => {
           </h2>
           <p className="login-info">
             {/* If you have an account, sign in with your <br /> mobile number. */}
-            {toggleForm ? "If you have an account, sign in with your <br /> mobile number." : `If you don't have an account, register with your
+            {toggleForm ? `If you have an account, sign in with your 
+            mobile number.` : `If you don't have an account, register with your
              mobile number` }
           </p>
           {/* <h2 className="heading register-heading hide">
