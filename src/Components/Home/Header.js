@@ -7,7 +7,7 @@ const Header = (props) => {
   const handleClick = () => {
     setIsShown((current) => !current);
 
-    props.setToggleForm(!isShown)
+    props.setToggleForm(!isShown);
   };
 
   return (

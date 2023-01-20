@@ -266,30 +266,32 @@ option {
 
 @media (min-width: 992px) {
 
-  .wrapper #kycModal .modal-lg,
-  .wrapper #kycModal .modal-xl {
+  .wrapper #kycForm .modal-lg,
+  .wrapper #kycForm .modal-xl {
     max-width: 1010px;
   }
 }
 
-.wrapper #kycModal .modal-content {
+.wrapper #kycForm {
   border-radius: 16px;
+  background-color: #fff;
+  margin-bottom: 30px;
 }
 
-.wrapper #kycModal .modal-content .modal-body {
+.wrapper #kycForm {
   padding: 0;
 }
 
-.wrapper #kycModal .modal-content .pb-form-floating>.form-select {
+.wrapper #kycForm .pb-form-floating>.form-select {
   height: 58px;
   border-radius: 8px;
 }
 
-.wrapper #kycModal .modal-content .pb-form-floating label {
+.wrapper #kycForm .pb-form-floating label {
   color: #767676;
 }
 
-.wrapper #kycModal .modal-content .modal-footer {
+.wrapper #kycForm .modal-footer {
   padding: 0.75rem 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -299,18 +301,18 @@ option {
   justify-content: space-between;
 }
 
-.wrapper #kycModal .modal-content .modal-footer .btn {
+.wrapper #kycForm .modal-footer .btn {
   font-size: 14px;
   width: 90px;
   height: 48px;
 }
 
-.wrapper #kycModal div#v-pills-tab {
+.wrapper #kycForm div#v-pills-tab {
   width: 260px;
   padding-top: 87px;
 }
 
-.wrapper #kycModal div#v-pills-tab .nav-link {
+.wrapper #kycForm div#v-pills-tab .nav-link {
   font-size: 16px;
   line-height: 21px;
   font-weight: 500;
@@ -319,22 +321,22 @@ option {
   padding: 15px;
 }
 
-.wrapper #kycModal div#v-pills-tab .nav-link.active {
+.wrapper #kycForm div#v-pills-tab .nav-link.active {
   background: #e0edff 0% 0% no-repeat padding-box;
   border-radius: 0px 8px 8px 0px;
 }
 
-.wrapper #kycModal div#v-pills-tab .nav-link span {
+.wrapper #kycForm div#v-pills-tab .nav-link span {
   color: red;
 }
 
-.wrapper #kycModal div#v-pills-tabContent {
+.wrapper #kycForm div#v-pills-tabContent {
   border-left: 1px solid #172b4d30;
   padding-right: 15px;
   width: 100%;
 }
 
-.wrapper #kycModal .custom-radio-btn h5 {
+.wrapper #kycForm .custom-radio-btn h5 {
   font-size: 14px;
   line-height: 18px;
   font-weight: 500;
@@ -342,12 +344,12 @@ option {
   columns: #07294a;
 }
 
-.wrapper #kycModal .custom-radio-btn .form-check.form-check-inline {
+.wrapper #kycForm .custom-radio-btn .form-check.form-check-inline {
   position: relative;
   padding-left: 0;
 }
 
-.wrapper #kycModal .custom-radio-btn .form-check.form-check-inline label {
+.wrapper #kycForm .custom-radio-btn .form-check.form-check-inline label {
   padding: 13px 45px;
   border-radius: 8px;
   border: 1px solid #767676;
@@ -355,15 +357,50 @@ option {
   cursor: pointer;
 }
 
-.wrapper #kycModal .custom-radio-btn .form-check.form-check-inline .form-check-input {
+.wrapper #kycForm .custom-radio-btn .form-check.form-check-inline .form-check-input {
   position: absolute;
   left: 40px;
   top: 12px;
 }
 
-.wrapper #kycModal .custom-radio-btn .form-check.form-check-inline.checked label {
+.wrapper #kycForm .custom-radio-btn .form-check.form-check-inline.checked label {
   color: #0065FF;
   border: 1px solid #0065FF;
+}
+
+.wrapper #kycForm .custom-choose-file label {
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 1px solid #138EFF;
+  border-radius: 5px;
+  padding: 8px 15px;
+  font-size: 14px;
+  color: #138EFF;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.wrapper #kycForm .custom-choose-file label img {
+  padding-right: 5px;
+}
+
+.wrapper #kycForm .custom-choose-file #file-chosen {
+  background: #D1FFF0 0% 0% no-repeat padding-box;
+  border-radius: 0px 5px 5px 0px;
+  border-left: 3px solid #19D194;
+  padding: 11px 15px 9px 15px;
+  margin-left: 15px;
+  font-size: 12px;
+  letter-spacing: 0.24px;
+  color: #6A6A6B;
+}
+
+.wrapper #kycForm .custom-choose-file #file-chosen img:first-child {
+  padding-right: 5px;
+}
+
+.wrapper #kycForm .custom-choose-file #file-chosen img:last-child {
+  padding-left: 10px;
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -400,35 +437,35 @@ option {
     margin-bottom: 15px;
   }
 
-  .wrapper #kycModal .modal-dialog {
+  .wrapper #kycForm {
     max-width: 100%;
   }
 
-  .wrapper #kycModal .modal-dialog .modal-body .d-flex {
+  .wrapper #kycForm .d-flex {
     display: unset !important;
   }
 
-  .wrapper #kycModal .modal-dialog .modal-body div#v-pills-tab {
+  .wrapper #kycForm div#v-pills-tab {
     width: 100%;
     padding-top: 35px;
     -ms-flex-pack: distribute;
     justify-content: space-around;
   }
 
-  .wrapper #kycModal .modal-dialog .modal-body div#v-pills-tab .nav-link {
+  .wrapper #kycForm div#v-pills-tab .nav-link {
     background: #f1f1f1;
     border-radius: 8px;
   }
 
-  .wrapper #kycModal .modal-dialog .modal-body div#v-pills-tab .nav-link.active {
+  .wrapper #kycForm div#v-pills-tab .nav-link.active {
     background: 0% 0% no-repeat padding-box padding-box #e0edff;
   }
 
-  .wrapper #kycModal .modal-dialog .modal-body div#v-pills-tabContent {
+  .wrapper #kycForm div#v-pills-tabContent {
     padding-right: unset;
   }
 
-  .wrapper #kycModal .modal-dialog .modal-body .flex-column {
+  .wrapper #kycForm .flex-column {
     -webkit-box-orient: horizontal !important;
     -webkit-box-direction: normal !important;
     -ms-flex-direction: row !important;
