@@ -529,3 +529,9 @@ input[type="number"]::-webkit-outer-spin-button {
 #kycForm .tab-content > .tab-pane {
   opacity: 1;
 }
+
+.invalid {
+  color: red !important;
+  padding-top: 10px;
+  text-align: right;
+}

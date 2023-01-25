@@ -4,13 +4,15 @@ import { useNavigate } from "react-router-dom";
 
 const LoginSignUpForm = ({ toggleForm }) => {
   const navigate = useNavigate();
+  const [firstNo, setfirstNo] = useState(false);
+  const [mobileNumber, setmobileNumber] = useState(false);
   const [toggleShow, setToggleShow] = useState("hide");
   const [disableOn, setDisableOn] = useState(true);
   const [otp, setOtp] = useState("");
   const [timeOutShow, setTimeOutShow] = useState("none");
 
   useEffect(() => {
-    setInputField(otp);
+    if (mobileNumber.length === 10) setInputField(otp);
   });
   const handleResend = () => {
     setTimeOutShow("none");
@@ -22,6 +24,7 @@ const LoginSignUpForm = ({ toggleForm }) => {
   const handleClick = () => {
     if (toggleShow === "hide") setToggleShow("show");
     else setToggleShow("hide");
+    setDisableOn(true);
   };
   function handleVerify() {
     if (otp === "101010") navigate("/info");
@@ -38,9 +41,6 @@ const LoginSignUpForm = ({ toggleForm }) => {
         nextfield = document.querySelector(`input[id=field-${otp.length + 1}]`);
       else nextfield = document.querySelector(`input[id=field-${otp.length}]`);
     }
-    if (otp.length === 6) setDisableOn(false);
-    else setDisableOn(true);
-
     if (nextfield === "null") return;
     nextfield.focus();
   }
@@ -71,10 +71,30 @@ const LoginSignUpForm = ({ toggleForm }) => {
     ) {
       let str = otp + e.key;
       setOtp(str);
+      console.log(otp.length);
+      if (otp.length === 5) setDisableOn(false);
     }
   }
+  function maxPhoneNumber(object) {
+    if (object.target.value.length > object.target.maxLength) {
+      object.target.value = object.target.value.slice(
+        0,
+        object.target.maxLength
+      );
+    }
+    setmobileNumber(object.target.value);
+    console.log(mobileNumber);
+  }
+  function checkNumber(e) {
+    let firstNumber = e.target.value[0];
+    if (firstNumber < 6) setfirstNo(true);
+    else setfirstNo(false);
+    console.log(e.target.value.length);
+    if (e.target.value.length === 10 && firstNo === false) setDisableOn(false);
+    else setDisableOn(true);
+    console.log(disableOn);
+  }
 
-  console.log(timeOutShow);
   return (
     <>
       <div className="col-md-6">
@@ -102,13 +122,31 @@ const LoginSignUpForm = ({ toggleForm }) => {
 
           <form action="">
             <div className="pb-form-floating mt-5 mb-4">
-              <input
-                type="text"
-                className="form-control"
-                id="floatingInput"
-                placeholder="+919953000022"
-              />
+              <div className="d-flex">
+                <input
+                  className="form-control"
+                  style={{
+                    width: "57px",
+                    color: "grey",
+                    fontSize: "15px",
+                    marginRight: "5px",
+                  }}
+                  value={"+91"}
+                ></input>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="floatingInput"
+                  placeholder="9953000022"
+                  maxLength={10}
+                  onInput={maxPhoneNumber}
+                  onChange={checkNumber}
+                />
+              </div>
               <label for="floatingInput">Mobile Number</label>
+              <p className={`invalid ${firstNo === true ? "show" : "hide"}`}>
+                Invalid Ph Number
+              </p>
             </div>
             <div className={`otp-number ${toggleShow}`}>
               <ul>
@@ -193,6 +231,7 @@ const LoginSignUpForm = ({ toggleForm }) => {
               className={`btn btn-primary btn-lg w-100 my-3 send-otp ${
                 toggleShow === "show" ? "hide" : "show"
               }`}
+              disabled={disableOn}
               onClick={() => {
                 handleClick();
                 handleResend();
