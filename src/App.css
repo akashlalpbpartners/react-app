@@ -60,7 +60,7 @@ option {
   padding: 3px;
   background: #fff;
   font-size: 14px;
-  color: #397EF6;
+  color: #397ef6;
 }
 
 .btn-lg {
@@ -74,7 +74,8 @@ option {
 }
 
 .wrapper .product-with-bg {
-  background: transparent linear-gradient(300deg, #5e9ffa2d 0%, #ffffff 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(300deg, #5e9ffa2d 0%, #ffffff 100%) 0%
+    0% no-repeat padding-box;
 }
 
 .wrapper .header {
@@ -265,7 +266,6 @@ option {
 }
 
 @media (min-width: 992px) {
-
   .wrapper #kycForm .modal-lg,
   .wrapper #kycForm .modal-xl {
     max-width: 1010px;
@@ -282,7 +282,7 @@ option {
   padding: 0;
 }
 
-.wrapper #kycForm .pb-form-floating>.form-select {
+.wrapper #kycForm .pb-form-floating > .form-select {
   height: 58px;
   border-radius: 8px;
 }
@@ -357,24 +357,32 @@ option {
   cursor: pointer;
 }
 
-.wrapper #kycForm .custom-radio-btn .form-check.form-check-inline .form-check-input {
+.wrapper
+  #kycForm
+  .custom-radio-btn
+  .form-check.form-check-inline
+  .form-check-input {
   position: absolute;
   left: 40px;
   top: 12px;
 }
 
-.wrapper #kycForm .custom-radio-btn .form-check.form-check-inline.checked label {
-  color: #0065FF;
-  border: 1px solid #0065FF;
+.wrapper
+  #kycForm
+  .custom-radio-btn
+  .form-check.form-check-inline.checked
+  label {
+  color: #0065ff;
+  border: 1px solid #0065ff;
 }
 
 .wrapper #kycForm .custom-choose-file label {
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  border: 1px solid #138EFF;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #138eff;
   border-radius: 5px;
   padding: 8px 15px;
   font-size: 14px;
-  color: #138EFF;
+  color: #138eff;
   margin-bottom: 15px;
   cursor: pointer;
 }
@@ -384,14 +392,14 @@ option {
 }
 
 .wrapper #kycForm .custom-choose-file #file-chosen {
-  background: #D1FFF0 0% 0% no-repeat padding-box;
+  background: #d1fff0 0% 0% no-repeat padding-box;
   border-radius: 0px 5px 5px 0px;
-  border-left: 3px solid #19D194;
+  border-left: 3px solid #19d194;
   padding: 11px 15px 9px 15px;
   margin-left: 15px;
   font-size: 12px;
   letter-spacing: 0.24px;
-  color: #6A6A6B;
+  color: #6a6a6b;
 }
 
 .wrapper #kycForm .custom-choose-file #file-chosen img:first-child {
@@ -493,3 +501,31 @@ option {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+/*Aman's CSS*/
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+.resend-otp {
+  margin-left: 10px;
+}
+
+#BasicInfo .tab-content > .tab-pane {
+  display: block;
+}
+#BasicInfo .tab-content > .tab-pane {
+  opacity: 1;
+}
+#BankInfo .tab-content > .tab-pane {
+  display: block;
+}
+#BankInfo .tab-content > .tab-pane {
+  opacity: 1;
+}
+#kycForm .tab-content > .tab-pane {
+  display: block;
+}
+#kycForm .tab-content > .tab-pane {
+  opacity: 1;
+}
