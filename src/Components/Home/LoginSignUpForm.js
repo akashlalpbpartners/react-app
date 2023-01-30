@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import check from "./checkUtility";
 
 const LoginSignUpForm = ({ toggleForm }) => {
   const navigate = useNavigate();
@@ -14,21 +15,10 @@ const LoginSignUpForm = ({ toggleForm }) => {
   useEffect(() => {
     if (mobileNumber.length === 10) setInputField(otp);
   });
-  const handleResend = () => {
-    setTimeOutShow("none");
-    setTimeout(offDisable, 5000);
-  };
+
   const offDisable = () => {
     setTimeOutShow("");
   };
-  const handleClick = () => {
-    if (toggleShow === "hide") setToggleShow("show");
-    else setToggleShow("hide");
-    setDisableOn(true);
-  };
-  function handleVerify() {
-    if (otp === "101010") navigate("/info");
-  }
   function setInputField(otp) {
     for (let i = 0; i < 6; i++) {
       if (i < otp.length)
@@ -43,56 +33,6 @@ const LoginSignUpForm = ({ toggleForm }) => {
     }
     if (nextfield === "null") return;
     nextfield.focus();
-  }
-  function maxLengthCheck(object) {
-    if (object.target.value.length > object.target.maxLength) {
-      object.target.value = object.target.value.slice(
-        0,
-        object.target.maxLength
-      );
-    }
-  }
-  function handleChange(e) {
-    if (e.key === "Backspace") {
-      setOtp(otp.substring(0, otp.length - 1));
-    }
-    if (
-      otp.length <= 5 &&
-      (e.key === "1" ||
-        e.key === "2" ||
-        e.key === "3" ||
-        e.key === "4" ||
-        e.key === "5" ||
-        e.key === "6" ||
-        e.key === "7" ||
-        e.key === "8" ||
-        e.key === "9" ||
-        e.key === "0")
-    ) {
-      let str = otp + e.key;
-      setOtp(str);
-      console.log(otp.length);
-      if (otp.length === 5) setDisableOn(false);
-    }
-  }
-  function maxPhoneNumber(object) {
-    if (object.target.value.length > object.target.maxLength) {
-      object.target.value = object.target.value.slice(
-        0,
-        object.target.maxLength
-      );
-    }
-    setmobileNumber(object.target.value);
-    console.log(mobileNumber);
-  }
-  function checkNumber(e) {
-    let firstNumber = e.target.value[0];
-    if (firstNumber < 6) setfirstNo(true);
-    else setfirstNo(false);
-    console.log(e.target.value.length);
-    if (e.target.value.length === 10 && firstNo === false) setDisableOn(false);
-    else setDisableOn(true);
-    console.log(disableOn);
   }
 
   return (
@@ -139,8 +79,12 @@ const LoginSignUpForm = ({ toggleForm }) => {
                   id="floatingInput"
                   placeholder="9953000022"
                   maxLength={10}
-                  onInput={maxPhoneNumber}
-                  onChange={checkNumber}
+                  onInput={(e) => {
+                    check.maxPhoneNumber({ e, setmobileNumber, mobileNumber });
+                  }}
+                  onChange={(e) => {
+                    check.checkNumber({ e, firstNo, setDisableOn, setfirstNo });
+                  }}
                 />
               </div>
               <label for="floatingInput">Mobile Number</label>
@@ -156,8 +100,12 @@ const LoginSignUpForm = ({ toggleForm }) => {
                     type="number"
                     className="form-control"
                     maxLength={1}
-                    onInput={maxLengthCheck}
-                    onKeyUp={handleChange}
+                    onInput={(e) => {
+                      check.maxLengthCheck({ e });
+                    }}
+                    onKeyUp={(e) => {
+                      check.handleChange({ e, otp, setOtp, setDisableOn });
+                    }}
                   />
                 </li>
                 <li>
@@ -166,8 +114,12 @@ const LoginSignUpForm = ({ toggleForm }) => {
                     type="number"
                     className="form-control"
                     maxLength={1}
-                    onInput={maxLengthCheck}
-                    onKeyUp={handleChange}
+                    onInput={(e) => {
+                      check.maxLengthCheck({ e });
+                    }}
+                    onKeyUp={(e) => {
+                      check.handleChange({ e, otp, setOtp, setDisableOn });
+                    }}
                   />
                 </li>
                 <li>
@@ -176,8 +128,12 @@ const LoginSignUpForm = ({ toggleForm }) => {
                     type="number"
                     className="form-control"
                     maxLength={1}
-                    onKeyUp={handleChange}
-                    onInput={maxLengthCheck}
+                    onKeyUp={(e) => {
+                      check.handleChange({ e, otp, setOtp, setDisableOn });
+                    }}
+                    onInput={(e) => {
+                      check.maxLengthCheck({ e });
+                    }}
                   />
                 </li>
                 <li>
@@ -186,8 +142,12 @@ const LoginSignUpForm = ({ toggleForm }) => {
                     type="number"
                     className="form-control"
                     max={1}
-                    onKeyUp={handleChange}
-                    onInput={maxLengthCheck}
+                    onKeyUp={(e) => {
+                      check.handleChange({ e, otp, setOtp, setDisableOn });
+                    }}
+                    onInput={(e) => {
+                      check.maxLengthCheck({ e });
+                    }}
                   />
                 </li>
                 <li>
@@ -196,8 +156,12 @@ const LoginSignUpForm = ({ toggleForm }) => {
                     type="number"
                     className="form-control"
                     max={1}
-                    onKeyUp={handleChange}
-                    onInput={maxLengthCheck}
+                    onKeyUp={(e) => {
+                      check.handleChange({ e, otp, setOtp, setDisableOn });
+                    }}
+                    onInput={(e) => {
+                      check.maxLengthCheck({ e });
+                    }}
                   />
                 </li>
                 <li>
@@ -206,8 +170,12 @@ const LoginSignUpForm = ({ toggleForm }) => {
                     type="number"
                     className="form-control"
                     max={1}
-                    onKeyUp={handleChange}
-                    onInput={maxLengthCheck}
+                    onKeyUp={(e) => {
+                      check.handleChange({ e, otp, setOtp, setDisableOn });
+                    }}
+                    onInput={(e) => {
+                      check.maxLengthCheck({ e });
+                    }}
                   />
                 </li>
               </ul>
@@ -220,7 +188,9 @@ const LoginSignUpForm = ({ toggleForm }) => {
                     timeOutShow === "none" ? "text-secondary " : ""
                   }`}
                   href="#x"
-                  onClick={handleResend}
+                  onClick={() => {
+                    check.resendOtp({ offDisable, setTimeOutShow });
+                  }}
                 >
                   Resend OTP
                 </a>
@@ -233,8 +203,8 @@ const LoginSignUpForm = ({ toggleForm }) => {
               }`}
               disabled={disableOn}
               onClick={() => {
-                handleClick();
-                handleResend();
+                check.handleClick({ toggleShow, setToggleShow, setDisableOn });
+                check.resendOtp({ offDisable, setTimeOutShow });
               }}
             >
               Send OTP
@@ -245,7 +215,9 @@ const LoginSignUpForm = ({ toggleForm }) => {
               data-bs-toggle="modal"
               data-bs-target="#kycModal"
               disabled={disableOn}
-              onClick={handleVerify}
+              onClick={() => {
+                check.handleVerify({ otp, navigate });
+              }}
             >
               Verify OTP
             </button>
