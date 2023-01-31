@@ -66,9 +66,25 @@ const RadioField = (props) => {
   );
 };
 
-const Functions = {
+const UploadField = (props) => {
+  return (
+    <div className="row">
+      <div className="col-md-12">
+        <input type="file" id="pan-card" hidden />
+        <label htmlFor="pan-card">
+          <img src={props.img} alt="" /> {props.labelText}
+        </label>
+        <span id="file-chosen" className={props.className}>
+          <img src={props.attachedImg} alt="" /> {props.markerText} <img src={props.closeImg} alt="" />
+        </span>
+      </div>
+    </div>
+  );
+};
+const Fields = {
   InputField,
   SelectField,
   RadioField,
+  UploadField,
 };
-export default Functions;
+export default Fields;

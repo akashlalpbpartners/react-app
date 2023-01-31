@@ -1,26 +1,16 @@
 import React from "react";
 import Field from "./InputField";
 const BasicInfo = () => {
-  const placeholder = [
-    "Enter Name here",
-    "Enter Name here",
-    "91787672617",
-    "Enter here",
-    "Enter here",
-    "17/02/1990",
-    "Enter here",
-    "110096",
-  ];
-  const labelText = [
-    "Name as per PAN",
-    "Father’s name",
-    "Mobile Number",
-    "Email ID",
-    "PAN Number",
-    "Date of Birth",
-    "Address",
-    "pincode",
-  ];
+  const placeholder = {
+    "Name as per PAN": "Enter Name here",
+    "Father’s name": "Enter Name here",
+    "Mobile Number": "91787672617",
+    "Email ID": "Enter here",
+    "PAN Number": "Enter here",
+    "Date of Birth": "17/02/1990",
+    Address: "Enter here",
+    Pincode: "110096",
+  };
 
   const selectFields = {
     State: ["Delhi", "Goa", "Gujrat"],
@@ -35,7 +25,14 @@ const BasicInfo = () => {
       "inlineRadio1",
       "inlineRadio2",
     ],
-    "MSME Number": ["YES", "NO"],
+    "MSME Number": [
+      "inlineRadio1",
+      "inlineRadio2",
+      "option1",
+      "option2",
+      "inlineRadio1",
+      "inlineRadio2",
+    ],
   };
   return (
     <>
@@ -47,15 +44,15 @@ const BasicInfo = () => {
       >
         <div className="container">
           <div className="row">
-            {placeholder.map((value, key) => (
+            {Object.entries(placeholder).map(([value, key]) => (
               <>
                 <Field.InputField
                   type={"text"}
                   className={"form-control"}
                   id={"floatingInput"}
-                  placeholder={value}
+                  placeholder={key}
                   htmlFor={"floatingInput"}
-                  labelText={labelText[key]}
+                  labelText={value}
                 />
               </>
             ))}

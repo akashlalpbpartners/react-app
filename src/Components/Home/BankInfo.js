@@ -1,5 +1,16 @@
 import React from "react";
+import Field from "./InputField";
 const bankInfo = () => {
+  const selectBank = ["SBI", "HDFC"];
+  const selectState = ["Delhi", "Goa", "Gujrat"];
+
+  const placeholder = {
+    "Account Holder Name": "Enter name here",
+    "Account Number": "Enter here",
+    "NEFT IFSC Code": "Enter here",
+    "PAN Number": "Enter here",
+    Pincode: "110096",
+  };
   return (
     <>
       <div
@@ -10,102 +21,42 @@ const bankInfo = () => {
       >
         <div className="container">
           <div className="row">
-            <div className="col-md-6">
-              <div className="pb-form-floating mb-4">
-                <select
-                  className="form-select"
-                  id="floatingSelectGrid"
-                  aria-label="Floating label select example"
-                >
-                  <option selected>Punjab national bank</option>
-                  <option value="1">SBI</option>
-                  <option value="2">HDFC</option>
-                </select>
-                <label htmlFor="floatingSelectGrid">Bank Name</label>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="pb-form-floating mb-4">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="floatingInput"
-                  placeholder="Enter name here"
+            <Field.SelectField
+              className={"form-select"}
+              id={"floatingSelectGrid"}
+              selectedValue={"Punjab national bank"}
+              option={selectBank}
+              htmlFor={"floatingSelectGrid"}
+              labelText={"Bank Name"}
+            />
+            {Object.entries(placeholder).map(([value, key]) => (
+              <>
+                <Field.InputField
+                  type={"text"}
+                  className={"form-control"}
+                  id={"floatingInput"}
+                  placeholder={key}
+                  htmlFor={"floatingInput"}
+                  labelText={value}
                 />
-                <label htmlFor="floatingInput">Account Holder Name</label>
-              </div>
-            </div>
-
-            <div className="col-md-6">
-              <div className="pb-form-floating mb-4">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="floatingInput"
-                  placeholder="Enter here"
-                />
-                <label htmlFor="floatingInput">Account Number</label>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="pb-form-floating mb-4">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="floatingInput"
-                  placeholder="Enter here"
-                />
-                <label htmlFor="floatingInput">NEFT IFSC Code</label>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="pb-form-floating mb-4">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="floatingInput"
-                  placeholder="Enter here"
-                />
-                <label htmlFor="floatingInput">PAN Number</label>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="pb-form-floating mb-4">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="floatingInput"
-                  placeholder="110096"
-                />
-                <label htmlFor="floatingInput">Pin Code</label>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="pb-form-floating mb-4">
-                <select
-                  className="form-select"
-                  id="floatingSelectGrid"
-                  aria-label="Floating label select example"
-                >
-                  <option selected>Gurugram</option>
-                  <option value="1">Delhi</option>
-                  <option value="2">Goa</option>
-                  <option value="3">Gujrat</option>
-                </select>
-                <label htmlFor="floatingSelectGrid">Branch State</label>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="pb-form-floating mb-4">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="floatingInput"
-                  placeholder="Enter here"
-                />
-                <label htmlFor="floatingInput">Branch Address</label>
-              </div>
-            </div>
+              </>
+            ))}
+            <Field.SelectField
+              className={"form-select"}
+              id={"floatingSelectGrid"}
+              selectedValue={"Gurugram"}
+              option={selectState}
+              htmlFor={"floatingSelectGrid"}
+              labelText={"Branch State"}
+            />
+            <Field.InputField
+              type={"text"}
+              className={"form-control"}
+              id={"floatingInput"}
+              placeholder={"Enter here"}
+              htmlFor={"floatingInput"}
+              labelText={"Branch Address"}
+            />
           </div>
           <div className="row">
             <div className="col-md-12">
