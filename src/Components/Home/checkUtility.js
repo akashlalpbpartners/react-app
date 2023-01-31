@@ -64,7 +64,7 @@ function checkNumber(props) {
   else props.setDisableOn(true);
 }
 
-export default {
+const ValidityFunction = {
   resendOtp,
   handleClick,
   handleVerify,
@@ -73,3 +73,5 @@ export default {
   maxLengthCheck,
   maxPhoneNumber,
 };
+
+export default ValidityFunction;

@@ -1,5 +1,6 @@
 import React from "react";
 import Field from "./InputField";
+
 const BasicInfo = () => {
   const placeholder = {
     "Name as per PAN": "Enter Name here",
@@ -14,7 +15,7 @@ const BasicInfo = () => {
 
   const selectFields = {
     State: ["Delhi", "Goa", "Gujrat"],
-    City: ["Delhi", "Goa", "Gujrat"],
+    City: ["Delhi", "Nehru place", "Ghaziabad"],
   };
   const radioHeading = {
     "GST Number": [
@@ -37,7 +38,7 @@ const BasicInfo = () => {
   return (
     <>
       <div
-        className="tab-pane fade show active"
+        className="tab-pane "
         id="basic-info"
         role="tabpanel"
         aria-labelledby=""
