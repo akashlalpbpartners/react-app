@@ -12,8 +12,8 @@ const WhatWeOffer = () => {
                 </div>
                 <div className="offer-cards">
                     {
-                        WhatWeOfferList.map(offer => {
-                            return <div className="offer-card">
+                        WhatWeOfferList.map((offer, index) => {
+                            return <div className="offer-card" key={index}>
                                 <div><img src={offer.imgSrc} alt="" /></div>
                                 <div>
                                     <h3>{offer.title}</h3>
