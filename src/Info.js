@@ -1,23 +1,22 @@
 import Header from "./Components/Home/Header";
 import Footer from "./Components/Home/Footer";
-import BasicInfo from "./Components/Home/BasicInfo";
-import BankInfo from "./Components/Home/BankInfo";
+// import BasicInfo from "./Components/Home/BasicInfo";
+// import BasicInfo2 from "./Components/Home/BasicInfo2";
+import BasicInfo3 from "./Components/Home/BasicInfo3";
+// import BankInfo from "./Components/Home/BankInfo";
+// import BankInfo2 from "./Components/Home/BankInfo2";
+import BankInfo3 from "./Components/Home/BankInfo3";
 import KycInfo from "./Components/Home/KycInfo";
 import SideMenu from "./Components/Home/SideMenu";
 import { useState } from "react";
 
 const Info = () => {
   const [toggleMenu, setToggleMenu] = useState("basic-info");
-  // useEffect(() => {
-  //   renderElement();
-  // });
 
   function renderElement(toggleMenu) {
-    // if (toggleMenu === "basic-info") return <div>hi</div>;
-    // else if (toggleMenu === "bank-info") return <div>hello</div>;
-    // else if (toggleMenu === "kyc-doc") return <div>hey</div>;
-    if (toggleMenu === "basic-info") return <BasicInfo />;
-    else if (toggleMenu === "bank-info") return <BankInfo />;
+    if (toggleMenu === "basic-info")
+      return <BasicInfo3 setToggleMenu={setToggleMenu} />;
+    else if (toggleMenu === "bank-info") return <BankInfo3 />;
     else if (toggleMenu === "kyc-doc") return <KycInfo />;
   }
   return (

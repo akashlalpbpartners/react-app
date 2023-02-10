@@ -11,7 +11,6 @@ const LoginSignUpForm = ({ toggleForm }) => {
   const [disableOn, setDisableOn] = useState(true);
   const [otp, setOtp] = useState("");
   const [timeOutShow, setTimeOutShow] = useState("none");
-
   useEffect(() => {
     if (mobileNumber.length === 10) setInputField(otp);
   });
