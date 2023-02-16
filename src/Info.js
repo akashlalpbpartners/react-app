@@ -12,13 +12,12 @@ import { useState } from "react";
 
 const Info = () => {
   const [toggleMenu, setToggleMenu] = useState("basic-info");
-    const [customerId, setCustomerId] = useState();
-
 
   function renderElement(toggleMenu) {
     if (toggleMenu === "basic-info")
       return <BasicInfo3 setToggleMenu={setToggleMenu} />;
-    else if (toggleMenu === "bank-info") return <BankInfo3 />;
+    else if (toggleMenu === "bank-info")
+      return <BankInfo3 setToggleMenu={setToggleMenu} />;
     else if (toggleMenu === "kyc-doc") return <KycInfo />;
   }
   return (

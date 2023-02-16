@@ -1,5 +1,5 @@
 import * as React from "react";
-import { DataGrid, GridValueGetterParams } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 const PersonalLoanLeadDetails = () => {
   const fetchData = () => {
     console.log("provision to call api");

@@ -1,5 +1,6 @@
 import React from "react";
 import Fields from "./InputField";
+import { useFormik } from "formik";
 const KycInfo = () => {
   const uploadOption = {
     "Pan Card": [
@@ -52,6 +53,35 @@ const KycInfo = () => {
       "assets/images/close.svg",
     ],
   };
+  const handleSubmit = () => {
+    registerKYCInfo();
+  };
+
+  async function registerKYCInfo(values) {
+    console.log(values);
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        CustomerID: 4,
+        BankName: values.Bank,
+        AccountHolderName: values.Account_holder_name,
+        AccountNumber: values.Account_no,
+        IfscCode: values.Ifsc_code,
+        PanNumber: values.Pan_no,
+        Pincode: values.Pincode,
+        BranchState: values.Branch_state,
+        BranchAddress: values.Branch_address,
+      }),
+    };
+    console.log(requestOptions.body);
+    await fetch("http://localhost:3001/details/bankinfo", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data);
+      });
+  }
+
   return (
     <>
       <div
@@ -83,7 +113,11 @@ const KycInfo = () => {
                 >
                   Back
                 </button>
-                <button type="button" className="btn btn-primary">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  onSubmit={handleSubmit}
+                >
                   Submit
                 </button>
               </div>

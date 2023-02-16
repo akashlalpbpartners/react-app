@@ -1,55 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import check from "./checkUtility";
-// import userContext from "../../Context/userContext";
+import userContext from "../../Context/userContext";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
+  const context = useContext(userContext);
+  const { setUser } = context;
   const [firstNo, setfirstNo] = useState(false);
   const [mobileNumber, setmobileNumber] = useState("");
   const [toggleShow, setToggleShow] = useState("hide");
   const [disableOn, setDisableOn] = useState(true);
   const [otp, setOtp] = useState("");
+  const [loginCustomer, setLoginCustomer] = useState([]);
   const [timeOutShow, setTimeOutShow] = useState("none");
 
   // UseEffect function
   useEffect(() => {
-    if (mobileNumber.length === 10 && toggleShow === 'show') {
-      // if (details.length === 0 && firstNo === false) {
-      //   setDetails(user);
-      //   console.log(details);
-      // }
+    if (mobileNumber.length === 10 && toggleShow === "show") {
       setInputField(otp);
     }
-  }, [mobileNumber, otp]);
-
-  // Login function
-  const registerUser = async () => {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        Username: " ",
-        FatherName: " ",
-        MobileNumber: mobileNumber,
-        EmailId: " ",
-        PanNumber: " ",
-        DOB: " ",
-        Address: " ",
-        Pincode: " ",
-        State: " ",
-        City: " ",
-        GSTNumber: 0,
-        MSMENumber: 0,
-      }),
-    };
-    console.log("hello");
-    await fetch("http://localhost:3001/details/basicinfo", requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
-  };
+  }, [mobileNumber.length, otp.length, toggleShow]);
 
   // Toggling TimeOutShow
   const offDisable = () => {
@@ -93,8 +64,8 @@ const RegisterForm = () => {
   const setInputField = (otp) => {
     for (let i = 0; i < 6; i++) {
       if (i < otp.length)
-        document.getElementById(otpField[i + 1]).value = otp[i];
-      else document.getElementById(otpField[i + 1]).value = "";
+        document.getElementById(`field-${i + 1}`).value = otp[i];
+      else document.getElementById(`field-${i + 1}`).value = "";
     }
     let nextfield = "";
     if (otp.length <= 6) {
@@ -106,6 +77,46 @@ const RegisterForm = () => {
     nextfield.focus();
   };
 
+  const handleVerify = (otp) => {
+    if (otp === "101010") return true;
+    else return false;
+  };
+
+  async function handleVerifyOtp() {
+    try {
+      // debugger;
+      if (handleVerify(otp)) {
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            Username: " ",
+            FatherName: " ",
+            MobileNumber: mobileNumber,
+            EmailId: " ",
+            PanNumber: " ",
+            DOB: " ",
+            Address: " ",
+            Pincode: " ",
+            State: " ",
+            City: " ",
+            GSTNumber: 0,
+            MSMENumber: 0,
+          }),
+        };
+        const response = await fetch(
+          "http://localhost:3001/details/createbasicinfo",
+          requestOptions
+        );
+        const parseRes = await response.json();
+        console.log(parseRes);
+        console.log("hello")
+        navigate("/info");
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
   // async function handleVerifyOtp() {
   //   try {
   //     if (check.handleVerify(otp) === true) {
@@ -229,13 +240,7 @@ const RegisterForm = () => {
                   data-bs-toggle="modal"
                   data-bs-target="#kycModal"
                   disabled={disableOn}
-                  onClick={() => {
-                    // OTP verification part
-                    if (check.handleVerify({ otp }) === true) {
-                      registerUser();
-                      navigate("/info");
-                    }
-                  }}
+                  onClick={handleVerifyOtp}
                 >
                   Verify OTP
                 </button>

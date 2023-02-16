@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import * as Yup from "yup";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -6,6 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import { useFormik } from "formik";
+import userContext from "../../Context/userContext";
 
 ////////////////////////// Start of form validation //////////////////////////
 
@@ -40,10 +41,11 @@ const validationSchemaInput = Yup.object({
 
 ////////////////////////// End of form validation //////////////////////////
 
-const BasicInfo3 = () => {
+const BankInfo3 = () => {
   ////////////////////////// Using state to store the values //////////////////////////
-  const [basicInfoValues, setBasicInfoValues] = React.useState({});
-
+  const [bankInfoValues, setBankInfoValues] = useState({});
+  const context = useContext(userContext);
+  const { user } = context;
   ////////////////////////// Using custom hook of formik //////////////////////////
 
   const formikInput = useFormik({
@@ -60,15 +62,12 @@ const BasicInfo3 = () => {
     validationSchema: validationSchemaInput,
     handleChange: (event) => {
       event.preventDefault();
-      console.log(event.target.value);
     },
-    onSubmit: (values) => {
-      setBasicInfoValues(values);
-      console.log(basicInfoValues);
+    onSubmit: async (values) => {
+      setBankInfoValues(values);
+      await registerBankInfo(values);
     },
   });
-  //   console.log(basicInfoValues);
-  ////////////////////////// Attribute dictionary //////////////////////////
   const inputField = {
     1: [
       "Bank",
@@ -156,26 +155,28 @@ const BasicInfo3 = () => {
     ],
   };
 
-  async function registerBankInfo() {
+  async function registerBankInfo(values) {
+    console.log(values);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        BankName: " ",
-        AccountHolderName: " ",
-        AccountNumber: " ",
-        IfscCode: " ",
-        PanNumber: " ",
-        Pincode: " ",
-        BranchState: " ",
-        BranchAddress: " ",
+        CustomerID: 4,
+        BankName: values.Bank,
+        AccountHolderName: values.Account_holder_name,
+        AccountNumber: values.Account_no,
+        IfscCode: values.Ifsc_code,
+        PanNumber: values.Pan_no,
+        Pincode: values.Pincode,
+        BranchState: values.Branch_state,
+        BranchAddress: values.Branch_address,
       }),
     };
-    console.log("hello");
-    await fetch("http://localhost:3001/details/basicinfo", requestOptions)
+    console.log(requestOptions.body);
+    await fetch("http://localhost:3001/details/bankinfo", requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
       });
   }
 
@@ -236,4 +237,4 @@ const BasicInfo3 = () => {
   );
 };
 
-export default BasicInfo3;
+export default BankInfo3;

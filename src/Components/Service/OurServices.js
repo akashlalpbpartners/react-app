@@ -1,12 +1,12 @@
 import React from "react";
 import saving from "./../../images/saving.png"
-import deal from "./../../images/deal.png"
-import sunbed from "./../../images/sunbed.png"
-import carwash from "./../../images/car-wash.png"
-import car from "./../../images/car.png"
-import shopping from "./../../images/shopping-bag.png"
-import education from "./../../images/mortarboard.png"
-import other from "./../../images/other.png"
+// import deal from "./../../images/deal.png"
+// import sunbed from "./../../images/sunbed.png"
+// import carwash from "./../../images/car-wash.png"
+// import car from "./../../images/car.png"
+// import shopping from "./../../images/shopping-bag.png"
+// import education from "./../../images/mortarboard.png"
+// import other from "./../../images/other.png"
 const OurServices = (props) => {
   function handleClick(e) {
     // Changing toggle menu state

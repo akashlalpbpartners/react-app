@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import logo from "../../../src/images/logo.png";
 import users from "../../../src/images/users.jpg";
 
@@ -12,7 +12,7 @@ const Header = (props) => {
       <div className="container-fluid">
         <div className="header">
           <div className="header-left">
-            <a className="navbar-brand" href="#">
+            <a className="navbar-brand" href="/noacess">
               <img src={logo} width="205" alt="" />
             </a>
           </div>
@@ -40,7 +40,7 @@ const Header = (props) => {
                 <img className="user-img" src={users} alt="" />
                 <a
                   className="dropdown-toggle"
-                  href="#"
+                  href="/noacess"
                   role="button"
                   id="dropdownMenuLink"
                   data-bs-toggle="dropdown"
@@ -54,12 +54,12 @@ const Header = (props) => {
                   aria-labelledby="dropdownMenuLink"
                 >
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item" href="/noacess">
                       Product
                     </a>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item" href="/noacess">
                       Services
                     </a>
                   </li>

@@ -75,9 +75,37 @@ const BasicInfo3 = (props) => {
       msme_no: "",
     },
     validationSchema: validationSchemaInput,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       setBasicInfoValues(values);
       console.log(basicInfoValues);
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          Username: values.Pan_name,
+          FatherName: values.Father_name,
+          MobileNumber: values.Mobile_no,
+          EmailId: values.Email,
+          PanNumber: values.Pan_no,
+          DOB: values.Dob,
+          Address: values.Address,
+          Pincode: values.Pincode,
+          State: inputField[7][values.state],
+          City: inputField[7][values.state],
+          GSTNumber: parseInt(values.gst_no),
+          MSMENumber: parseInt(values.msme_no),
+        }),
+      };
+      console.log("hello");
+      await fetch(
+        "http://localhost:3001/details/updatebasicinfo",
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        });
+      props.setToggleMenu("bank-info");
     },
   });
   ////////////////////////// Attribute dictionary //////////////////////////
@@ -237,8 +265,8 @@ const BasicInfo3 = (props) => {
                 <em>{item[1]}</em>
               </MenuItem>
               {item[7].map((key, value) => (
-                <MenuItem key={key} value={value}>
-                  {value}
+                <MenuItem key={value} value={value}>
+                  {key}
                 </MenuItem>
               ))}
             </TextField>
@@ -255,8 +283,8 @@ const BasicInfo3 = (props) => {
                 value={item[2]}
                 onChange={formikInput.handleChange}
               >
-                <FormControlLabel value="YES" control={<Radio />} label="YES" />
-                <FormControlLabel value="NO" control={<Radio />} label="NO" />
+                <FormControlLabel value={1} control={<Radio />} label="YES" />
+                <FormControlLabel value={0} control={<Radio />} label="NO" />
               </RadioGroup>
               {item[4] && (
                 <small className="text-danger">
