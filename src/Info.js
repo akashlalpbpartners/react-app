@@ -12,6 +12,8 @@ import { useState } from "react";
 
 const Info = () => {
   const [toggleMenu, setToggleMenu] = useState("basic-info");
+    const [customerId, setCustomerId] = useState();
+
 
   function renderElement(toggleMenu) {
     if (toggleMenu === "basic-info")

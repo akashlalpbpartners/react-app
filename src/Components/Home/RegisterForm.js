@@ -1,80 +1,86 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import check from "./checkUtility";
-import userContext from "../../Context/userContext";
+// import userContext from "../../Context/userContext";
 
-const LoginSignUpForm = () => {
+const RegisterForm = () => {
   const navigate = useNavigate();
-  const context = useContext(userContext);
-  const { fetchUser } = context;
-  const [firstNo, setfirstNo] = useState("");
+  const [firstNo, setfirstNo] = useState(false);
   const [mobileNumber, setmobileNumber] = useState("");
   const [toggleShow, setToggleShow] = useState("hide");
   const [disableOn, setDisableOn] = useState(true);
   const [otp, setOtp] = useState("");
   const [timeOutShow, setTimeOutShow] = useState("none");
-  const [loginCustomer, setLoginCustomer] = useState([]);
-  const [clicked, setClicked] = useState(false);
 
+  // UseEffect function
   useEffect(() => {
-    if (mobileNumber.length === 10 && toggleShow === "show") {
+    if (mobileNumber.length === 10 && toggleShow === 'show') {
+      // if (details.length === 0 && firstNo === false) {
+      //   setDetails(user);
+      //   console.log(details);
+      // }
       setInputField(otp);
-      if (otp.length === 7) check.handleChange(otp);
     }
+  }, [mobileNumber, otp]);
 
-    //   if (loginCustomer.length === 0) {
-    // console.log("API fired useeffect");
-    // setToggleShow("show");
-    //   }
+  // Login function
+  const registerUser = async () => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        Username: " ",
+        FatherName: " ",
+        MobileNumber: mobileNumber,
+        EmailId: " ",
+        PanNumber: " ",
+        DOB: " ",
+        Address: " ",
+        Pincode: " ",
+        State: " ",
+        City: " ",
+        GSTNumber: 0,
+        MSMENumber: 0,
+      }),
+    };
+    console.log("hello");
+    await fetch("http://localhost:3001/details/basicinfo", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
 
-    //   if (toggleShow === "hide" && details.length === 0) {
-    // getDetails();
-    //   } else {
-    //     if (
-    //       toggleShow === "hide" &&
-    //       user.filter(function (item) {
-    //         return item.MobileNumber === mobileNumber;
-    //       }).length === 0
-    //     ) {
-    //       setfirstNo("register");
-    //     } else setfirstNo("");
-    //   }
-    // } else {
-    //   setDisableOn(true);
-    // }
-  }, [mobileNumber.length, otp.length, toggleShow, clicked]);
-
+  // Toggling TimeOutShow
   const offDisable = () => {
     setTimeOutShow("");
   };
 
   async function handleSendOtp() {
-    const response = await fetchUser();
-    console.log(response);
-    if (response.length !== null) {
-      const result = response.filter(function (item) {
-        return item.MobileNumber === mobileNumber;
-      });
-      if (result.length !== 0) {
-        check.handleClick({
-          toggleShow,
-          firstNo,
-          setDisableOn,
-          setToggleShow,
-        });
-        setLoginCustomer(result);
-        console.log(result);
-        setClicked(true);
-        setfirstNo("");
-      } else {
-        setfirstNo("register");
-      }
-    } else alert("Internal server error!");
+    // if (user.length !== null) {
+    //   const result = user.filter(function (item) {
+    //     return item.MobileNumber === mobileNumber;
+    //   });
+    //   if (result.length !== 0) {
+    check.handleClick({
+      toggleShow,
+      firstNo,
+      setDisableOn,
+      setToggleShow,
+    });
+    // setLoginCustomer(result);
+    // console.log(loginCustomer);
+    // setfirstNo("");
+    // } else {
+    //   setfirstNo("register");
+    // }
+    // }
 
     check.resendOtp({ offDisable, setTimeOutShow });
     // return result;
   }
 
+  // Setting OTP fields
   const otpField = {
     1: ["field-1"],
     2: ["field-2"],
@@ -87,8 +93,8 @@ const LoginSignUpForm = () => {
   const setInputField = (otp) => {
     for (let i = 0; i < 6; i++) {
       if (i < otp.length)
-        document.getElementById(`field-${i + 1}`).value = otp[i];
-      else document.getElementById(`field-${i + 1}`).value = "";
+        document.getElementById(otpField[i + 1]).value = otp[i];
+      else document.getElementById(otpField[i + 1]).value = "";
     }
     let nextfield = "";
     if (otp.length <= 6) {
@@ -100,42 +106,34 @@ const LoginSignUpForm = () => {
     nextfield.focus();
   };
 
-  const handleVerify = (otp) => {
-    if (otp === "101010") return true;
-    else return false;
-  };
-  async function handleVerifyOtp() {
-    try {
-      // debugger;
-      console.log(otp);
-      if (handleVerify(otp)) {
-        const response = await fetch("http://localhost:3001/api/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            CustomerID: loginCustomer[0].ID,
-            MobileNumber: loginCustomer[0].MobileNumber,
-            Otp: otp,
-          }),
-        });
-        const parseRes = await response.json();
-        console.log(parseRes);
-        navigate("/info");
-      }
-    } catch (err) {
-      console.error(err.message);
-    }
-  }
+  // async function handleVerifyOtp() {
+  //   try {
+  //     if (check.handleVerify(otp) === true) {
+  //       const response = await fetch("http://localhost:3001/api/login", {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({
+  //           CustomerID: loginCustomer.ID,
+  //           MobileNumber: loginCustomer.MobileNumber,
+  //           Otp: otp,
+  //         }),
+  //       });
+  //       const parseRes = await response.json();
+  //       console.log(parseRes);
+  //       navigate("/info");
+  //     }
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // }
 
   return (
     <>
       <div className="col-md-6">
         <div className="auth-form">
-          <h2 className="heading login-heading">
-            Login to your seller account
-          </h2>
+          <h2 className="heading login-heading">Register for seller account</h2>
           <p className="login-info">
-            If you don't have an account, register with your mobile number
+            If you have an account, sign in with your mobile number.
           </p>
 
           <form action="">
@@ -196,9 +194,6 @@ const LoginSignUpForm = () => {
                           type="number"
                           className="form-control"
                           maxLength={1}
-                          onInput={(e) => {
-                            check.maxLengthCheck({ e });
-                          }}
                           onKeyUp={(e) => {
                             check.handleChange({
                               e,
@@ -234,7 +229,13 @@ const LoginSignUpForm = () => {
                   data-bs-toggle="modal"
                   data-bs-target="#kycModal"
                   disabled={disableOn}
-                  onClick={handleVerifyOtp}
+                  onClick={() => {
+                    // OTP verification part
+                    if (check.handleVerify({ otp }) === true) {
+                      registerUser();
+                      navigate("/info");
+                    }
+                  }}
                 >
                   Verify OTP
                 </button>
@@ -242,14 +243,15 @@ const LoginSignUpForm = () => {
             ) : (
               <button
                 type="button"
-                className="btn btn-primary btn-lg w-100 my-3 send-otp"
+                className={`btn btn-primary btn-lg w-100 my-3 send-otp ${
+                  toggleShow === "show" ? "hide" : "show"
+                }`}
                 disabled={disableOn}
                 onClick={handleSendOtp}
               >
                 Send OTP
               </button>
             )}
-
             <button
               type="button"
               className="btn btn-outline-primary btn-lg w-100 buyer-login"
@@ -263,4 +265,4 @@ const LoginSignUpForm = () => {
   );
 };
 
-export default LoginSignUpForm;
+export default RegisterForm;

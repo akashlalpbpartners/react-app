@@ -155,6 +155,30 @@ const BasicInfo3 = () => {
       [],
     ],
   };
+
+  async function registerBankInfo() {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        BankName: " ",
+        AccountHolderName: " ",
+        AccountNumber: " ",
+        IfscCode: " ",
+        PanNumber: " ",
+        Pincode: " ",
+        BranchState: " ",
+        BranchAddress: " ",
+      }),
+    };
+    console.log("hello");
+    await fetch("http://localhost:3001/details/basicinfo", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }
+
   return (
     <>
       <Box
@@ -173,6 +197,7 @@ const BasicInfo3 = () => {
           {Object.entries(inputField).map(([key, item]) => (
             <TextField
               fullWidth
+              required
               select={item[6]}
               id={item[0]}
               name={item[0]}
@@ -198,9 +223,9 @@ const BasicInfo3 = () => {
             <Button
               type="submit"
               variant="contained"
-              // onClick={() => {
-              //   props.setToggleMenu("bank-info");
-              // }}
+              onClick={() => {
+                registerBankInfo();
+              }}
             >
               Next
             </Button>

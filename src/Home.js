@@ -1,12 +1,12 @@
-import React, { useState }  from "react";
+import React, { useState } from "react";
 import Header from "./Components/Home/Header";
 import LoginSignUpForm from "./Components/Home/LoginSignUpForm";
+import RegisterForm from "./Components/Home/RegisterForm";
 import OutProducts from "./Components/Home/OurProducts";
 import WhatWeOffer from "./Components/Home/WhatWeOffer";
 import Footer from "./Components/Home/Footer";
 
 const Home = () => {
-
   const [toggleForm, setToggleForm] = useState(true);
 
   return (
@@ -18,7 +18,7 @@ const Home = () => {
             <div className="container-fluid">
               <div className="row row-reverse">
                 <OutProducts />
-                <LoginSignUpForm toggleForm={toggleForm} />
+                {toggleForm === true ? <LoginSignUpForm /> : <RegisterForm />}
               </div>
             </div>
           </div>

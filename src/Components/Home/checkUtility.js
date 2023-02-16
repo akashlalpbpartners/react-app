@@ -4,11 +4,7 @@ function resendOtp(props) {
 }
 function handleClick(props) {
   if (props.toggleShow === "hide") props.setToggleShow("show");
-  else props.setToggleShow("hide");
   props.setDisableOn(true);
-}
-function handleVerify(props) {
-  if (props.otp === "101010") props.navigate("/info");
 }
 function handleChange(props) {
   props.e.target.value = props.e.target.value.replace(/[^0-9]/g, "");
@@ -30,7 +26,6 @@ function handleChange(props) {
   ) {
     let str = props.otp + props.e.key;
     props.setOtp(str);
-    console.log(props.otp.length);
     if (props.otp.length === 5) props.setDisableOn(false);
   }
 }
@@ -44,34 +39,28 @@ function maxLengthCheck(props) {
 }
 function maxPhoneNumber(props) {
   props.e.target.value = props.e.target.value.replace(/[^0-9]/g, "");
+  let firstNumber = props.e.target.value[0];
+  if (firstNumber < 6) props.setfirstNo("first");
+  else props.setfirstNo("");
   if (props.e.target.value.length > props.e.target.maxLength) {
     props.e.target.value = props.e.target.value.slice(
       0,
       props.e.target.maxLength
     );
   }
-  props.setmobileNumber(props.e.target.value);
-  console.log(props.mobileNumber);
-}
-function checkNumber(props) {
-  props.e.target.value = props.e.target.value.replace(/[^0-9]/g, "");
-  let firstNumber = props.e.target.value[0];
-  props.e.target.value.replace(/[^0-9]/g, "");
-  if (firstNumber < 6) props.setfirstNo(true);
-  else props.setfirstNo(false);
-  if (props.e.target.value.length === 10 && props.firstNo === false)
+  if (props.e.target.value.length === 10 && props.firstNo === "")
     props.setDisableOn(false);
   else props.setDisableOn(true);
+  props.setmobileNumber(props.e.target.value);
 }
 
 const ValidityFunction = {
   resendOtp,
   handleClick,
-  handleVerify,
+  // handleVerify,
   handleChange,
-  checkNumber,
-  maxLengthCheck,
   maxPhoneNumber,
+  maxLengthCheck,
 };
 
 export default ValidityFunction;

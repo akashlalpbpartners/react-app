@@ -221,6 +221,7 @@ const BasicInfo3 = (props) => {
         >
           {Object.entries(inputField).map(([key, item]) => (
             <TextField
+              key={key}
               fullWidth
               select={item[6]}
               id={item[0]}
@@ -235,13 +236,15 @@ const BasicInfo3 = (props) => {
               <MenuItem value="">
                 <em>{item[1]}</em>
               </MenuItem>
-              {item[7].map((value) => (
-                <MenuItem value={value}>{value}</MenuItem>
+              {item[7].map((key, value) => (
+                <MenuItem key={key} value={value}>
+                  {value}
+                </MenuItem>
               ))}
             </TextField>
           ))}
           {Object.entries(radioButton).map(([key, item]) => (
-            <FormControl sx={{ m: 2, minWidth: "68ch" }}>
+            <FormControl sx={{ m: 2, minWidth: "68ch" }} key={key}>
               <FormLabel id="demo-row-radio-buttons-group-label">
                 {item[0]}
               </FormLabel>
