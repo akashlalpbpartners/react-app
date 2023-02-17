@@ -10,9 +10,29 @@ const validationSchemaInput = Yup.object({});
 const PersonalLoan = (props) => {
   ////////////////////////// Using state to store the values //////////////////////////
   const [initialValues, setInitialValues] = useState({});
+  const [cityList, setCityList] = useState([]);
+  const [cityArray, setCityArray] = useState([]);
+
   useEffect(() => {
-    console.log(initialValues);
-  }, [initialValues]);
+    if (cityList.length === 0) {
+      const cityList_ID = 7;
+      const requestOptions = {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      };
+      fetch(`http://localhost:3001/geo/readcity/${cityList_ID}`, requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          setCityList(data);
+        });
+    } else {
+      const array = [];
+      for (var i = 0; i < cityList.length; i++) {
+        array.push(cityList[i].city);
+      }
+      setCityArray(array);
+    }
+  }, [cityList]);
 
   ////////////////////////// Using custom hook of formik //////////////////////////
   const formikInput = useFormik({
@@ -24,7 +44,33 @@ const PersonalLoan = (props) => {
       Employment_type: "",
     },
     validationSchema: validationSchemaInput,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sub_product_id: 2,
+          // customer_name: user.Username,
+          customer_name: "ram",
+          customer_mobile: values.Mobile_no,
+          city_id: values.City,
+          loan_amount: values.Loan_amount_required,
+          net_monthly_income: values.Net_monthly_income,
+          employment_type: values.Employment_type,
+          // created_by: user.ID,
+          created_by: 1,
+          // Mobile_no: ,
+          // City: ,
+          // Loan_amount_required: ,
+          // Net_monthly_income: ,
+          // Employment_type: ,
+        }),
+      };
+      console.log(values);
+      await fetch(
+        "http://localhost:3001/product/insertfinancialservices",
+        requestOptions
+      );
       setInitialValues(values);
     },
   });
@@ -47,8 +93,8 @@ const PersonalLoan = (props) => {
       formikInput.values.City,
       formikInput.touched.City && Boolean(formikInput.errors.City),
       formikInput.touched.City && formikInput.errors.City,
-      false,
-      [],
+      true,
+      cityArray,
     ],
     3: [
       "Loan_amount_required",
@@ -114,6 +160,7 @@ const PersonalLoan = (props) => {
                 {Object.entries(inputField).map(([key, item]) => (
                   <>
                     <TextField
+                      key={key}
                       fullWidth
                       required
                       id={item[0]}
@@ -129,8 +176,8 @@ const PersonalLoan = (props) => {
                       <MenuItem value="">
                         <em>{item[1]}</em>
                       </MenuItem>
-                      {item[7].map((value) => (
-                        <MenuItem value={value}>{value}</MenuItem>
+                      {item[7].map((key, value) => (
+                        <MenuItem value={value}>{key}</MenuItem>
                       ))}
                     </TextField>
                   </>

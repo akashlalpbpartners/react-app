@@ -41,7 +41,7 @@ const validationSchemaInput = Yup.object({
 
 ////////////////////////// End of form validation //////////////////////////
 
-const BankInfo3 = () => {
+const BankInfo3 = (props) => {
   ////////////////////////// Using state to store the values //////////////////////////
   const [bankInfoValues, setBankInfoValues] = useState({});
   const context = useContext(userContext);
@@ -178,6 +178,7 @@ const BankInfo3 = () => {
       .then((data) => {
         // console.log(data);
       });
+    props.setToggleMenu("kyc-doc");
   }
 
   return (

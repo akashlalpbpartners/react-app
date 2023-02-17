@@ -1,17 +1,43 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 const BusinessLoanLeadDetails = () => {
+  const [loanLeadDetails, setLoanLeadDetails] = useState([]);
+  const [rows, setRows] = useState([]);
+  useEffect(() => {
+    if (loanLeadDetails.length === 0) {
+      const sub_product_ID = 3;
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      };
+      fetch(
+        `http://localhost:3001/product/readfinancialservices/${sub_product_ID}`,
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setLoanLeadDetails(data);
+        });
+    } else {
+      setRows(loanLeadDetails);
+    }
+  }, [loanLeadDetails]);
+
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "mobileNumber", headerName: "Mobile Number", width: 190 },
+    {
+      field: "customer_mobile",
+      headerName: "Mobile Number",
+      width: 190,
+    },
     { field: "city", headerName: "City", width: 190 },
     {
-      field: "loanAmoutRequired",
+      field: "loan_amount",
       headerName: "Loan Amount Required",
       width: 190,
     },
     {
-      field: "netMonthlyIncome",
+      field: "net_monthly_income",
       headerName: "Net Monthly Income",
       //   description: "This column has a value getter and is not sortable.",
       //   sortable: false,
@@ -20,29 +46,10 @@ const BusinessLoanLeadDetails = () => {
       //     `${params.row.firstName || ""} ${params.row.lastName || ""}`,
     },
     {
-      field: "employmentType",
+      field: "employment_type",
       headerName: "Employment",
       width: 190,
     },
-  ];
-
-  const rows = [
-    {
-      id: 1,
-      mobileNumber: "9999999999",
-      city: "Delhi",
-      loanAmoutRequired: "2500000",
-      netMonthlyIncome: "50000",
-      employmentType: "Business",
-    },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
-    { id: 8 },
-    { id: 9 },
   ];
 
   return (

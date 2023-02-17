@@ -1,6 +1,8 @@
 import React from "react";
 import Fields from "./InputField";
+import userContext from "../../Context/userContext";
 import { useFormik } from "formik";
+import { useContext } from "react";
 const KycInfo = () => {
   const uploadOption = {
     "Pan Card": [
@@ -81,7 +83,9 @@ const KycInfo = () => {
         // console.log(data);
       });
   }
-
+  const context = useContext(userContext);
+  const { ab } = context;
+  console.log(ab);
   return (
     <>
       <div

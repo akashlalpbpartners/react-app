@@ -15,6 +15,29 @@ const LoginSignUpForm = () => {
   const [timeOutShow, setTimeOutShow] = useState("none");
   const [loginCustomer, setLoginCustomer] = useState([]);
   const [clicked, setClicked] = useState(false);
+  const [cityList, setCityList] = useState([]);
+  const [cityArray, setCityArray] = useState([]);
+
+  useEffect(() => {
+    if (cityList.length === 0) {
+      const cityList_ID = 7;
+      const requestOptions = {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      };
+      fetch(`http://localhost:3001/geo/readcity/${cityList_ID}`, requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          setCityList(data);
+        });
+    } else {
+      const array = [];
+      for (var i = 0; i < cityList.length; i++) {
+        array.push(cityList[i].city);
+      }
+      setCityArray(array);
+    }
+  }, [cityList]);
 
   useEffect(() => {
     if (mobileNumber.length === 10 && toggleShow === "show") {
