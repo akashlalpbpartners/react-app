@@ -1,91 +1,70 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Fields from "./InputField";
 import userContext from "../../Context/userContext";
 import { useFormik } from "formik";
-import { useContext } from "react";
+import attachment from "./../../images/attachment.svg";
+import close from "./../../images/close.svg";
+import cloud_upload from "./../../images/cloud-upload.svg";
+import axios from "axios";
+import userContext from "../../Context/userContext";
+import { useDispatch, useSelector } from "react-redux";
+import UserState from "../../Context/userState";
 const KycInfo = () => {
-  const uploadOption = {
-    "Pan Card": [
-      "assets/images/cloud-upload.svg",
-      "show",
-      "assets/images/attachment.svg",
-      "Uploaded PAN card.png",
-      "assets/images/close.svg",
-    ],
-    "Cancel Cheque": [
-      "assets/images/cloud-upload.svg",
-      "hide",
-      "assets/images/attachment.svg",
-      "No file choosen",
-      "assets/images/close.svg",
-    ],
-    "Address Proof": [
-      "assets/images/cloud-upload.svg",
-      "hide",
-      "assets/images/attachment.svg",
-      "No file choosen",
-      "assets/images/close.svg",
-    ],
-    "Highest Education": [
-      "assets/images/cloud-upload.svg",
-      "hide",
-      "assets/images/attachment.svg",
-      "No file choosen",
-      "assets/images/close.svg",
-    ],
-    "Partner Photo": [
-      "assets/images/cloud-upload.svg",
-      "hide",
-      "assets/images/attachment.svg",
-      "No file choosen",
-      "assets/images/close.svg",
-    ],
-    "MSME Certificate": [
-      "assets/images/cloud-upload.svg",
-      "hide",
-      "assets/images/attachment.svg",
-      "No file choosen",
-      "assets/images/close.svg",
-    ],
-    "GST Certificate": [
-      "assets/images/cloud-upload.svg",
-      "hide",
-      "assets/images/attachment.svg",
-      "No file choosen",
-      "assets/images/close.svg",
-    ],
+  const [panCard, setPanCard] = useState(null);
+  const [cancelCheque, setCancelCheque] = useState(null);
+  const [addressProof, setAddressProof] = useState(null);
+  const [highestEducation, setHighestEducation] = useState(null);
+  const [partnerPhoto, setPartnerPhoto] = useState(null);
+  const [msmeCertificate, setMsmeCertificate] = useState(null);
+  const [gstCertificate, setGstCertificate] = useState(null);
+  const [panCardName, setPanCardName] = useState("");
+  const [cancelChequeName, setCancelChequeName] = useState("");
+  const [addressProofName, setAddressProofName] = useState("");
+  const [highestEducationName, setHighestEducationName] = useState("");
+  const [partnerPhotoName, setPartnerPhotoName] = useState("");
+  const [msmeCertificateName, setMsmeCertificateName] = useState("");
+  const [gstCertificateName, setGstCertificateName] = useState("");
+  const [message, setMessage] = useState("");
+  const [messageStyle, setMessageStyle] = useState("");
+  const handleReset = () => {
+    setMessage("");
+    setMessageStyle("");
+    setPanCard(null);
+    setPanCardName("");
+    setCancelCheque(null);
+    setCancelChequeName("");
+    setAddressProof(null);
+    setAddressProofName("");
+    setHighestEducation(null);
+    setHighestEducationName("");
+    setPartnerPhoto(null);
+    setPartnerPhotoName("");
+    setMsmeCertificate(null);
+    setMsmeCertificateName("");
+    setGstCertificate(null);
+    setGstCertificateName("");
   };
-  const handleSubmit = () => {
-    registerKYCInfo();
+  const handleSubmit = async () => {
+    var formdata = new FormData();
+    formdata.append("CustomerID", "1");
+    formdata.append("PanCard", panCard);
+    formdata.append("CancelCheque", cancelCheque);
+    formdata.append("AddressProof", addressProof);
+    formdata.append("HighestEducation", highestEducation);
+    formdata.append("PartnerPhoto", partnerPhoto);
+    formdata.append("MSMECertificate", msmeCertificate);
+    formdata.append("GSTCertificate", gstCertificate);
+    await axios
+      .post("http://localhost:4000/details/kycdocuments", formdata)
+      .then((response) => {
+        console.log(response.data);
+
+        handleReset();
+        setMessage(response.data.msg);
+        setMessageStyle("my-input");
+      });
   };
 
-  async function registerKYCInfo(values) {
-    console.log(values);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        CustomerID: 4,
-        BankName: values.Bank,
-        AccountHolderName: values.Account_holder_name,
-        AccountNumber: values.Account_no,
-        IfscCode: values.Ifsc_code,
-        PanNumber: values.Pan_no,
-        Pincode: values.Pincode,
-        BranchState: values.Branch_state,
-        BranchAddress: values.Branch_address,
-      }),
-    };
-    console.log(requestOptions.body);
-    await fetch("http://localhost:3001/details/bankinfo", requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data);
-      });
-  }
-  const context = useContext(userContext);
-  const { ab } = context;
-  console.log(ab);
   return (
     <>
       <div
@@ -95,37 +74,166 @@ const KycInfo = () => {
         aria-labelledby=""
       >
         <div className="container custom-choose-file">
-          {Object.entries(uploadOption).map(([value, key]) => (
-            <>
-              <Fields.UploadField
-                img={key[0]}
-                labelText={value}
-                className={key[1]}
-                attchedImg={key[2]}
-                markerText={key[3]}
-                closeImg={key[4]}
-              />
-            </>
-          ))}
+          <div id="message" className={messageStyle}>
+            {message}
+          </div>
           <div className="row">
-            <div className="col-md-12">
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-outline-primary"
-                  data-bs-dismiss="modal"
+            <form>
+              <div className="col-md-12">
+                <input
+                  type="file"
+                  onChange={(e) => {
+                    setPanCardName(e.target.files[0].name);
+                    setPanCard(e.target.files[0]);
+                  }}
+                  id="pancard"
+                  hidden
+                />
+                <label htmlFor="pancard">
+                  <img src={cloud_upload} alt="" /> Pan Card
+                </label>
+                <span
+                  id="pan_card_file"
+                  className={panCardName ? "my-input m-3" : ""}
                 >
-                  Back
-                </button>
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  onSubmit={handleSubmit}
-                >
-                  Submit
-                </button>
+                  {panCardName}{" "}
+                </span>
               </div>
-            </div>
+              <div className="col-md-12">
+                <input
+                  type="file"
+                  id="cancelcheque"
+                  onChange={(e) => {
+                    setCancelChequeName(e.target.files[0].name);
+                    setCancelCheque(e.target.files[0]);
+                  }}
+                  hidden
+                />
+                <label htmlFor="cancelcheque">
+                  <img src={cloud_upload} alt="" /> Cancel Cheque
+                </label>
+                <span
+                  id="cancel-cheque_file"
+                  className={cancelChequeName ? "my-input m-3" : ""}
+                >
+                  {cancelChequeName}{" "}
+                </span>
+              </div>
+              <div className="col-md-12">
+                <input
+                  type="file"
+                  id="addressproof"
+                  onChange={(e) => {
+                    setAddressProofName(e.target.files[0].name);
+                    setAddressProof(e.target.files[0]);
+                  }}
+                  hidden
+                />
+                <label htmlFor="addressproof">
+                  <img src={cloud_upload} alt="" /> Address Proof
+                </label>
+                <span
+                  id="address_proof_file"
+                  className={addressProofName ? "my-input m-3" : ""}
+                >
+                  {addressProofName}{" "}
+                </span>
+              </div>
+              <div className="col-md-12">
+                <input
+                  type="file"
+                  id="highesteducation"
+                  onChange={(e) => {
+                    setHighestEducationName(e.target.files[0].name);
+                    setHighestEducation(e.target.files[0]);
+                  }}
+                  hidden
+                />
+                <label htmlFor="highesteducation">
+                  <img src={cloud_upload} alt="" /> Highest Education
+                </label>
+                <span
+                  id="highest_education_file"
+                  className={highestEducationName ? "my-input m-3" : ""}
+                >
+                  {highestEducationName}{" "}
+                </span>
+              </div>
+              <div className="col-md-12">
+                <input
+                  type="file"
+                  id="partnerphoto"
+                  onChange={(e) => {
+                    setPartnerPhotoName(e.target.files[0].name);
+                    setPartnerPhoto(e.target.files[0]);
+                  }}
+                  hidden
+                />
+                <label htmlFor="partnerphoto">
+                  <img src={cloud_upload} alt="" /> Partner Photo
+                </label>
+                <span
+                  id="partner_photo_file"
+                  className={partnerPhotoName ? "my-input m-3" : ""}
+                >
+                  {partnerPhotoName}{" "}
+                </span>
+              </div>
+              <div className="col-md-12">
+                <input
+                  type="file"
+                  id="msmecertificate"
+                  onChange={(e) => {
+                    setMsmeCertificateName(e.target.files[0].name);
+                    setMsmeCertificate(e.target.files[0]);
+                  }}
+                  hidden
+                />
+                <label htmlFor="msmecertificate">
+                  <img src={cloud_upload} alt="" /> MSME Certificate
+                </label>
+                <span
+                  id="msmecertificate_file"
+                  className={msmeCertificateName ? "my-input m-3" : ""}
+                >
+                  {msmeCertificateName}{" "}
+                </span>
+              </div>
+              <div className="col-md-12">
+                <input
+                  type="file"
+                  id="gstcertificate"
+                  onChange={(e) => {
+                    setGstCertificateName(e.target.files[0].name);
+                    setGstCertificate(e.target.files[0]);
+                  }}
+                  hidden
+                />
+                <label htmlFor="gstcertificate">
+                  <img src={cloud_upload} alt="" /> GST Certificate
+                </label>
+                <span
+                  id="gstcertificate_file"
+                  className={gstCertificateName ? "my-input m-3" : ""}
+                >
+                  {gstCertificateName}{" "}
+                </span>
+              </div>
+              <button
+                type="reset"
+                className="btn btn-warning m-2"
+                onClick={handleReset}
+              >
+                Reset
+              </button>
+              <button
+                type="button"
+                onClick={handleSubmit}
+                className="btn btn-primary"
+              >
+                Submit
+              </button>
+            </form>
           </div>
         </div>
       </div>
