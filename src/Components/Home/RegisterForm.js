@@ -6,13 +6,12 @@ import userContext from "../../Context/userContext";
 const RegisterForm = () => {
   const navigate = useNavigate();
   const context = useContext(userContext);
-  const { setUser } = context;
+  const { setUser, fetchUser } = context;
   const [firstNo, setfirstNo] = useState(false);
   const [mobileNumber, setmobileNumber] = useState("");
   const [toggleShow, setToggleShow] = useState("hide");
   const [disableOn, setDisableOn] = useState(true);
   const [otp, setOtp] = useState("");
-  const [loginCustomer, setLoginCustomer] = useState([]);
   const [timeOutShow, setTimeOutShow] = useState("none");
 
   // UseEffect function
@@ -22,36 +21,27 @@ const RegisterForm = () => {
     }
   }, [mobileNumber.length, otp.length, toggleShow]);
 
-  // Toggling TimeOutShow
   const offDisable = () => {
     setTimeOutShow("");
   };
 
   async function handleSendOtp() {
-    // if (user.length !== null) {
-    //   const result = user.filter(function (item) {
-    //     return item.MobileNumber === mobileNumber;
-    //   });
-    //   if (result.length !== 0) {
-    check.handleClick({
-      toggleShow,
-      firstNo,
-      setDisableOn,
-      setToggleShow,
-    });
-    // setLoginCustomer(result);
-    // console.log(loginCustomer);
-    // setfirstNo("");
-    // } else {
-    //   setfirstNo("register");
-    // }
-    // }
-
-    check.resendOtp({ offDisable, setTimeOutShow });
-    // return result;
+    // API to call otp
+    const result = await fetchUser(mobileNumber);
+    if (result.length === 0) {
+      check.handleClick({
+        toggleShow,
+        firstNo,
+        setDisableOn,
+        setToggleShow,
+      });
+      setfirstNo("");
+      check.resendOtp({ offDisable, setTimeOutShow });
+    } else {
+      setfirstNo("exists");
+    }
   }
 
-  // Setting OTP fields
   const otpField = {
     1: ["field-1"],
     2: ["field-2"],
@@ -84,7 +74,6 @@ const RegisterForm = () => {
 
   async function handleVerifyOtp() {
     try {
-      // debugger;
       if (handleVerify(otp)) {
         const requestOptions = {
           method: "POST",
@@ -108,9 +97,15 @@ const RegisterForm = () => {
           "http://localhost:3001/details/createbasicinfo",
           requestOptions
         );
+        console.log("Register user API called");
         const parseRes = await response.json();
-        console.log(parseRes);
-        console.log("hello")
+        let data = {
+          ID: parseRes.ID,
+          Username: parseRes.Username,
+          MobileNumber: parseRes.MobileNumber,
+          EmailId: parseRes.EmailId,
+        };
+        setUser(data);
         navigate("/info");
       }
     } catch (err) {
@@ -187,8 +182,8 @@ const RegisterForm = () => {
                 ) : (
                   <div></div>
                 )}
-                {firstNo === "register" ? (
-                  <p className="invalid">Mobile number is not register.</p>
+                {firstNo === "exists" ? (
+                  <p className="invalid">Mobile number is already register.</p>
                 ) : (
                   <div></div>
                 )}

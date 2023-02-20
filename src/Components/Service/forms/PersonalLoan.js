@@ -1,38 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import userContext from "../../../Context/userContext";
 
 const validationSchemaInput = Yup.object({});
 
 const PersonalLoan = (props) => {
   ////////////////////////// Using state to store the values //////////////////////////
-  const [initialValues, setInitialValues] = useState({});
-  const [cityList, setCityList] = useState([]);
-  const [cityArray, setCityArray] = useState([]);
+  const context = useContext(userContext);
+  const { city } = context;
 
-  useEffect(() => {
-    if (cityList.length === 0) {
-      const cityList_ID = 7;
-      const requestOptions = {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      };
-      fetch(`http://localhost:3001/geo/readcity/${cityList_ID}`, requestOptions)
-        .then((response) => response.json())
-        .then((data) => {
-          setCityList(data);
-        });
-    } else {
-      const array = [];
-      for (var i = 0; i < cityList.length; i++) {
-        array.push(cityList[i].city);
-      }
-      setCityArray(array);
-    }
-  }, [cityList]);
+  // useEffect(() => {
+  //   if (cityList.length === 0) {
+  //     const cityList_ID = 7;
+  //     const requestOptions = {
+  //       method: "GET",
+  //       headers: { "Content-Type": "application/json" },
+  //     };
+  //     fetch(`http://localhost:3001/geo/readcity/${cityList_ID}`, requestOptions)
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         setCityList(data);
+  //       });
+  //   } else {
+  //     const array = [];
+  //     for (var i = 0; i < cityList.length; i++) {
+  //       array.push(cityList[i].city);
+  //     }
+  //     setCityArray(array);
+  //   }
+  // }, [cityList]);
 
   ////////////////////////// Using custom hook of formik //////////////////////////
   const formikInput = useFormik({
@@ -71,7 +71,6 @@ const PersonalLoan = (props) => {
         "http://localhost:3001/product/insertfinancialservices",
         requestOptions
       );
-      setInitialValues(values);
     },
   });
   ////////////////////////// Attribute dictionary //////////////////////////
@@ -94,7 +93,7 @@ const PersonalLoan = (props) => {
       formikInput.touched.City && Boolean(formikInput.errors.City),
       formikInput.touched.City && formikInput.errors.City,
       true,
-      cityArray,
+      city,
     ],
     3: [
       "Loan_amount_required",

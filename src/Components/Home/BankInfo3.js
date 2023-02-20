@@ -219,7 +219,14 @@ const BankInfo3 = (props) => {
             </TextField>
           ))}
           <FormControl sx={{ m: 1, marginRight: "62ch" }}>
-            <Button variant="outlined">Previous</Button>
+            <Button
+              variant="outlined"
+              onClick={() => {
+                props.setToggleMenu("basic-info");
+              }}
+            >
+              Previous
+            </Button>
           </FormControl>
           <FormControl sx={{ m: 1, marginLeft: "61ch" }}>
             <Button

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Fields from "./InputField";
-import userContext from "../../Context/userContext";
 import { useFormik } from "formik";
 import attachment from "./../../images/attachment.svg";
 import close from "./../../images/close.svg";
@@ -55,7 +54,7 @@ const KycInfo = () => {
     formdata.append("MSMECertificate", msmeCertificate);
     formdata.append("GSTCertificate", gstCertificate);
     await axios
-      .post("http://localhost:4000/details/kycdocuments", formdata)
+      .post("http://localhost:3001/details/kycdocuments", formdata)
       .then((response) => {
         console.log(response.data);
 

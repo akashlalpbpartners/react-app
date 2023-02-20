@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import * as Yup from "yup";
+import { useFormik } from "formik";
+import parse from "date-fns/parse";
 import Box from "@mui/material/Box";
 import Radio from "@mui/material/Radio";
 import Button from "@mui/material/Button";
@@ -8,9 +10,8 @@ import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
-import { useFormik } from "formik";
-import parse from "date-fns/parse";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import userContext from "../../Context/userContext";
 
 //Start of Form validation
 const validationSchemaInput = Yup.object({
@@ -55,29 +56,42 @@ const validationSchemaInput = Yup.object({
 
 const BasicInfo3 = (props) => {
   ////////////////////////// Using state to store the values //////////////////////////
-  const [basicInfoValues, setBasicInfoValues] = React.useState({});
+  const [basicInfoValues, setBasicInfoValues] = useState({});
+  const [selectState, setSelectState] = useState([]);
+  const [selectCity, setSelectCity] = useState([]);
+  const context = useContext(userContext);
+  const { user, state, city } = context;
 
+  useEffect(() => {
+    const cities = city.filter(function (key) {
+      return key.state_id === parseInt(selectState);
+    });
+    const filteredCities = [];
+    Object.entries(cities).map(([key, value]) => {
+      filteredCities.push(value.city);
+    });
+    setSelectCity(filteredCities);
+    // if(basicInfoValues.length === 0)
+  }, [selectState]);
   ////////////////////////// Using custom hook of formik //////////////////////////
-
   const formikInput = useFormik({
     initialValues: {
-      Pan_name: "",
-      Father_name: "",
-      Mobile_no: "",
-      Email: "",
-      Pan_no: "",
-      Dob: "",
-      Address: "",
-      Pincode: "",
+      Pan_name: user[0].Username === " " ? "" : user[0].Username,
+      Father_name: user[0].FatherName === " " ? "" : user[0].FatherName ,
+      Mobile_no: user[0].MobileNumber === " " ? "" : user[0].MobileNumber,
+      Email: user[0].EmailId === " " ? "" : user[0].EmailId,
+      Pan_no: user[0].PanNumber === " " ? "" : user[0].PanNumber,
+      Dob: user[0].DOB === " " ? "" : user[0].DOB,
+      Address: user[0].Address === " " ? "" : user[0].Address,
+      Pincode: user[0].Pincode === " " ? "" : user[0].Pincode,
       state: "",
       city: "",
-      gst_no: "",
-      msme_no: "",
+      gst_no: user[0].GSTNumber === " " ? "" : user[0].GSTNumber,
+      msme_no: user[0].MSMENumber === " " ? "" : user[0].MSMENumber,
     },
     validationSchema: validationSchemaInput,
     onSubmit: async (values) => {
       setBasicInfoValues(values);
-      console.log(basicInfoValues);
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -108,6 +122,14 @@ const BasicInfo3 = (props) => {
       props.setToggleMenu("bank-info");
     },
   });
+  const states = [];
+  Object.entries(state).map(([key, value]) => {
+    states.push(value.state);
+  });
+
+  function handleSelect(e) {
+    setSelectState(e.currentTarget.dataset.value);
+  }
   ////////////////////////// Attribute dictionary //////////////////////////
   const inputField = {
     1: [
@@ -199,7 +221,7 @@ const BasicInfo3 = (props) => {
       formikInput.touched.state && Boolean(formikInput.errors.state),
       formikInput.touched.state && formikInput.errors.state,
       true,
-      ["Delhi", "Goa", "Gujrat"],
+      states,
     ],
     10: [
       "city",
@@ -209,7 +231,7 @@ const BasicInfo3 = (props) => {
       formikInput.touched.city && Boolean(formikInput.errors.city),
       formikInput.touched.city && formikInput.errors.city,
       true,
-      ["Delhi", "Ghaziabad", "Nehru place"],
+      selectCity,
     ],
   };
 
@@ -264,9 +286,9 @@ const BasicInfo3 = (props) => {
               <MenuItem value="">
                 <em>{item[1]}</em>
               </MenuItem>
-              {item[7].map((key, value) => (
-                <MenuItem key={value} value={value}>
-                  {key}
+              {item[7].map((value, key) => (
+                <MenuItem key={key + 1} value={key + 1} onClick={handleSelect}>
+                  {value}
                 </MenuItem>
               ))}
             </TextField>

@@ -6,7 +6,7 @@ import userContext from "../../Context/userContext";
 const LoginSignUpForm = () => {
   const navigate = useNavigate();
   const context = useContext(userContext);
-  const { fetchUser } = context;
+  const { loginUser, fetchUser, fetchState, fetchCity } = context;
   const [firstNo, setfirstNo] = useState("");
   const [mobileNumber, setmobileNumber] = useState("");
   const [toggleShow, setToggleShow] = useState("hide");
@@ -14,88 +14,33 @@ const LoginSignUpForm = () => {
   const [otp, setOtp] = useState("");
   const [timeOutShow, setTimeOutShow] = useState("none");
   const [loginCustomer, setLoginCustomer] = useState([]);
-  const [clicked, setClicked] = useState(false);
-  const [cityList, setCityList] = useState([]);
-  const [cityArray, setCityArray] = useState([]);
-
-  useEffect(() => {
-    if (cityList.length === 0) {
-      const cityList_ID = 7;
-      const requestOptions = {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      };
-      fetch(`http://localhost:3001/geo/readcity/${cityList_ID}`, requestOptions)
-        .then((response) => response.json())
-        .then((data) => {
-          setCityList(data);
-        });
-    } else {
-      const array = [];
-      for (var i = 0; i < cityList.length; i++) {
-        array.push(cityList[i].city);
-      }
-      setCityArray(array);
-    }
-  }, [cityList]);
 
   useEffect(() => {
     if (mobileNumber.length === 10 && toggleShow === "show") {
       setInputField(otp);
       if (otp.length === 7) check.handleChange(otp);
     }
-
-    //   if (loginCustomer.length === 0) {
-    // console.log("API fired useeffect");
-    // setToggleShow("show");
-    //   }
-
-    //   if (toggleShow === "hide" && details.length === 0) {
-    // getDetails();
-    //   } else {
-    //     if (
-    //       toggleShow === "hide" &&
-    //       user.filter(function (item) {
-    //         return item.MobileNumber === mobileNumber;
-    //       }).length === 0
-    //     ) {
-    //       setfirstNo("register");
-    //     } else setfirstNo("");
-    //   }
-    // } else {
-    //   setDisableOn(true);
-    // }
-  }, [mobileNumber.length, otp.length, toggleShow, clicked]);
+  }, [mobileNumber.length, otp.length, toggleShow]);
 
   const offDisable = () => {
     setTimeOutShow("");
   };
 
   async function handleSendOtp() {
-    const response = await fetchUser();
-    console.log(response);
-    if (response.length !== null) {
-      const result = response.filter(function (item) {
-        return item.MobileNumber === mobileNumber;
+    const response = await fetchUser(mobileNumber);
+    if (response.length !== 0) {
+      check.handleClick({
+        toggleShow,
+        firstNo,
+        setDisableOn,
+        setToggleShow,
       });
-      if (result.length !== 0) {
-        check.handleClick({
-          toggleShow,
-          firstNo,
-          setDisableOn,
-          setToggleShow,
-        });
-        setLoginCustomer(result);
-        console.log(result);
-        setClicked(true);
-        setfirstNo("");
-      } else {
-        setfirstNo("register");
-      }
-    } else alert("Internal server error!");
-
-    check.resendOtp({ offDisable, setTimeOutShow });
-    // return result;
+      setLoginCustomer(response);
+      setfirstNo("");
+      check.resendOtp({ offDisable, setTimeOutShow });
+    } else {
+      setfirstNo("register");
+    }
   }
 
   const otpField = {
@@ -127,22 +72,13 @@ const LoginSignUpForm = () => {
     if (otp === "101010") return true;
     else return false;
   };
+
   async function handleVerifyOtp() {
     try {
-      // debugger;
-      console.log(otp);
       if (handleVerify(otp)) {
-        const response = await fetch("http://localhost:3001/api/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            CustomerID: loginCustomer[0].ID,
-            MobileNumber: loginCustomer[0].MobileNumber,
-            Otp: otp,
-          }),
-        });
-        const parseRes = await response.json();
-        console.log(parseRes);
+        loginUser(loginCustomer, otp);
+        fetchState();
+        fetchCity();
         navigate("/info");
       }
     } catch (err) {
