@@ -1,24 +1,45 @@
+import react, { useState, useEffect } from "react";
 const FinancialServicesNavbar = (props) => {
+  // const [prodlist, setProdlist] = useState([]);
+  // useEffect(() => {
+  //   loadSubProduct();
+  // }, [prodlist]);
+  // const loadSubProduct = async () => {
+  //   await fetch(
+  //     `http://localhost:3001/product/readsubproducts/${props.ToggleSubForm}`,
+  //     {
+  //       method: "POST",
+  //     }
+  //   )
+  //     .then((res) => res.json())
+  //     .then((data) => setProdlist(data));
+  // };
   function handleClick(e) {
     // Changing toggle menu state
     props.setToggleSubForm(e.target.id);
-    console.log(props.ToggleSubForm)
   }
+
   return (
     <>
       <ul className="nav second nav-pills mb-3" id="pills-tab" role="tablist">
+        {/* {Object.entries(subProdArray).map(([value, key]) => {
+          console.log("hello");
+        })} */}
         <li className="nav-item" role="presentation">
           <button
             className={`nav-link ${
-              props.ToggleSubForm === "personalloan" ? "active" : ""
+              // props.ToggleSubForm === value.id ? "active" : ""
+              props.ToggleSubForm === "1" ? "active" : ""
             }`}
-            id="personalloan"
+            id="1"
             type="button"
             onClick={handleClick}
           >
+            {/* {value.name} */}
             Personal Loan
           </button>
         </li>
+        {/* })} */}
         {/* <li className="nav-item" role="presentation">
           <button
             className={`nav-link ${
@@ -34,9 +55,9 @@ const FinancialServicesNavbar = (props) => {
         <li className="nav-item" role="presentation">
           <button
             className={`nav-link ${
-                props.ToggleSubForm === "homeloan" ? "active" : ""
-              }`}
-            id="homeloan"
+              props.ToggleSubForm === "2" ? "active" : ""
+            }`}
+            id="2"
             type="button"
             onClick={handleClick}
           >
@@ -82,9 +103,9 @@ const FinancialServicesNavbar = (props) => {
         <li className="nav-item" role="presentation">
           <button
             className={`nav-link ${
-                props.ToggleSubForm === "businessloan" ? "active" : ""
-              }`}
-            id="businessloan"
+              props.ToggleSubForm === "3" ? "active" : ""
+            }`}
+            id="3"
             type="button"
             onClick={handleClick}
           >

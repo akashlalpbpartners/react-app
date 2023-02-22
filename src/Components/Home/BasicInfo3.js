@@ -12,6 +12,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import userContext from "../../Context/userContext";
+import Cookies from "js-cookie";
 
 //Start of Form validation
 const validationSchemaInput = Yup.object({
@@ -56,45 +57,62 @@ const validationSchemaInput = Yup.object({
 
 const BasicInfo3 = (props) => {
   ////////////////////////// Using state to store the values //////////////////////////
-  const [basicInfoValues, setBasicInfoValues] = useState({});
-  const [selectState, setSelectState] = useState([]);
-  const [selectCity, setSelectCity] = useState([]);
   const context = useContext(userContext);
-  const { user, state, city } = context;
+  const { user, state, city, fetchBankInfo } = context;
+  const [basicDetails, setBasicDetails] = useState(
+    JSON.parse(localStorage.getItem("UserDetails"))
+  );
+  const [selectState, setSelectState] = useState();
+  const [selectCity, setSelectCity] = useState([]);
 
   useEffect(() => {
+    setSelectState(basicDetails.State);
     const cities = city.filter(function (key) {
       return key.state_id === parseInt(selectState);
     });
     const filteredCities = [];
     Object.entries(cities).map(([key, value]) => {
-      filteredCities.push(value.city);
+      return filteredCities.push([value.id, value.city]);
     });
     setSelectCity(filteredCities);
-    // if(basicInfoValues.length === 0)
-  }, [selectState]);
+  }, [selectState, selectCity, user]);
+
+  const states = [];
+  Object.entries(state).map(([key, value]) => {
+    return states.push([value.id, value.state]);
+  });
   ////////////////////////// Using custom hook of formik //////////////////////////
+
   const formikInput = useFormik({
     initialValues: {
-      Pan_name: user[0].Username === " " ? "" : user[0].Username,
-      Father_name: user[0].FatherName === " " ? "" : user[0].FatherName ,
-      Mobile_no: user[0].MobileNumber === " " ? "" : user[0].MobileNumber,
-      Email: user[0].EmailId === " " ? "" : user[0].EmailId,
-      Pan_no: user[0].PanNumber === " " ? "" : user[0].PanNumber,
-      Dob: user[0].DOB === " " ? "" : user[0].DOB,
-      Address: user[0].Address === " " ? "" : user[0].Address,
-      Pincode: user[0].Pincode === " " ? "" : user[0].Pincode,
-      state: "",
-      city: "",
-      gst_no: user[0].GSTNumber === " " ? "" : user[0].GSTNumber,
-      msme_no: user[0].MSMENumber === " " ? "" : user[0].MSMENumber,
+      Pan_name: basicDetails.Username === " " ? "" : basicDetails.Username,
+      Father_name:
+        basicDetails.FatherName === " " ? "" : basicDetails.FatherName,
+      Mobile_no:
+        basicDetails.MobileNumber === " " ? "" : basicDetails.MobileNumber,
+      Email: basicDetails.EmailId === " " ? "" : basicDetails.EmailId,
+      Pan_no: basicDetails.PanNumber === " " ? "" : basicDetails.PanNumber,
+      Dob: basicDetails.DOB === " " ? "" : basicDetails.DOB,
+      Address: basicDetails.Address === " " ? "" : basicDetails.Address,
+      Pincode:
+        basicDetails.Pincode === " " || basicDetails.Pincode === null
+          ? ""
+          : basicDetails.Pincode,
+      state: basicDetails.State,
+      city: basicDetails.City,
+      gst_no: basicDetails.GSTNumber === " " ? "" : basicDetails.GSTNumber,
+      msme_no: basicDetails.MSMENumber === " " ? "" : basicDetails.MSMENumber,
     },
     validationSchema: validationSchemaInput,
     onSubmit: async (values) => {
-      setBasicInfoValues(values);
       const requestOptions = {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(Cookies.get("userCookie")).Token
+          }`,
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           Username: values.Pan_name,
           FatherName: values.Father_name,
@@ -104,31 +122,27 @@ const BasicInfo3 = (props) => {
           DOB: values.Dob,
           Address: values.Address,
           Pincode: values.Pincode,
-          State: inputField[7][values.state],
-          City: inputField[7][values.state],
+          State: values.state,
+          City: values.city,
           GSTNumber: parseInt(values.gst_no),
           MSMENumber: parseInt(values.msme_no),
         }),
       };
-      console.log("hello");
       await fetch(
         "http://localhost:3001/details/updatebasicinfo",
         requestOptions
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          localStorage.setItem("UserDetails", JSON.stringify(data));
         });
       props.setToggleMenu("bank-info");
     },
   });
-  const states = [];
-  Object.entries(state).map(([key, value]) => {
-    states.push(value.state);
-  });
 
   function handleSelect(e) {
-    setSelectState(e.currentTarget.dataset.value);
+    if (e.target.getAttribute("name") === "State")
+      setSelectState(e.currentTarget.dataset.value);
   }
   ////////////////////////// Attribute dictionary //////////////////////////
   const inputField = {
@@ -283,12 +297,17 @@ const BasicInfo3 = (props) => {
               error={item[4]}
               helperText={item[5]}
             >
-              <MenuItem value="">
+              <MenuItem value={item[1]}>
                 <em>{item[1]}</em>
               </MenuItem>
               {item[7].map((value, key) => (
-                <MenuItem key={key + 1} value={key + 1} onClick={handleSelect}>
-                  {value}
+                <MenuItem
+                  name={item[1]}
+                  key={key}
+                  value={value[0]}
+                  onClick={handleSelect}
+                >
+                  {value[1]}
                 </MenuItem>
               ))}
             </TextField>
@@ -320,13 +339,7 @@ const BasicInfo3 = (props) => {
             <Button variant="outlined">Previous</Button>
           </FormControl>
           <FormControl sx={{ m: 1, marginLeft: "61ch" }}>
-            <Button
-              type="submit"
-              variant="contained"
-              // onClick={() => {
-              //   props.setToggleMenu("bank-info");
-              // }}
-            >
+            <Button type="submit" variant="contained">
               Next
             </Button>
           </FormControl>

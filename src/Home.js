@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Header from "./Components/Home/Header";
+import HeaderHome from "./Components/Home/HeaderHome";
 import LoginSignUpForm from "./Components/Home/LoginSignUpForm";
 import RegisterForm from "./Components/Home/RegisterForm";
 import OutProducts from "./Components/Home/OurProducts";
@@ -13,7 +13,7 @@ const Home = () => {
     <>
       <div className="wrapper">
         <div className="product-with-bg">
-          <Header setToggleForm={setToggleForm} />
+          <HeaderHome setToggleForm={setToggleForm} />
           <div className="our-product">
             <div className="container-fluid">
               <div className="row row-reverse">

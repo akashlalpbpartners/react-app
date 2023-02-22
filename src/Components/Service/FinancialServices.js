@@ -5,28 +5,29 @@ import HomeLoan from "./forms/HomeLoan";
 import HomeLoanLeadDetails from "./Details/HomeLoanLeadDetails";
 import BusinessLoan from "./forms/BusinessLoan";
 import BusinessLoanLeadDetails from "./Details/BusinessLoanLeadDetails";
+
 import { useState } from "react";
 const FinancialServices = (props) => {
-  const [ToggleSubForm, setToggleSubForm] = useState("personalloan");
+  const [ToggleSubForm, setToggleSubForm] = useState("1");
   function renderElement(ToggleSubForm) {
-    if (ToggleSubForm === "personalloan") {
+    if (ToggleSubForm === "1") {
       if (props.togglePage === "leadrequest") {
-        return <PersonalLoan />;
+        return <PersonalLoan ToggleSubForm={ToggleSubForm} />;
       } else {
         return <PersonalLoanLeadDetails />;
       }
-    } else if(ToggleSubForm === "homeloan"){
-        if (props.togglePage === "leadrequest") {
-            return <HomeLoan />;
-          } else {
-            return <HomeLoanLeadDetails />;
-          }
-    } else if(ToggleSubForm === "businessloan"){
-        if (props.togglePage === "leadrequest") {
-            return <BusinessLoan />;
-          } else {
-            return <BusinessLoanLeadDetails />;
-          }
+    } else if (ToggleSubForm === "2") {
+      if (props.togglePage === "leadrequest") {
+        return <HomeLoan ToggleSubForm={ToggleSubForm} />;
+      } else {
+        return <HomeLoanLeadDetails />;
+      }
+    } else if (ToggleSubForm === "3") {
+      if (props.togglePage === "leadrequest") {
+        return <BusinessLoan ToggleSubForm={ToggleSubForm} />;
+      } else {
+        return <BusinessLoanLeadDetails />;
+      }
     }
   }
   return (
@@ -42,9 +43,8 @@ const FinancialServices = (props) => {
             ToggleSubForm={ToggleSubForm}
             setToggleSubForm={setToggleSubForm}
           />
-          
-            {renderElement(ToggleSubForm)}
-          
+
+          {renderElement(ToggleSubForm)}
         </div>
       </div>
     </>

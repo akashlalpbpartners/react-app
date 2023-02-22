@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import userContext from "../../../Context/userContext";
 import { DataGrid } from "@mui/x-data-grid";
-const BusinessLoanLeadDetails = () => {
+const HomeLoanLeadDetails = () => {
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);
+  const context = useContext(userContext);
+  const { userToken } = context;
   const [rows, setRows] = useState([]);
   useEffect(() => {
     if (loanLeadDetails.length === 0) {
       const sub_product_ID = 3;
       const requestOptions = {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          "Content-Type": "application/json",
+        },
       };
       fetch(
         `http://localhost:3001/product/readfinancialservices/${sub_product_ID}`,
@@ -68,4 +74,4 @@ const BusinessLoanLeadDetails = () => {
     </>
   );
 };
-export default BusinessLoanLeadDetails;
+export default HomeLoanLeadDetails;

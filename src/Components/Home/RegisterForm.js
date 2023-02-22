@@ -6,7 +6,7 @@ import userContext from "../../Context/userContext";
 const RegisterForm = () => {
   const navigate = useNavigate();
   const context = useContext(userContext);
-  const { setUser, fetchUser } = context;
+  const { setUser, fetchUser, fetchState, fetchCity } = context;
   const [firstNo, setfirstNo] = useState(false);
   const [mobileNumber, setmobileNumber] = useState("");
   const [toggleShow, setToggleShow] = useState("hide");
@@ -18,6 +18,7 @@ const RegisterForm = () => {
   useEffect(() => {
     if (mobileNumber.length === 10 && toggleShow === "show") {
       setInputField(otp);
+      if (otp.length === 7) check.handleChange(otp);
     }
   }, [mobileNumber.length, otp.length, toggleShow]);
 
@@ -87,8 +88,8 @@ const RegisterForm = () => {
             DOB: " ",
             Address: " ",
             Pincode: " ",
-            State: " ",
-            City: " ",
+            State: 0,
+            City: 0,
             GSTNumber: 0,
             MSMENumber: 0,
           }),
@@ -99,39 +100,17 @@ const RegisterForm = () => {
         );
         console.log("Register user API called");
         const parseRes = await response.json();
-        let data = {
-          ID: parseRes.ID,
-          Username: parseRes.Username,
-          MobileNumber: parseRes.MobileNumber,
-          EmailId: parseRes.EmailId,
-        };
-        setUser(data);
+        const array = [];
+        array.push(parseRes);
+        setUser(array);
+        fetchState();
+        fetchCity();
         navigate("/info");
       }
     } catch (err) {
       console.error(err.message);
     }
   }
-  // async function handleVerifyOtp() {
-  //   try {
-  //     if (check.handleVerify(otp) === true) {
-  //       const response = await fetch("http://localhost:3001/api/login", {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({
-  //           CustomerID: loginCustomer.ID,
-  //           MobileNumber: loginCustomer.MobileNumber,
-  //           Otp: otp,
-  //         }),
-  //       });
-  //       const parseRes = await response.json();
-  //       console.log(parseRes);
-  //       navigate("/info");
-  //     }
-  //   } catch (err) {
-  //     console.error(err.message);
-  //   }
-  // }
 
   return (
     <>
@@ -200,6 +179,9 @@ const RegisterForm = () => {
                           type="number"
                           className="form-control"
                           maxLength={1}
+                          onInput={(e) => {
+                            check.maxLengthCheck({ e });
+                          }}
                           onKeyUp={(e) => {
                             check.handleChange({
                               e,

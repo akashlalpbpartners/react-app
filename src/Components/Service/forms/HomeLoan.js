@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import MenuItem from "@mui/material/MenuItem";
@@ -6,36 +6,39 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import userContext from "../../../Context/userContext";
 
-const validationSchemaInput = Yup.object({});
+const validationSchemaInput = Yup.object({
+  Mobile_no: Yup.string()
+    .min(10, "Invalid Mobile Number")
+    .max(10, "Invalid Mobile Number")
+    .matches(/^[789]\d{9}$/, "Phone number is not valid.")
+    .required("Phone Number is required."),
+  City: Yup.string().required("City is required."),
+  Loan_amount_required: Yup.string().required("Loan amount is required."),
+  Net_monthly_income: Yup.string().required("Monthly income is required."),
+  Employment_type: Yup.string().required("Employment type is required."),
+});
 
-const HomeLoan = (props) => {
+const PersonalLoan = (props) => {
   ////////////////////////// Using state to store the values //////////////////////////
-  const [initialValues, setInitialValues] = useState({});
-  const [cityList, setCityList] = useState([]);
-  const [cityArray, setCityArray] = useState([]);
   const context = useContext(userContext);
-  const { user } = context;
-
+  const [empType, setEmpType] = useState([]);
+  const { user, city, userToken } = context;
   useEffect(() => {
-    if (cityList.length === 0) {
-      const cityList_ID = 7;
-      const requestOptions = {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      };
-      fetch(`http://localhost:3001/geo/readcity/${cityList_ID}`, requestOptions)
-        .then((response) => response.json())
-        .then((data) => {
-          setCityList(data);
-        });
-    } else {
-      const array = [];
-      for (var i = 0; i < cityList.length; i++) {
-        array.push(cityList[i].city);
-      }
-      setCityArray(array);
-    }
-  }, [cityList]);
+    loadEmpType();
+  }, []);
+
+  const loadEmpType = async () => {
+    await fetch("http://localhost:3001/employmenttype/", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => setEmpType(data));
+  };
+
+  const cityList = [];
+  Object.entries(city).map(([key, value]) => {
+    return cityList.push([value.id, value.city]);
+  });
 
   ////////////////////////// Using custom hook of formik //////////////////////////
   const formikInput = useFormik({
@@ -50,32 +53,30 @@ const HomeLoan = (props) => {
     onSubmit: async (values) => {
       const requestOptions = {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-          sub_product_id: 2,
-          // customer_name: user.Username,
-          customer_name: "ram",
+          sub_product_id: parseInt(props.ToggleSubForm),
+          customer_name: user[0].Username,
           customer_mobile: values.Mobile_no,
           city_id: values.City,
           loan_amount: values.Loan_amount_required,
           net_monthly_income: values.Net_monthly_income,
           employment_type: values.Employment_type,
-          // created_by: user.ID,
-          created_by: 1,
-          // Mobile_no: ,
-          // City: ,
-          // Loan_amount_required: ,
-          // Net_monthly_income: ,
-          // Employment_type: ,
+          created_by: user[0].ID,
         }),
       };
-      console.log(values);
       await fetch(
         "http://localhost:3001/product/insertfinancialservices",
         requestOptions
       );
-      setInitialValues(values);
     },
+  });
+  const empList = [];
+  Object.entries(empType).map(([key, value]) => {
+    return empList.push([value.id, value.EmploymentType]);
   });
   ////////////////////////// Attribute dictionary //////////////////////////
   const inputField = {
@@ -97,7 +98,7 @@ const HomeLoan = (props) => {
       formikInput.touched.City && Boolean(formikInput.errors.City),
       formikInput.touched.City && formikInput.errors.City,
       true,
-      cityArray,
+      cityList,
     ],
     3: [
       "Loan_amount_required",
@@ -132,7 +133,7 @@ const HomeLoan = (props) => {
         Boolean(formikInput.errors.Employment_type),
       formikInput.touched.Employment_type && formikInput.errors.Employment_type,
       true,
-      ["Salaried", "Self Employed", "Business"],
+      empList,
     ],
   };
 
@@ -163,6 +164,7 @@ const HomeLoan = (props) => {
                 {Object.entries(inputField).map(([key, item]) => (
                   <>
                     <TextField
+                      key={key}
                       fullWidth
                       required
                       id={item[0]}
@@ -178,8 +180,10 @@ const HomeLoan = (props) => {
                       <MenuItem value="">
                         <em>{item[1]}</em>
                       </MenuItem>
-                      {item[7].map((key, value) => (
-                        <MenuItem value={value}>{key}</MenuItem>
+                      {item[7].map((value, key) => (
+                        <MenuItem name={item[1]} key={key} value={value[0]}>
+                          {value[1]}
+                        </MenuItem>
                       ))}
                     </TextField>
                   </>
@@ -215,4 +219,4 @@ const HomeLoan = (props) => {
     </>
   );
 };
-export default HomeLoan;
+export default PersonalLoan;

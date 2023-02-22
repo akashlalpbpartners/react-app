@@ -1,4 +1,4 @@
-import Header from "./Components/Home/Header";
+import Header from "./Components/Home/FormHeader";
 import Footer from "./Components/Home/Footer";
 // import BasicInfo from "./Components/Home/BasicInfo";
 // import BasicInfo2 from "./Components/Home/BasicInfo2";

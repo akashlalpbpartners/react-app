@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import * as Yup from "yup";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -7,11 +7,12 @@ import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import { useFormik } from "formik";
 import userContext from "../../Context/userContext";
+import Cookies from "js-cookie";
 
 ////////////////////////// Start of form validation //////////////////////////
 
 const validationSchemaInput = Yup.object({
-  Bank: Yup.string().required("Pan Name is required."),
+  Bank: Yup.number().required("Bank Name is required."),
   Account_holder_name: Yup.string()
     .matches(/^[a-zA-Z]+$/, "Account holder name must not contain a number.")
     .required("Father Name is required."),
@@ -43,31 +44,63 @@ const validationSchemaInput = Yup.object({
 
 const BankInfo3 = (props) => {
   ////////////////////////// Using state to store the values //////////////////////////
-  const [bankInfoValues, setBankInfoValues] = useState({});
+  const [bankInfoValues, setBankInfoValues] = useState(
+    JSON.parse(localStorage.getItem("BankDetails"))
+  );
   const context = useContext(userContext);
-  const { user } = context;
-  ////////////////////////// Using custom hook of formik //////////////////////////
+  const { user, state } = context;
 
   const formikInput = useFormik({
     initialValues: {
-      Bank: "",
-      Account_holder_name: "",
-      Account_no: "",
-      Ifsc_code: "",
-      Pan_no: "",
-      Pincode: "",
-      Branch_state: "",
-      Branch_address: "",
+      Bank: bankInfoValues.length === 0 ? "" : bankInfoValues.BankName,
+      Account_holder_name:
+        bankInfoValues.length === 0 ? "" : bankInfoValues.AccountHolderName,
+      Account_no:
+        bankInfoValues.length === 0 ? "" : bankInfoValues.AccountNumber,
+      Ifsc_code: bankInfoValues.length === 0 ? "" : bankInfoValues.IfscCode,
+      Pan_no: bankInfoValues.length === 0 ? "" : bankInfoValues.PanNumber,
+      Pincode: bankInfoValues.length === 0 ? "" : bankInfoValues.Pincode,
+      Branch_state:
+        bankInfoValues.length === 0 ? 1 : bankInfoValues.BranchState,
+      Branch_address:
+        bankInfoValues.length === 0 ? "" : bankInfoValues.BranchAddress,
     },
     validationSchema: validationSchemaInput,
-    handleChange: (event) => {
-      event.preventDefault();
-    },
     onSubmit: async (values) => {
-      setBankInfoValues(values);
-      await registerBankInfo(values);
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(Cookies.get("userCookie")).Token
+          }`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          CustomerID: JSON.parse(Cookies.get("userCookie")).CustomerID,
+          BankName: values.Bank,
+          AccountHolderName: values.Account_holder_name,
+          AccountNumber: values.Account_no,
+          IfscCode: values.Ifsc_code,
+          PanNumber: values.Pan_no,
+          Pincode: values.Pincode,
+          BranchState: values.Branch_state,
+          BranchAddress: values.Branch_address,
+        }),
+      };
+      await fetch("http://localhost:3001/details/bankinfo", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          localStorage.setItem("BankDetails", JSON.stringify(data));
+        });
+      props.setToggleMenu("kyc-doc");
     },
   });
+
+  const states = [];
+  Object.entries(state).map(([key, value]) => {
+    return states.push([value.id, value.state]);
+  });
+
   const inputField = {
     1: [
       "Bank",
@@ -77,7 +110,41 @@ const BankInfo3 = (props) => {
       formikInput.touched.Bank && Boolean(formikInput.errors.Bank),
       formikInput.touched.Bank && formikInput.errors.Bank,
       true,
-      ["SBI", "HDFC"],
+      [
+        [1, "Bank of Baroda"],
+        [2, "Bank of Maharashtra"],
+        [3, "Canara Bank"],
+        [4, "Central Bank of India"],
+        [5, "Indian Bank"],
+        [6, "Indian Overseas Bank"],
+        [7, "Punjab and Sind Bank"],
+        [8, "Punjab National Bank"],
+        [9, "State Bank of India"],
+        [10, "UCO Bank"],
+        [11, "Union Bank of India"],
+        [12, "Axis Bank"],
+        [13, "Bandhan Bank"],
+        [14, "CSB Bank"],
+        [15, "City Union Bank"],
+        [16, "DCB Bank"],
+        [17, "Dhanlaxmi Bank"],
+        [18, "Federal Bank"],
+        [19, "HDFC Bank"],
+        [20, "ICICI Bank"],
+        [21, "IDBI Bank"],
+        [22, "IDFC First Bank"],
+        [23, "IndusInd Bank"],
+        [24, "Jammu & Kashmir Bank"],
+        [25, "Karnataka Bank"],
+        [26, "Karur Vysya Bank"],
+        [27, "Kotak Mahindra Bank"],
+        [28, "Nainital Bank"],
+        [29, "RBL Bank"],
+        [30, "South Indian Bank"],
+        [31, "Tamilnad Mercantile Bank"],
+        [32, "Yes Bank"],
+        [33, "Bank of India"],
+      ],
     ],
     2: [
       "Account_holder_name",
@@ -140,7 +207,7 @@ const BankInfo3 = (props) => {
         Boolean(formikInput.errors.Branch_state),
       formikInput.touched.Branch_state && formikInput.errors.Branch_state,
       true,
-      ["Delhi", "Goa", "Gujrat"],
+      states,
     ],
     8: [
       "Branch_address",
@@ -154,32 +221,6 @@ const BankInfo3 = (props) => {
       [],
     ],
   };
-
-  async function registerBankInfo(values) {
-    console.log(values);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        CustomerID: 4,
-        BankName: values.Bank,
-        AccountHolderName: values.Account_holder_name,
-        AccountNumber: values.Account_no,
-        IfscCode: values.Ifsc_code,
-        PanNumber: values.Pan_no,
-        Pincode: values.Pincode,
-        BranchState: values.Branch_state,
-        BranchAddress: values.Branch_address,
-      }),
-    };
-    console.log(requestOptions.body);
-    await fetch("http://localhost:3001/details/bankinfo", requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data);
-      });
-    props.setToggleMenu("kyc-doc");
-  }
 
   return (
     <>
@@ -210,11 +251,13 @@ const BankInfo3 = (props) => {
               error={item[4]}
               helperText={item[5]}
             >
-              <MenuItem value="">
+              <MenuItem value={item[1]}>
                 <em>{item[1]}</em>
               </MenuItem>
-              {item[7].map((value) => (
-                <MenuItem value={value}>{value}</MenuItem>
+              {item[7].map((value, key) => (
+                <MenuItem name={item[1]} key={key} value={value[0]}>
+                  {value[1]}
+                </MenuItem>
               ))}
             </TextField>
           ))}
@@ -229,13 +272,7 @@ const BankInfo3 = (props) => {
             </Button>
           </FormControl>
           <FormControl sx={{ m: 1, marginLeft: "61ch" }}>
-            <Button
-              type="submit"
-              variant="contained"
-              onClick={() => {
-                registerBankInfo();
-              }}
-            >
+            <Button type="submit" variant="contained">
               Next
             </Button>
           </FormControl>

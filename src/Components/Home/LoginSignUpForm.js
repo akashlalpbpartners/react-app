@@ -79,7 +79,7 @@ const LoginSignUpForm = () => {
         loginUser(loginCustomer, otp);
         fetchState();
         fetchCity();
-        navigate("/info");
+        navigate("/service");
       }
     } catch (err) {
       console.error(err.message);

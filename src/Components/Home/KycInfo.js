@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from "react";
-import Fields from "./InputField";
-import { useFormik } from "formik";
-import attachment from "./../../images/attachment.svg";
-import close from "./../../images/close.svg";
+import React, { useState, useContext } from "react";
 import cloud_upload from "./../../images/cloud-upload.svg";
 import axios from "axios";
 import userContext from "../../Context/userContext";
-import { useDispatch, useSelector } from "react-redux";
-import UserState from "../../Context/userState";
+
 const KycInfo = () => {
+  const context = useContext(userContext);
+  const { user } = context;
   const [panCard, setPanCard] = useState(null);
   const [cancelCheque, setCancelCheque] = useState(null);
   const [addressProof, setAddressProof] = useState(null);
@@ -25,6 +22,7 @@ const KycInfo = () => {
   const [gstCertificateName, setGstCertificateName] = useState("");
   const [message, setMessage] = useState("");
   const [messageStyle, setMessageStyle] = useState("");
+
   const handleReset = () => {
     setMessage("");
     setMessageStyle("");
@@ -43,9 +41,10 @@ const KycInfo = () => {
     setGstCertificate(null);
     setGstCertificateName("");
   };
+
   const handleSubmit = async () => {
-    var formdata = new FormData();
-    formdata.append("CustomerID", "1");
+    const formdata = new FormData();
+    formdata.append("CustomerID", user[0].ID);
     formdata.append("PanCard", panCard);
     formdata.append("CancelCheque", cancelCheque);
     formdata.append("AddressProof", addressProof);
@@ -56,8 +55,6 @@ const KycInfo = () => {
     await axios
       .post("http://localhost:3001/details/kycdocuments", formdata)
       .then((response) => {
-        console.log(response.data);
-
         handleReset();
         setMessage(response.data.msg);
         setMessageStyle("my-input");
