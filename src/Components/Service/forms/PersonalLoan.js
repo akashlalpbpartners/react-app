@@ -76,9 +76,9 @@ const PersonalLoan = (props) => {
     },
     validationSchema: validationSchemaInput,
     onSubmit: async (values) => {
-      const isPresent = rows.filter(
-        (row) => row.customer_mobile === values.Mobile_no
-      );
+      const isPresent = rows.filter((row) => {
+        return row.customer_mobile === values.Mobile_no;
+      });
       console.log(isPresent);
       const requestOptions = {
         method: "POST",
@@ -94,7 +94,7 @@ const PersonalLoan = (props) => {
           net_monthly_income: values.Net_monthly_income,
           employment_type: values.Employment_type,
           created_by: JSON.parse(Cookies.get("userCookie")).CustomerID,
-          is_present: isPresent.length === 0 ? 0 : 1,
+          is_present: isPresent.length ? 0 : 1,
         }),
       };
       await fetch(

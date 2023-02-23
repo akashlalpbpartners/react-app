@@ -1,11 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import cloud_upload from "./../../images/cloud-upload.svg";
 import axios from "axios";
 import userContext from "../../Context/userContext";
+import Cookies from "js-cookie";
 
 const KycInfo = () => {
   const context = useContext(userContext);
-  const { user } = context;
+  const { fetchKycInfo } = context;
+
   const [panCard, setPanCard] = useState(null);
   const [cancelCheque, setCancelCheque] = useState(null);
   const [addressProof, setAddressProof] = useState(null);
@@ -13,16 +15,99 @@ const KycInfo = () => {
   const [partnerPhoto, setPartnerPhoto] = useState(null);
   const [msmeCertificate, setMsmeCertificate] = useState(null);
   const [gstCertificate, setGstCertificate] = useState(null);
-  const [panCardName, setPanCardName] = useState("");
-  const [cancelChequeName, setCancelChequeName] = useState("");
-  const [addressProofName, setAddressProofName] = useState("");
-  const [highestEducationName, setHighestEducationName] = useState("");
-  const [partnerPhotoName, setPartnerPhotoName] = useState("");
-  const [msmeCertificateName, setMsmeCertificateName] = useState("");
-  const [gstCertificateName, setGstCertificateName] = useState("");
+  const [kycInfoValues, setKycInfoValues] = useState(
+    JSON.parse(localStorage.getItem("KycDetails"))
+  );
+  const [panCardName, setPanCardName] = useState(
+    kycInfoValues.length === 0 || kycInfoValues[0].PanCard === null
+      ? ""
+      : kycInfoValues[0].PanCard.split("/").pop()
+  );
+  const [cancelChequeName, setCancelChequeName] = useState(
+    kycInfoValues.length === 0 || kycInfoValues[0].CancelCheque === null
+      ? ""
+      : kycInfoValues[0].CancelCheque.split("/").pop()
+  );
+  const [addressProofName, setAddressProofName] = useState(
+    kycInfoValues.length === 0 || kycInfoValues[0].AddressProof === null
+      ? ""
+      : kycInfoValues[0].AddressProof.split("/").pop()
+  );
+  const [highestEducationName, setHighestEducationName] = useState(
+    kycInfoValues.length === 0 || kycInfoValues[0].HighestEducation === null
+      ? ""
+      : kycInfoValues[0].HighestEducation.split("/").pop()
+  );
+  const [partnerPhotoName, setPartnerPhotoName] = useState(
+    kycInfoValues.length === 0 || kycInfoValues[0].PartnerPhoto === null
+      ? ""
+      : kycInfoValues[0].PartnerPhoto.split("/").pop()
+  );
+  const [msmeCertificateName, setMsmeCertificateName] = useState(
+    kycInfoValues.length === 0 || kycInfoValues[0].MSMECertificate === null
+      ? ""
+      : kycInfoValues[0].MSMECertificate.split("/").pop()
+  );
+  const [gstCertificateName, setGstCertificateName] = useState(
+    kycInfoValues.length === 0 || kycInfoValues[0].GSTCertificate === null
+      ? ""
+      : kycInfoValues[0].GSTCertificate.split("/").pop()
+  );
   const [message, setMessage] = useState("");
   const [messageStyle, setMessageStyle] = useState("");
-
+  useEffect(() => {
+    // setKycInfoValues(JSON.parse(localStorage.getItem("KycDetails")));
+    setPanCardName(
+      kycInfoValues.length === 0
+        ? ""
+        : kycInfoValues[0].PanCard.split("/").pop()
+    );
+    setCancelChequeName(
+      kycInfoValues.length === 0
+        ? ""
+        : kycInfoValues[0].CancelCheque.split("/").pop()
+    );
+    setAddressProofName(
+      kycInfoValues.length === 0
+        ? ""
+        : kycInfoValues[0].AddressProof.split("/").pop()
+    );
+    setHighestEducationName(
+      kycInfoValues.length === 0
+        ? ""
+        : kycInfoValues[0].HighestEducation.split("/").pop()
+    );
+    setPartnerPhotoName(
+      kycInfoValues.length === 0
+        ? ""
+        : kycInfoValues[0].PartnerPhoto.split("/").pop()
+    );
+    setMsmeCertificateName(
+      kycInfoValues.length === 0
+        ? ""
+        : kycInfoValues[0].MSMECertificate.split("/").pop()
+    );
+    setGstCertificateName(
+      kycInfoValues.length === 0
+        ? ""
+        : kycInfoValues[0].GSTCertificate.split("/").pop()
+    );
+  }, [kycInfoValues]);
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${JSON.parse(Cookies.get("userCookie")).Token}`,
+    },
+  };
+  if (kycInfoValues.length !== 0) {
+    fetch(`${kycInfoValues[0].PanCard}`, requestOptions)
+      .then((response) => {
+        return response.blob();
+      })
+      .then((blob) => {
+        setPanCard(blob);
+      });
+  }
   const handleReset = () => {
     setMessage("");
     setMessageStyle("");
@@ -44,7 +129,10 @@ const KycInfo = () => {
 
   const handleSubmit = async () => {
     const formdata = new FormData();
-    formdata.append("CustomerID", user[0].ID);
+    formdata.append(
+      "CustomerID",
+      JSON.parse(Cookies.get("userCookie")).CustomerID
+    );
     formdata.append("PanCard", panCard);
     formdata.append("CancelCheque", cancelCheque);
     formdata.append("AddressProof", addressProof);
@@ -52,12 +140,22 @@ const KycInfo = () => {
     formdata.append("PartnerPhoto", partnerPhoto);
     formdata.append("MSMECertificate", msmeCertificate);
     formdata.append("GSTCertificate", gstCertificate);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(Cookies.get("userCookie")).Token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    };
     await axios
-      .post("http://localhost:3001/details/kycdocuments", formdata)
+      .post("http://localhost:3001/details/kycdocuments", formdata, config)
       .then((response) => {
-        handleReset();
+        // handleReset();
         setMessage(response.data.msg);
         setMessageStyle("my-input");
+        fetchKycInfo(JSON.parse(Cookies.get("userCookie")).CustomerID);
+      })
+      .catch((error) => {
+        console.error(error);
       });
   };
 

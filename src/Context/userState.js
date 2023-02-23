@@ -118,7 +118,7 @@ const UserState = (props) => {
   const fetchKycInfo = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/details/getbasicinfo/${id}`,
+        `http://localhost:3001/details/getkycinfo/${id}`,
         {
           method: "POST",
           headers: {
