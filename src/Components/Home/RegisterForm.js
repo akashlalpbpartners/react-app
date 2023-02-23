@@ -6,7 +6,7 @@ import userContext from "../../Context/userContext";
 const RegisterForm = () => {
   const navigate = useNavigate();
   const context = useContext(userContext);
-  const { setUser, fetchUser, fetchState, fetchCity } = context;
+  const { setUser, loginUser, fetchUser, fetchState, fetchCity } = context;
   const [firstNo, setfirstNo] = useState(false);
   const [mobileNumber, setmobileNumber] = useState("");
   const [toggleShow, setToggleShow] = useState("hide");
@@ -100,12 +100,16 @@ const RegisterForm = () => {
         );
         console.log("Register user API called");
         const parseRes = await response.json();
-        const array = [];
-        array.push(parseRes);
-        setUser(array);
+        console.log(parseRes);
+        localStorage.setItem("UserDetails", JSON.stringify(parseRes));
+        setUser(parseRes);
+        loginUser(
+          [{ ID: parseRes.ID, MobileNumber: parseRes.MobileNumber }],
+          otp
+        );
         fetchState();
         fetchCity();
-        navigate("/info");
+        navigate("/service");
       }
     } catch (err) {
       console.error(err.message);

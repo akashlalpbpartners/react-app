@@ -62,11 +62,13 @@ const BasicInfo3 = (props) => {
   const [basicDetails, setBasicDetails] = useState(
     JSON.parse(localStorage.getItem("UserDetails"))
   );
-  const [selectState, setSelectState] = useState();
-  const [selectCity, setSelectCity] = useState([]);
+  const [selectState, setSelectState] = useState("State");
+  const [selectCity, setSelectCity] = useState("City");
+  const [selectCityList, setSelectCityList] = useState([]);
 
   useEffect(() => {
-    setSelectState(basicDetails.State);
+    if (basicDetails.State !== 0) setSelectState(basicDetails.State);
+    // setSelectCity("City");
     const cities = city.filter(function (key) {
       return key.state_id === parseInt(selectState);
     });
@@ -74,8 +76,8 @@ const BasicInfo3 = (props) => {
     Object.entries(cities).map(([key, value]) => {
       return filteredCities.push([value.id, value.city]);
     });
-    setSelectCity(filteredCities);
-  }, [selectState, selectCity, user]);
+    setSelectCityList(filteredCities);
+  }, [selectState, selectCityList, user]);
 
   const states = [];
   Object.entries(state).map(([key, value]) => {
@@ -94,16 +96,17 @@ const BasicInfo3 = (props) => {
       Pan_no: basicDetails.PanNumber === " " ? "" : basicDetails.PanNumber,
       Dob: basicDetails.DOB === " " ? "" : basicDetails.DOB,
       Address: basicDetails.Address === " " ? "" : basicDetails.Address,
-      Pincode:
-        basicDetails.Pincode === " " || basicDetails.Pincode === null
-          ? ""
-          : basicDetails.Pincode,
-      state: basicDetails.State,
-      city: basicDetails.City,
+      Pincode: basicDetails.Pincode === " " ? "" : basicDetails.Pincode,
+      state: basicDetails.State === 0 ? "State" : basicDetails.State,
+      city: basicDetails.City === 0 ? "City" : basicDetails.City,
       gst_no: basicDetails.GSTNumber === " " ? "" : basicDetails.GSTNumber,
       msme_no: basicDetails.MSMENumber === " " ? "" : basicDetails.MSMENumber,
     },
     validationSchema: validationSchemaInput,
+    onChange: (values) => {
+      values.state = "State";
+      values.city = "City";
+    },
     onSubmit: async (values) => {
       const requestOptions = {
         method: "POST",
@@ -141,8 +144,10 @@ const BasicInfo3 = (props) => {
   });
 
   function handleSelect(e) {
-    if (e.target.getAttribute("name") === "State")
+    if (e.target.getAttribute("name") === "State") {
       setSelectState(e.currentTarget.dataset.value);
+    } else if (e.target.getAttribute("name") === "City")
+      setSelectCity(e.currentTarget.dataset.value);
   }
   ////////////////////////// Attribute dictionary //////////////////////////
   const inputField = {
@@ -236,6 +241,7 @@ const BasicInfo3 = (props) => {
       formikInput.touched.state && formikInput.errors.state,
       true,
       states,
+      selectState,
     ],
     10: [
       "city",
@@ -245,6 +251,7 @@ const BasicInfo3 = (props) => {
       formikInput.touched.city && Boolean(formikInput.errors.city),
       formikInput.touched.city && formikInput.errors.city,
       true,
+      selectCityList,
       selectCity,
     ],
   };
@@ -296,8 +303,9 @@ const BasicInfo3 = (props) => {
               onChange={formikInput.handleChange}
               error={item[4]}
               helperText={item[5]}
+              defaultValue={item[8]}
             >
-              <MenuItem value={item[1]}>
+              <MenuItem value={item[8]}>
                 <em>{item[1]}</em>
               </MenuItem>
               {item[7].map((value, key) => (

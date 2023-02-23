@@ -48,7 +48,7 @@ const BankInfo3 = (props) => {
     JSON.parse(localStorage.getItem("BankDetails"))
   );
   const context = useContext(userContext);
-  const { user, state } = context;
+  const { state } = context;
 
   const formikInput = useFormik({
     initialValues: {
@@ -61,7 +61,7 @@ const BankInfo3 = (props) => {
       Pan_no: bankInfoValues.length === 0 ? "" : bankInfoValues.PanNumber,
       Pincode: bankInfoValues.length === 0 ? "" : bankInfoValues.Pincode,
       Branch_state:
-        bankInfoValues.length === 0 ? 1 : bankInfoValues.BranchState,
+        bankInfoValues.length === 0 ? "" : bankInfoValues.BranchState,
       Branch_address:
         bankInfoValues.length === 0 ? "" : bankInfoValues.BranchAddress,
     },
@@ -240,7 +240,6 @@ const BankInfo3 = (props) => {
           {Object.entries(inputField).map(([key, item]) => (
             <TextField
               fullWidth
-              required
               select={item[6]}
               id={item[0]}
               name={item[0]}

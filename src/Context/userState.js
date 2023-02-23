@@ -11,6 +11,7 @@ const UserState = (props) => {
   const [completeKYCalert, setCompleteKYCalert] = useState(false);
   const [state, setState] = useState([]);
   const [city, setCity] = useState([]);
+  const [empType, setEmpType] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,6 +20,7 @@ const UserState = (props) => {
       setUserToken(object.Token);
       fetchState();
       fetchCity();
+      loadEmpType();
     } else {
       navigate("/");
     }
@@ -102,7 +104,11 @@ const UserState = (props) => {
       const parseRes = await response.json();
       console.log("Fetch bank called!");
       setBankInfo(parseRes);
-      localStorage.setItem("BankDetails", JSON.stringify(parseRes[0]));
+      console.log("bank", parseRes);
+      if (parseRes.length === 0)
+        localStorage.setItem("BankDetails", JSON.stringify([]));
+      else localStorage.setItem("BankDetails", JSON.stringify(parseRes[0]));
+      console.log(JSON.parse(localStorage.getItem("BankDetails")));
       return parseRes;
     } catch (err) {
       alert(err);
@@ -162,6 +168,13 @@ const UserState = (props) => {
       console.error(err.message);
     }
   };
+  const loadEmpType = async () => {
+    await fetch("http://localhost:3001/employmenttype/", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => setEmpType(data));
+  };
   const logoutUser = async () => {
     try {
       // id number name email
@@ -193,6 +206,7 @@ const UserState = (props) => {
         userToken,
         state,
         city,
+        empType,
         completeKYCalert,
         loginUser,
         fetchUser,
@@ -201,6 +215,7 @@ const UserState = (props) => {
         setUser,
         fetchState,
         fetchCity,
+        loadEmpType,
         logoutUser,
       }}
     >

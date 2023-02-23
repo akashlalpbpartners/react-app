@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import userContext from "../../../Context/userContext";
 import { DataGrid } from "@mui/x-data-grid";
+import { Box } from "@mui/system";
+import Cookies from "js-cookie";
+
 const PersonalLoanLeadDetails = () => {
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);
   const context = useContext(userContext);
-  const { userToken } = context;
+  const { city, empType } = context;
   const [rows, setRows] = useState([]);
   useEffect(() => {
     if (loanLeadDetails.length === 0) {
@@ -12,12 +15,16 @@ const PersonalLoanLeadDetails = () => {
       const requestOptions = {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${userToken}`,
+          Authorization: `Bearer ${
+            JSON.parse(Cookies.get("userCookie")).Token
+          }`,
           "Content-Type": "application/json",
         },
       };
       fetch(
-        `http://localhost:3001/product/readfinancialservices/${sub_product_ID}`,
+        `http://localhost:3001/product/readfinancialservices/${sub_product_ID}/${
+          JSON.parse(Cookies.get("userCookie")).CustomerID
+        }`,
         requestOptions
       )
         .then((response) => response.json())
@@ -25,7 +32,19 @@ const PersonalLoanLeadDetails = () => {
           setLoanLeadDetails(data);
         });
     } else {
-      setRows(loanLeadDetails);
+      setRows(
+        loanLeadDetails.map(function (row) {
+          return {
+            id: row.id,
+            customer_mobile: row.customer_mobile,
+            city_id: city[row.city_id].city,
+            loan_amount: row.loan_amount,
+            net_monthly_income: row.net_monthly_income,
+            employment_type: empType[row.employment_type].EmploymentType,
+            is_present: row.is_present,
+          };
+        })
+      );
     }
   }, [loanLeadDetails]);
 
@@ -36,7 +55,11 @@ const PersonalLoanLeadDetails = () => {
       headerName: "Mobile Number",
       width: 190,
     },
-    { field: "city", headerName: "City", width: 190 },
+    {
+      field: "city_id",
+      headerName: "City",
+      width: 200,
+    },
     {
       field: "loan_amount",
       headerName: "Loan Amount Required",
@@ -45,31 +68,31 @@ const PersonalLoanLeadDetails = () => {
     {
       field: "net_monthly_income",
       headerName: "Net Monthly Income",
-      //   description: "This column has a value getter and is not sortable.",
-      //   sortable: false,
       width: 190,
-      //   valueGetter: (params: GridValueGetterParams) =>
-      //     `${params.row.firstName || ""} ${params.row.lastName || ""}`,
     },
     {
       field: "employment_type",
       headerName: "Employment",
-      width: 190,
     },
   ];
 
   return (
     <>
-      <div className="tab-content" id="pills-tabContent">
-        <div style={{ height: 260, width: "100%" }}>
+      <div className="container tab-content" id="pills-tabContent">
+        <Box
+          container
+          style={{ height: 260, width: "100%", margin: "0 0 5ch 0" }}
+        >
           <DataGrid
             rows={rows}
             columns={columns}
             pageSize={3}
             rowsPerPageOptions={[3]}
-            // checkboxSelection
+            getRowClassName={(params) => {
+              if (params.row.is_present === 1) return "Rejected";
+            }}
           />
-        </div>
+        </Box>
       </div>
     </>
   );

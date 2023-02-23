@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
+import Cookies from "js-cookie";
 import { useFormik } from "formik";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
@@ -22,10 +23,34 @@ const PersonalLoan = (props) => {
   ////////////////////////// Using state to store the values //////////////////////////
   const context = useContext(userContext);
   const [empType, setEmpType] = useState([]);
-  const { user, city, userToken } = context;
+  const [loanLeadDetails, setLoanLeadDetails] = useState([]);
+  const [rows, setRows] = useState([]);
+  const { city, userToken } = context;
   useEffect(() => {
     loadEmpType();
-  }, []);
+    if (loanLeadDetails.length === 0) {
+      const sub_product_ID = 1;
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          "Content-Type": "application/json",
+        },
+      };
+      fetch(
+        `http://localhost:3001/product/readfinancialservices/${sub_product_ID}/${
+          JSON.parse(Cookies.get("userCookie")).CustomerID
+        }`,
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setLoanLeadDetails(data);
+        });
+    } else {
+      setRows(loanLeadDetails);
+    }
+  }, [loanLeadDetails]);
 
   const loadEmpType = async () => {
     await fetch("http://localhost:3001/employmenttype/", {
@@ -51,6 +76,10 @@ const PersonalLoan = (props) => {
     },
     validationSchema: validationSchemaInput,
     onSubmit: async (values) => {
+      const isPresent = rows.filter(
+        (row) => row.customer_mobile === values.Mobile_no
+      );
+      console.log(isPresent);
       const requestOptions = {
         method: "POST",
         headers: {
@@ -59,19 +88,20 @@ const PersonalLoan = (props) => {
         },
         body: JSON.stringify({
           sub_product_id: parseInt(props.ToggleSubForm),
-          customer_name: user[0].Username,
           customer_mobile: values.Mobile_no,
           city_id: values.City,
           loan_amount: values.Loan_amount_required,
           net_monthly_income: values.Net_monthly_income,
           employment_type: values.Employment_type,
-          created_by: user[0].ID,
+          created_by: JSON.parse(Cookies.get("userCookie")).CustomerID,
+          is_present: isPresent.length === 0 ? 0 : 1,
         }),
       };
       await fetch(
         "http://localhost:3001/product/insertfinancialservices",
         requestOptions
       );
+      formikInput.handleReset();
     },
   });
   const empList = [];

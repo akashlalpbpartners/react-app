@@ -546,3 +546,6 @@ input[type="number"]::-webkit-outer-spin-button {
   padding: 11px;
   border-left: 3px solid #19d194;
 }
+.Rejected {
+  background-color: red;
+}
