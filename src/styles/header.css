@@ -1,0 +1,40 @@
+.navbar {
+    background: #fff;
+    padding: 15px 0;
+    transition: .5s
+}
+
+.navbar .navbar-header {
+    display: flex;
+    align-items: center;
+    width: 100%
+}
+
+.navbar .navbar-header .navbar-brand {
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+}
+
+.navbar .navbar-header ul {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.navbar .navbar-header ul li .btn {
+    background: #fff;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #4b80fd;
+    border-radius: 0.25rem;
+    border: 1px solid #4b80fd;
+    height: 42px;
+    padding: 0 15px;
+}
+
+.navbar .navbar-header ul li .btn:hover {
+    background: #4b80fd;
+    color: #fff
+}

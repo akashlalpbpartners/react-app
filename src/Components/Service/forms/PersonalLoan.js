@@ -38,8 +38,7 @@ const PersonalLoan = (props) => {
         },
       };
       fetch(
-        `http://localhost:3001/product/readfinancialservices/${sub_product_ID}/${
-          JSON.parse(Cookies.get("userCookie")).CustomerID
+        `http://localhost:3001/product/readfinancialservices/${sub_product_ID}/${JSON.parse(Cookies.get("userCookie")).CustomerID
         }`,
         requestOptions
       )
@@ -94,7 +93,7 @@ const PersonalLoan = (props) => {
           net_monthly_income: values.Net_monthly_income,
           employment_type: values.Employment_type,
           created_by: JSON.parse(Cookies.get("userCookie")).CustomerID,
-          is_present: isPresent.length ? 0 : 1,
+          is_present: isPresent.length === 0 ? 0 : 1,
         }),
       };
       await fetch(
@@ -136,9 +135,9 @@ const PersonalLoan = (props) => {
       "Enter Loan amount required",
       formikInput.values.Loan_amount_required,
       formikInput.touched.Loan_amount_required &&
-        Boolean(formikInput.errors.Loan_amount_required),
+      Boolean(formikInput.errors.Loan_amount_required),
       formikInput.touched.Loan_amount_required &&
-        formikInput.errors.Loan_amount_required,
+      formikInput.errors.Loan_amount_required,
       false,
       [],
     ],
@@ -148,9 +147,9 @@ const PersonalLoan = (props) => {
       "Enter Net monthly income",
       formikInput.values.Net_monthly_income,
       formikInput.touched.Net_monthly_income &&
-        Boolean(formikInput.errors.Net_monthly_income),
+      Boolean(formikInput.errors.Net_monthly_income),
       formikInput.touched.Net_monthly_income &&
-        formikInput.errors.Net_monthly_income,
+      formikInput.errors.Net_monthly_income,
       false,
       [],
     ],
@@ -160,7 +159,7 @@ const PersonalLoan = (props) => {
       "Enter Employment type",
       formikInput.values.Employment_type,
       formikInput.touched.Employment_type &&
-        Boolean(formikInput.errors.Employment_type),
+      Boolean(formikInput.errors.Employment_type),
       formikInput.touched.Employment_type && formikInput.errors.Employment_type,
       true,
       empList,

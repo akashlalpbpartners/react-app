@@ -1,0 +1,9 @@
+.banner-bg {
+    height: 538px;
+    background: #fff;
+    background-image: url(../images/form-bg.svg), linear-gradient(180deg, #fff 0, #fff 50%, #eaf2fe 100%);
+    ;
+    /* background-image: url(./images/form-bg.svg), linear-gradient(180deg, #fff 0, #fff 50%, #eaf2fe 100%); */
+    background-position: right bottom;
+    background-repeat: no-repeat;
+}

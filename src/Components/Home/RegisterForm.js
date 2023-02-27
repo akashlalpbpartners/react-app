@@ -118,7 +118,7 @@ const RegisterForm = () => {
 
   return (
     <>
-      <div className="col-md-6">
+      <div className="col-md-5">
         <div className="auth-form">
           <h2 className="heading login-heading">Register for seller account</h2>
           <p className="login-info">
@@ -203,9 +203,8 @@ const RegisterForm = () => {
                   <span className="otp-will-expire">
                     Your OTP will expire in 00:25s
                     <a
-                      className={`resend-otp text-decoration-none pe-${timeOutShow} ${
-                        timeOutShow === "none" ? "text-secondary " : ""
-                      }`}
+                      className={`resend-otp text-decoration-none pe-${timeOutShow} ${timeOutShow === "none" ? "text-secondary " : ""
+                        }`}
                       href="#x"
                       onClick={() => {
                         check.resendOtp({ offDisable, setTimeOutShow });
@@ -229,9 +228,8 @@ const RegisterForm = () => {
             ) : (
               <button
                 type="button"
-                className={`btn btn-primary btn-lg w-100 my-3 send-otp ${
-                  toggleShow === "show" ? "hide" : "show"
-                }`}
+                className={`btn btn-primary btn-lg w-100 my-3 send-otp ${toggleShow === "show" ? "hide" : "show"
+                  }`}
                 disabled={disableOn}
                 onClick={handleSendOtp}
               >

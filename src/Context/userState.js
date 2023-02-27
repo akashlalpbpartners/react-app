@@ -94,9 +94,8 @@ const UserState = (props) => {
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${
-              JSON.parse(Cookies.get("userCookie")).Token
-            }`,
+            Authorization: `Bearer ${JSON.parse(Cookies.get("userCookie")).Token
+              }`,
             "Content-Type": "application/json",
           },
         }
@@ -122,9 +121,8 @@ const UserState = (props) => {
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${
-              JSON.parse(Cookies.get("userCookie")).Token
-            }`,
+            Authorization: `Bearer ${JSON.parse(Cookies.get("userCookie")).Token
+              }`,
             "Content-Type": "application/json",
           },
         }
@@ -179,8 +177,7 @@ const UserState = (props) => {
     try {
       // id number name email
       await fetch(
-        `http://localhost:3001/api/logout/${
-          JSON.parse(Cookies.get("userCookie")).id
+        `http://localhost:3001/api/logout/${JSON.parse(Cookies.get("userCookie")).id
         }`,
         {
           method: "PUT",

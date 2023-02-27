@@ -1,7 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
+@import "./styles/header.css";
+@import "./styles/banner-form.css";
+
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: Roboto, sans-serif;
+  background: #fff;
+  color: #707070;
+  font-size: 13px;
+  padding-top: 77px;
+}
+
+ul,
+li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .hide {
@@ -74,8 +88,7 @@ option {
 }
 
 .wrapper .product-with-bg {
-  background: transparent linear-gradient(300deg, #5e9ffa2d 0%, #ffffff 100%) 0%
-    0% no-repeat padding-box;
+  background: transparent linear-gradient(300deg, #5e9ffa2d 0%, #ffffff 100%) 0% 0% no-repeat padding-box;
 }
 
 .wrapper .header {
@@ -266,6 +279,7 @@ option {
 }
 
 @media (min-width: 992px) {
+
   .wrapper #kycForm .modal-lg,
   .wrapper #kycForm .modal-xl {
     max-width: 1010px;
@@ -282,7 +296,7 @@ option {
   padding: 0;
 }
 
-.wrapper #kycForm .pb-form-floating > .form-select {
+.wrapper #kycForm .pb-form-floating>.form-select {
   height: 58px;
   border-radius: 8px;
 }
@@ -357,21 +371,13 @@ option {
   cursor: pointer;
 }
 
-.wrapper
-  #kycForm
-  .custom-radio-btn
-  .form-check.form-check-inline
-  .form-check-input {
+.wrapper #kycForm .custom-radio-btn .form-check.form-check-inline .form-check-input {
   position: absolute;
   left: 40px;
   top: 12px;
 }
 
-.wrapper
-  #kycForm
-  .custom-radio-btn
-  .form-check.form-check-inline.checked
-  label {
+.wrapper #kycForm .custom-radio-btn .form-check.form-check-inline.checked label {
   color: #0065ff;
   border: 1px solid #0065ff;
 }
@@ -507,26 +513,32 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
 }
+
 .resend-otp {
   margin-left: 10px;
 }
 
-#BasicInfo .tab-content > .tab-pane {
+#BasicInfo .tab-content>.tab-pane {
   display: block;
 }
-#BasicInfo .tab-content > .tab-pane {
+
+#BasicInfo .tab-content>.tab-pane {
   opacity: 1;
 }
-#BankInfo .tab-content > .tab-pane {
+
+#BankInfo .tab-content>.tab-pane {
   display: block;
 }
-#BankInfo .tab-content > .tab-pane {
+
+#BankInfo .tab-content>.tab-pane {
   opacity: 1;
 }
-#kycForm .tab-content > .tab-pane {
+
+#kycForm .tab-content>.tab-pane {
   display: block;
 }
-#kycForm .tab-content > .tab-pane {
+
+#kycForm .tab-content>.tab-pane {
   opacity: 1;
 }
 
@@ -546,6 +558,7 @@ input[type="number"]::-webkit-outer-spin-button {
   padding: 11px;
   border-left: 3px solid #19d194;
 }
+
 .Rejected {
   background-color: red;
 }

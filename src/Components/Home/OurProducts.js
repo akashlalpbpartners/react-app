@@ -4,7 +4,7 @@ import ProductsList from "../../Data/ProductsList";
 const OutProducts = () => {
   return (
     <>
-      <div className="col-md-6">
+      <div className="col-md-7">
         <h2 className="heading heading-product">Our Products</h2>
         <div className="row">
           {ProductsList.map((products, index) => {
