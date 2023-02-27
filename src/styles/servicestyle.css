@@ -352,17 +352,6 @@ option {
     flex-direction: row !important;
   }
 
-  .wrapper .services-with-bg {
-    height: auto !important;
-    margin-bottom: 0 !important;
-    padding-bottom: 35px;
-  }
-
-  .wrapper .services-with-bg .services {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
-
   .wrapper .services-with-bg .services .nav.second {
     -webkit-box-pack: start !important;
     -ms-flex-pack: start !important;
@@ -396,29 +385,17 @@ option {
   }
 }
 
-.wrapper .services-with-bg {
-  height: 425px;
-  background: transparent linear-gradient(111deg, #2D68CE 0%, #1E3C72 100%) 0% 0% no-repeat padding-box;
-  opacity: 1;
-  margin-bottom: 170px;
-}
+.wrapper .services-with-bg {}
 
-.wrapper .services-with-bg .services {
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  -webkit-box-shadow: 0px 3px 6px #00000029;
-  box-shadow: 0px 3px 6px #00000029;
-  border-radius: 16px;
-  margin-top: 90px;
-  padding-left: 0;
-  padding-right: 0;
-}
+.wrapper .services-with-bg .services {}
 
 .wrapper .services-with-bg .services .nav.first {
   background: #FFFFFF 0% 0% no-repeat padding-box;
   -webkit-box-shadow: 0px 3px 6px #00000029;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 8px;
-  margin-top: -50px;
+  /* margin-top: -50px; */
+  margin-top: 15px;
   margin-left: 30px;
   margin-right: 30px;
   display: -webkit-box;
