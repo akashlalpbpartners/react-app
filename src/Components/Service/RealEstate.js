@@ -1,5 +1,5 @@
-
-const RealEstate=()=>{
+import React from "react";
+const RealEstate = () => {
     return (
         <>
 

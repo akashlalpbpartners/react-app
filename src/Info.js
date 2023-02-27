@@ -1,3 +1,4 @@
+import React from "react";
 import Header from "./Components/Home/FormHeader";
 import Footer from "./Components/Home/Footer";
 // import BasicInfo from "./Components/Home/BasicInfo";

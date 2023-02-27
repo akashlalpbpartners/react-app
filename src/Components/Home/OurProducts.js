@@ -4,8 +4,8 @@ import ProductsList from "../../Data/ProductsList";
 const OutProducts = () => {
   return (
     <>
-      <div className="col-md-7">
-        <h2 className="heading heading-product">Our Products</h2>
+      <div className="col-md-7 financeBg">
+        {/* <h2 className="heading heading-product">Our Products</h2>
         <div className="row">
           {ProductsList.map((products, index) => {
             return (
@@ -17,7 +17,7 @@ const OutProducts = () => {
               </div>
             );
           })}
-        </div>
+        </div> */}
       </div>
     </>
   );

@@ -20,13 +20,13 @@ function HeaderHome(props) {
             <a className="navbar-brand" href="/service">
               <img src={logo} width="205" alt="" />
             </a>
-            <ul>
+            {/* <ul>
               <li>
                 <button type="button" className="btn btn-outline-primary register" onClick={handleClick} >
                   {isShown ? "REGISTER" : "LOGIN"}
                 </button>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </div>
       </nav>

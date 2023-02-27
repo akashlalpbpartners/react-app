@@ -24,7 +24,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.5.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^2.1.3",
     "sass": "^1.57.0",
     "sequelize-auto": "^0.8.8",
     "styled-components": "^5.3.6",

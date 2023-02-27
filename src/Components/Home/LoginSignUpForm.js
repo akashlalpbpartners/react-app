@@ -90,15 +90,23 @@ const LoginSignUpForm = () => {
     <>
       <div className="col-md-5">
         <div className="auth-form">
-          <h2 className="heading login-heading">
+          <h1>
             Login to your seller account
-          </h2>
-          <p className="login-info">
-            If you don't have an account, register with your mobile number
-          </p>
+            <small>
+              If you don't have an account, register with your mobile number
+            </small>
+          </h1>
+
 
           <form action="">
-            <div className="pb-form-floating mt-5 mb-4">
+
+            {/* <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="floatingInput" placeholder="Fincode" />
+              <label for="floatingInput">Fincode</label>
+            </div> */}
+
+
+            <div className="pb-form-floating form-group">
               <div className="d-flex">
                 <input
                   id="+91"
@@ -133,12 +141,12 @@ const LoginSignUpForm = () => {
               <label htmlFor="floatingInput">Mobile Number</label>
               <div id="error_messages">
                 {firstNo === "first" ? (
-                  <p className="invalid">Invalid mobile number</p>
+                  <small className="invalid">Invalid mobile number</small>
                 ) : (
                   <div></div>
                 )}
                 {firstNo === "register" ? (
-                  <p className="invalid">Mobile number is not register.</p>
+                  <small className="invalid">Mobile number is not register.</small>
                 ) : (
                   <div></div>
                 )}
@@ -208,12 +216,12 @@ const LoginSignUpForm = () => {
               </button>
             )}
 
-            <button
+            {/* <button
               type="button"
               className="btn btn-outline-primary btn-lg w-100 buyer-login"
             >
               Buyer Login
-            </button>
+            </button> */}
           </form>
         </div>
       </div>

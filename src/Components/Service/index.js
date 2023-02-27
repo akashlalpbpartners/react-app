@@ -1,3 +1,4 @@
+import React from 'react';
 import "./../../styles/servicestyle.css";
 import Header from "./ServiceHeader";
 import Footer from "./Footer";

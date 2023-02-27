@@ -120,13 +120,16 @@ const RegisterForm = () => {
     <>
       <div className="col-md-5">
         <div className="auth-form">
-          <h2 className="heading login-heading">Register for seller account</h2>
-          <p className="login-info">
-            If you have an account, sign in with your mobile number.
-          </p>
+          <h1>
+            Register for seller account
+            <p>
+              If you have an account, sign in with your mobile number.
+            </p>
+          </h1>
+
 
           <form action="">
-            <div className="pb-form-floating mt-5 mb-4">
+            <div className="pb-form-floating form-group">
               <div className="d-flex">
                 <input
                   id="+91"
@@ -161,12 +164,12 @@ const RegisterForm = () => {
               <label htmlFor="floatingInput">Mobile Number</label>
               <div id="error_messages">
                 {firstNo === "first" ? (
-                  <p className="invalid">Invalid mobile number</p>
+                  <small className="invalid">Invalid mobile number</small>
                 ) : (
                   <div></div>
                 )}
                 {firstNo === "exists" ? (
-                  <p className="invalid">Mobile number is already register.</p>
+                  <small className="invalid">Mobile number is already register.</small>
                 ) : (
                   <div></div>
                 )}

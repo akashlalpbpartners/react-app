@@ -11,6 +11,14 @@ body {
   padding-top: 77px;
 }
 
+.form-control {
+  font-size: 14px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
 ul,
 li {
   list-style-type: none;
@@ -131,7 +139,7 @@ option {
 }
 
 .wrapper .our-product {
-  padding-top: 5px;
+  padding-top: 15px;
   padding-bottom: 35px;
 }
 
@@ -156,23 +164,6 @@ option {
   white-space: nowrap;
 }
 
-.wrapper .our-product .auth-form {
-  width: 450px;
-  background: #ffffff 0% 0% no-repeat padding-box;
-  -webkit-box-shadow: 0px 3px 6px #00000029;
-  box-shadow: 0px 3px 6px #00000029;
-  border: 1px solid #b6b7b9;
-  border-radius: 16px;
-  float: right;
-  padding: 60px 40px;
-}
-
-.wrapper .our-product .auth-form p {
-  font-size: 14px;
-  line-height: 22px;
-  color: #b2b2b9;
-  margin-top: -10px;
-}
 
 .wrapper .our-product .auth-form .otp-number ul {
   list-style-type: none;
@@ -186,8 +177,17 @@ option {
 }
 
 .wrapper .our-product .auth-form .otp-number ul li {
-  width: 15%;
+  width: 16.66%;
   text-align: center;
+  margin: 0px 5px;
+}
+
+.wrapper .our-product .auth-form .otp-number ul li:first-child {
+  margin-left: 0;
+}
+
+.wrapper .our-product .auth-form .otp-number ul li:last-child {
+  margin-right: 0;
 }
 
 .wrapper .our-product .auth-form .otp-number ul li .form-control {
@@ -197,6 +197,8 @@ option {
 
 .wrapper .our-product .auth-form .otp-expire-msg {
   text-align: center;
+  margin-top: 5px;
+  font-size: 12px;
 }
 
 .wrapper .our-product .auth-form .otp-expire-msg p {
@@ -515,7 +517,9 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .resend-otp {
-  margin-left: 10px;
+  margin-left: 5px;
+  border-left: 1px solid #777;
+  padding-left: 5px;
 }
 
 #BasicInfo .tab-content>.tab-pane {
@@ -543,9 +547,10 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .invalid {
-  color: red !important;
+  color: red;
   padding-top: 10px;
-  text-align: right;
+  text-align: left;
+  font-size: 12px;
 }
 
 .my-input {
@@ -561,4 +566,46 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .Rejected {
   background-color: red;
+}
+
+
+
+
+
+
+.wrapper .what-we-offer .offer-cards .box h1,
+.wrapper .what-we-offer .offer-cards .box h2,
+.wrapper .what-we-offer .offer-cards .box h3,
+.wrapper .what-we-offer .offer-cards .box h4,
+.wrapper .what-we-offer .offer-cards .box h5,
+.wrapper .what-we-offer .offer-cards .box h6 {
+  color: #3e4555;
+}
+
+.wrapper .what-we-offer .offer-cards .box .font-weight-medium {
+  font-weight: 500;
+}
+
+.wrapper .what-we-offer .offer-cards .box .bg-light {
+  background-color: #f4f8fa !important;
+}
+
+
+.wrapper .what-we-offer .offer-cards .box .card.card-shadow {
+  -webkit-box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
+  box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
+}
+
+.wrapper .what-we-offer .offer-cards .box .card.card-shadow .description {
+  padding-left: 0;
+}
+
+.wrapper .what-we-offer .offer-cards .box .card.card-shadow img.img-fluid {
+  height: 80px;
+  width: 80px;
+}
+
+.wrapper .what-we-offer .offer-cards .box .btn-md {
+  padding: 15px 45px;
+  font-size: 16px;
 }

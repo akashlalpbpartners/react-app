@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import "./App.css";
 import Home from "./Home";
 import NotFound from "./NotFound";

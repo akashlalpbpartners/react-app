@@ -1,4 +1,4 @@
-import react, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 const FinancialServicesNavbar = (props) => {
   // const [prodlist, setProdlist] = useState([]);
   // useEffect(() => {
@@ -30,7 +30,7 @@ const FinancialServicesNavbar = (props) => {
             className={`nav-link ${
               // props.ToggleSubForm === value.id ? "active" : ""
               props.ToggleSubForm === "1" ? "active" : ""
-            }`}
+              }`}
             id="1"
             type="button"
             onClick={handleClick}
@@ -54,9 +54,8 @@ const FinancialServicesNavbar = (props) => {
         </li> */}
         <li className="nav-item" role="presentation">
           <button
-            className={`nav-link ${
-              props.ToggleSubForm === "2" ? "active" : ""
-            }`}
+            className={`nav-link ${props.ToggleSubForm === "2" ? "active" : ""
+              }`}
             id="2"
             type="button"
             onClick={handleClick}
@@ -102,9 +101,8 @@ const FinancialServicesNavbar = (props) => {
         </li> */}
         <li className="nav-item" role="presentation">
           <button
-            className={`nav-link ${
-              props.ToggleSubForm === "3" ? "active" : ""
-            }`}
+            className={`nav-link ${props.ToggleSubForm === "3" ? "active" : ""
+              }`}
             id="3"
             type="button"
             onClick={handleClick}
