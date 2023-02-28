@@ -31,9 +31,10 @@ const LoginSignUpForm = () => {
     } else setFINCode(e.target.value);
   };
   const handleSendOtp = async () => {
+    console.log("hello");
     const response = await fetchUser(FINCode);
     if (response.length !== 0) {
-      console.log(response);
+      // console.log(response);
       setToggleShow("show");
       setDisableOn(false);
       check.resendOtp({ offDisable, setTimeOutShow });

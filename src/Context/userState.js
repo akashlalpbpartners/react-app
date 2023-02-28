@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import userContext from "./userContext";
-
+import axios from "axios";
 const UserState = (props) => {
   const [user, setUser] = useState([]);
   const [state, setState] = useState([]);
@@ -67,6 +67,11 @@ const UserState = (props) => {
       // const result = await response.json();
       // console.log("Fetch user called!");
       // console.log(result);
+      await axios.post("http://localhost:3001/api/fincode",{
+        FinanceCode: FINCode
+      }).then((response)=>{
+        console.log(response.data);
+      })
       const result = [
         {
           FINCode: "FIN100000104",
