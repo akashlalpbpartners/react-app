@@ -30,7 +30,7 @@ function ServiceHeader(props) {
     } else if (e.target.innerHTML === "Services") {
       navigate("/service");
     } else if (e.target.innerHTML === "Logout") {
-      logoutUser(JSON.parse(Cookies.get("userCookie")).id);
+      logoutUser();
       navigate("/");
     }
     setAnchorElUser(null);

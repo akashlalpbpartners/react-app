@@ -5,10 +5,6 @@ import userContext from "./userContext";
 
 const UserState = (props) => {
   const [user, setUser] = useState([]);
-  const [bankInfo, setBankInfo] = useState([]);
-  const [kycInfo, setKycInfo] = useState([]);
-  const [userToken, setUserToken] = useState("");
-  const [completeKYCalert, setCompleteKYCalert] = useState(false);
   const [state, setState] = useState([]);
   const [city, setCity] = useState([]);
   const [empType, setEmpType] = useState([]);
@@ -16,19 +12,13 @@ const UserState = (props) => {
 
   useEffect(() => {
     if (getCookie("userCookie") !== null) {
-      const object = JSON.parse(Cookies.get("userCookie"));
-      setUserToken(object.Token);
+      setUser(JSON.parse(Cookies.get("userCookie")));
       fetchState();
       fetchCity();
       loadEmpType();
-    } else {
-      navigate("/");
+      navigate("/service");
     }
   }, []);
-
-  // console.log(JSON.parse(localStorage.getItem("UserDetails")));
-  // console.log(JSON.parse(localStorage.getItem("BankDetails")));
-  // console.log(localStorage.getItem("KycDetails"));
 
   function getCookie(name) {
     var documentCookies = document.cookie;
@@ -47,96 +37,103 @@ const UserState = (props) => {
     return decodeURI(documentCookies.substring(begin + prefix.length, end));
   }
 
-  const loginUser = async (loginCustomer, otp) => {
+  const loginUser = async () => {
     const response = await fetch("http://localhost:3001/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        CustomerID: loginCustomer[0].ID,
-        MobileNumber: loginCustomer[0].MobileNumber,
-        Otp: otp,
+        FINCode: JSON.parse(localStorage.getItem("UserDetails")).FINCode,
+        MobileNumber: JSON.parse(localStorage.getItem("UserDetails"))
+          .MobileNumber,
       }),
     });
     console.log("Login user API called!");
     const parseRes = await response.json();
     Cookies.remove("userCookie");
     Cookies.set("userCookie", JSON.stringify(parseRes));
-    setUserToken(parseRes.Token);
-    await fetchBankInfo(parseRes.CustomerID);
-    await fetchKycInfo(parseRes.CustomerID);
+    setUser(parseRes);
     return parseRes;
   };
 
-  const fetchUser = async (mobileNumber) => {
+  const fetchUser = async (FINCode) => {
     try {
-      const response = await fetch(
-        `http://localhost:3001/details/getbasicinfo/${mobileNumber}`,
+      // const response = await fetch(`http://localhost:3001/api/fincode`, {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({
+      //     FINCode: FINCode,
+      //   }),
+      // });
+      // console.log(FINCode);
+      // const result = await response.json();
+      // console.log("Fetch user called!");
+      // console.log(result);
+      const result = [
         {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      const parseRes = await response.json();
-      console.log("Fetch user called!");
-      setUser(parseRes);
-      localStorage.setItem("UserDetails", JSON.stringify(parseRes[0]));
-      return parseRes;
-      // if (checkFields(parseRes)) setCompleteKYCalert(true);
+          FINCode: "FIN100000104",
+          MobileNumber: 9999999999,
+        },
+      ];
+      localStorage.setItem("UserDetails", JSON.stringify(result[0]));
+      return result;
     } catch (err) {
       alert(err);
       console.error(err.message);
     }
   };
-  const fetchBankInfo = async (id) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3001/details/getbankinfo/${id}`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${JSON.parse(Cookies.get("userCookie")).Token
-              }`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const parseRes = await response.json();
-      console.log("Fetch bank called!");
-      setBankInfo(parseRes);
-      console.log("bank", parseRes);
-      if (parseRes.length === 0)
-        localStorage.setItem("BankDetails", JSON.stringify([]));
-      else localStorage.setItem("BankDetails", JSON.stringify(parseRes[0]));
-      console.log(JSON.parse(localStorage.getItem("BankDetails")));
-      return parseRes;
-    } catch (err) {
-      alert(err);
-      console.error(err.message);
-    }
-  };
-  const fetchKycInfo = async (id) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3001/details/getkycinfo/${id}`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${JSON.parse(Cookies.get("userCookie")).Token
-              }`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const parseRes = await response.json();
-      console.log("Fetch kyc called!");
-      setKycInfo(parseRes);
-      localStorage.setItem("KycDetails", JSON.stringify(parseRes));
-      return parseRes;
-    } catch (err) {
-      alert(err);
-      console.error(err.message);
-    }
-  };
+
+  // const fetchBankInfo = async (id) => {
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:3001/details/getbankinfo/${id}`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           Authorization: `Bearer ${
+  //             JSON.parse(Cookies.get("userCookie")).Token
+  //           }`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     const parseRes = await response.json();
+  //     console.log("Fetch bank called!");
+  //     setBankInfo(parseRes);
+  //     console.log("bank", parseRes);
+  //     if (parseRes.length === 0)
+  //       localStorage.setItem("BankDetails", JSON.stringify([]));
+  //     else localStorage.setItem("BankDetails", JSON.stringify(parseRes[0]));
+  //     console.log(JSON.parse(localStorage.getItem("BankDetails")));
+  //     return parseRes;
+  //   } catch (err) {
+  //     alert(err);
+  //     console.error(err.message);
+  //   }
+  // };
+  // const fetchKycInfo = async (id) => {
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:3001/details/getkycinfo/${id}`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           Authorization: `Bearer ${
+  //             JSON.parse(Cookies.get("userCookie")).Token
+  //           }`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     const parseRes = await response.json();
+  //     console.log("Fetch kyc called!");
+  //     setKycInfo(parseRes);
+  //     localStorage.setItem("KycDetails", JSON.stringify(parseRes));
+  //     return parseRes;
+  //   } catch (err) {
+  //     alert(err);
+  //     console.error(err.message);
+  //   }
+  // };
   const fetchState = async () => {
     try {
       const response = await fetch("http://localhost:3001/geo/readstates", {
@@ -167,27 +164,29 @@ const UserState = (props) => {
     }
   };
   const loadEmpType = async () => {
-    await fetch("http://localhost:3001/employmenttype/", {
+    const response = await fetch("http://localhost:3001/employmenttype/", {
       method: "GET",
-    })
-      .then((res) => res.json())
-      .then((data) => setEmpType(data));
+    });
+    const parseRes = await response.json();
+    console.log("EmpType loading API called!");
+    setEmpType(parseRes);
+    return parseRes;
   };
   const logoutUser = async () => {
     try {
       // id number name email
       await fetch(
-        `http://localhost:3001/api/logout/${JSON.parse(Cookies.get("userCookie")).id
+        `http://localhost:3001/api/logout/${
+          JSON.parse(Cookies.get("userCookie")).id
         }`,
         {
           method: "PUT",
         }
       );
       console.log("Logout Api called");
-      Cookies.remove("userCookie");
-      localStorage.clear();
-      setUserToken("");
       setUser([]);
+      localStorage.clear();
+      Cookies.remove("userCookie");
     } catch (err) {
       alert(err);
       console.error(err.message);
@@ -198,18 +197,12 @@ const UserState = (props) => {
     <userContext.Provider
       value={{
         user,
-        bankInfo,
-        kycInfo,
-        userToken,
         state,
         city,
         empType,
-        completeKYCalert,
+        setUser,
         loginUser,
         fetchUser,
-        fetchBankInfo,
-        fetchKycInfo,
-        setUser,
         fetchState,
         fetchCity,
         loadEmpType,

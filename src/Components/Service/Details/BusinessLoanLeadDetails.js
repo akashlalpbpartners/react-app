@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 const PersonalLoanLeadDetails = () => {
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);
   const context = useContext(userContext);
-  const { city, userToken } = context;
+  const { city } = context;
   const [rows, setRows] = useState([]);
   useEffect(() => {
     if (loanLeadDetails.length === 0) {
