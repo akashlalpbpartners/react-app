@@ -21,7 +21,7 @@ const PersonalLoan = (props) => {
   const context = useContext(userContext);
   const { user, city, empType } = context;
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);
-  const [rows, setRows] = useState([]);
+  
   useEffect(() => {
     setLoanLeadDetails(fetchLeads());
   }, []);
@@ -47,11 +47,11 @@ const PersonalLoan = (props) => {
 
   const cityList = [];
   Object.entries(city).map(([key, value]) => {
-    return cityList.push([value.Id, value.City]);
+    cityList.push([value.Id, value.City]);
   });
   const empTypeList = [];
   Object.entries(empType).map(([key, value]) => {
-    return empTypeList.push([value.Id, value.EmploymentType]);
+    empTypeList.push([value.Id, value.EmploymentType]);
   });
 
   const formikInput = useFormik({

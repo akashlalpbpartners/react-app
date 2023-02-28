@@ -75,7 +75,8 @@ const LoginSignUpForm = () => {
   const handleVerifyOtp = async () => {
     try {
       if (handleVerify(otp)) {
-        loginUser();
+        await loginUser();
+        navigate("/service");
       }
     } catch (err) {
       console.error(err.message);
