@@ -30,6 +30,10 @@ li {
   display: none;
 }
 
+.dropdown-menu li a {
+  font-size: 13px;
+}
+
 .container-fluid {
   width: 100%;
   max-width: 1366px;
