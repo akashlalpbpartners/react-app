@@ -8,7 +8,6 @@ const Footer = () => {
                     <div className="row">
                         <div className="col-md-12">
                             <p>© 2022 PBPartners. All Rights Reserved</p>
-
                         </div>
                     </div>
                 </div>
