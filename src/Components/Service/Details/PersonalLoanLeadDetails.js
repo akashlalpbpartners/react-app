@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import userContext from "../../../Context/userContext";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid} from '@mui/x-data-grid';
 import { Box } from "@mui/system";
 import Cookies from "js-cookie";
-
 const PersonalLoanLeadDetails = () => {
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);
   const context = useContext(userContext);
@@ -11,37 +10,84 @@ const PersonalLoanLeadDetails = () => {
   const [rows, setRows] = useState([]);
   useEffect(() => {
     if (loanLeadDetails.length === 0) {
-      const sub_product_ID = 1;
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${
-            JSON.parse(Cookies.get("userCookie")).Token
-          }`,
-          "Content-Type": "application/json",
+      // const sub_product_ID = 1;
+      // const requestOptions = {
+      //   method: "POST",
+      //   headers: {
+      //     Authorization: `Bearer ${
+      //       JSON.parse(Cookies.get("userCookie")).Token
+      //     }`,
+      //     "Content-Type": "application/json",
+      //   },
+      // };
+      // fetch(
+      //   `http://localhost:3001/product/readfinancialservices/${sub_product_ID}/${
+      //     JSON.parse(Cookies.get("userCookie")).CustomerID
+      //   }`,
+      //   requestOptions
+      // )
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     setLoanLeadDetails(data);
+      //   });
+      const data = [
+        {
+          Id: 1,
+          SubProductId: 1,
+          CustomerMobile: 9090909091,
+          CityId: 1,
+          LoanAmount: 0,
+          NetMonthlyIncome: 0,
+          EmploymentType: 1,
+          FINCode: 0,
+          GrossSales: 0,
+          IsPresent: 1,
+          IsActive: 1,
+          CreatedAt: "2023-02-28T12:24:16.000Z",
+          UpdatedAt: "2023-02-28T12:24:16.000Z",
+        },{
+          Id: 2,
+          SubProductId: 1,
+          CustomerMobile: 4758475498,
+          CityId: 1,
+          LoanAmount: 0,
+          NetMonthlyIncome: 0,
+          EmploymentType: 1,
+          FINCode: 0,
+          GrossSales: 0,
+          IsPresent: 1,
+          IsActive: 1,
+          CreatedAt: "2023-02-28T12:24:16.000Z",
+          UpdatedAt: "2023-02-28T12:24:16.000Z",
+        },{
+          Id: 3,
+          SubProductId: 1,
+          CustomerMobile: 4758475498,
+          CityId: 1,
+          LoanAmount: 0,
+          NetMonthlyIncome: 0,
+          EmploymentType: 1,
+          FINCode: 0,
+          GrossSales: 0,
+          IsPresent: 1,
+          IsActive: 1,
+          CreatedAt: "2023-02-28T12:24:16.000Z",
+          UpdatedAt: "2023-02-28T12:24:16.000Z",
         },
-      };
-      fetch(
-        `http://localhost:3001/product/readfinancialservices/${sub_product_ID}/${
-          JSON.parse(Cookies.get("userCookie")).CustomerID
-        }`,
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          setLoanLeadDetails(data);
-        });
+      ];
+      setLoanLeadDetails(data);
     } else {
       setRows(
-        loanLeadDetails.map(function (row) {
+        loanLeadDetails.map(function(row) {
+         
           return {
-            id: row.id,
-            customer_mobile: row.customer_mobile,
-            city_id: city[row.city_id].city,
-            loan_amount: row.loan_amount,
-            net_monthly_income: row.net_monthly_income,
-            employment_type: empType[row.employment_type].EmploymentType,
-            is_present: row.is_present,
+            id: row.Id,
+            customer_mobile:row.CustomerMobile,
+            city_id: city[row.CityId].City,
+            loan_amount: row.LoanAmount,
+            net_monthly_income: row.NetMonthlyIncome,
+            employment_type: empType[row.EmploymentType].EmploymentType,
+            is_present: row.IsPresent,
           };
         })
       );
@@ -54,6 +100,7 @@ const PersonalLoanLeadDetails = () => {
       field: "customer_mobile",
       headerName: "Mobile Number",
       width: 190,
+      valueGetter: NumberFormat,
     },
     {
       field: "city_id",
@@ -75,9 +122,13 @@ const PersonalLoanLeadDetails = () => {
       headerName: "Employment",
     },
   ];
-
+  function NumberFormat(props) {
+    const  MobileNumber  = props.value;
+    return (MobileNumber.toString().replace(/(\d{6})$/, "XXXXXX"));
+  }
   return (
     <>
+   
       <div className="container tab-content" id="pills-tabContent">
         <Box
           container
@@ -86,12 +137,8 @@ const PersonalLoanLeadDetails = () => {
           <DataGrid
             rows={rows}
             columns={columns}
-            pageSize={3}
-            rowsPerPageOptions={[3]}
-            getRowClassName={(params) => {
-              if (params.row.is_present === 1) return "Rejected";
-            }}
           />
+            
         </Box>
       </div>
     </>
