@@ -9,8 +9,6 @@ import userContext from "../../../Context/userContext";
 
 const validationSchemaInput = Yup.object({
   Mobile_no: Yup.string()
-    .min(10, "Invalid Mobile Number")
-    .max(10, "Invalid Mobile Number")
     .matches(/^[789]\d{9}$/, "Phone number is not valid.")
     .required("Phone Number is required."),
   City: Yup.string().required("City is required."),
@@ -20,51 +18,42 @@ const validationSchemaInput = Yup.object({
 });
 
 const PersonalLoan = (props) => {
-  ////////////////////////// Using state to store the values //////////////////////////
   const context = useContext(userContext);
-  const [empType, setEmpType] = useState([]);
+  const { user, city, empType } = context;
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);
   const [rows, setRows] = useState([]);
-  const { city, userToken } = context;
   useEffect(() => {
-    loadEmpType();
-    if (loanLeadDetails.length === 0) {
-      const sub_product_ID = 1;
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-          "Content-Type": "application/json",
-        },
-      };
-      fetch(
-        `http://localhost:3001/product/readfinancialservices/${sub_product_ID}/${JSON.parse(Cookies.get("userCookie")).CustomerID
-        }`,
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          setLoanLeadDetails(data);
-        });
-    } else {
-      setRows(loanLeadDetails);
-    }
-  }, [loanLeadDetails]);
+    setLoanLeadDetails(fetchLeads());
+  }, []);
 
-  const loadEmpType = async () => {
-    await fetch("http://localhost:3001/employmenttype/", {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((data) => setEmpType(data));
+  const fetchLeads = async () => {
+    const SubProductId = 1;
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${user.Token}`,
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch(
+      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${
+        JSON.parse(Cookies.get("userCookie")).FINCode
+      }`,
+      requestOptions
+    );
+    const result = await response.json();
+    return result;
   };
 
   const cityList = [];
   Object.entries(city).map(([key, value]) => {
-    return cityList.push([value.id, value.city]);
+    return cityList.push([value.Id, value.City]);
+  });
+  const empTypeList = [];
+  Object.entries(empType).map(([key, value]) => {
+    return empTypeList.push([value.Id, value.EmploymentType]);
   });
 
-  ////////////////////////// Using custom hook of formik //////////////////////////
   const formikInput = useFormik({
     initialValues: {
       Mobile_no: "",
@@ -75,38 +64,37 @@ const PersonalLoan = (props) => {
     },
     validationSchema: validationSchemaInput,
     onSubmit: async (values) => {
-      const isPresent = rows.filter((row) => {
-        return row.customer_mobile === values.Mobile_no;
+      const isPresent = loanLeadDetails.filter((row) => {
+        return row.CustomerMobile === values.Mobile_no;
       });
-      console.log(isPresent);
+      console.log(loanLeadDetails);
       const requestOptions = {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${userToken}`,
+          Authorization: `Bearer ${user.Token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          sub_product_id: parseInt(props.ToggleSubForm),
-          customer_mobile: values.Mobile_no,
-          city_id: values.City,
-          loan_amount: values.Loan_amount_required,
-          net_monthly_income: values.Net_monthly_income,
-          employment_type: values.Employment_type,
-          created_by: JSON.parse(Cookies.get("userCookie")).CustomerID,
-          is_present: isPresent.length === 0 ? 0 : 1,
+          SubProductId: parseInt(props.ToggleSubForm),
+          CustomerMobile: parseInt(values.Mobile_no),
+          CityId: values.City,
+          LoanAmount: parseInt(values.Loan_amount_required),
+          NetMonthlyIncome: parseInt(values.Net_monthly_income),
+          EmploymentType: values.Employment_type,
+          FINCode: JSON.parse(Cookies.get("userCookie")).FINCode,
+          GrossSales: 0,
+          IsPresent: isPresent.length === 0 ? 0 : 1,
         }),
       };
+      console.log(requestOptions.body);
       await fetch(
         "http://localhost:3001/product/insertfinancialservices",
         requestOptions
       );
-      formikInput.handleReset();
+      // formikInput.handleReset();
     },
   });
-  const empList = [];
-  Object.entries(empType).map(([key, value]) => {
-    return empList.push([value.id, value.EmploymentType]);
-  });
+
   ////////////////////////// Attribute dictionary //////////////////////////
   const inputField = {
     1: [
@@ -135,9 +123,9 @@ const PersonalLoan = (props) => {
       "Enter Loan amount required",
       formikInput.values.Loan_amount_required,
       formikInput.touched.Loan_amount_required &&
-      Boolean(formikInput.errors.Loan_amount_required),
+        Boolean(formikInput.errors.Loan_amount_required),
       formikInput.touched.Loan_amount_required &&
-      formikInput.errors.Loan_amount_required,
+        formikInput.errors.Loan_amount_required,
       false,
       [],
     ],
@@ -147,9 +135,9 @@ const PersonalLoan = (props) => {
       "Enter Net monthly income",
       formikInput.values.Net_monthly_income,
       formikInput.touched.Net_monthly_income &&
-      Boolean(formikInput.errors.Net_monthly_income),
+        Boolean(formikInput.errors.Net_monthly_income),
       formikInput.touched.Net_monthly_income &&
-      formikInput.errors.Net_monthly_income,
+        formikInput.errors.Net_monthly_income,
       false,
       [],
     ],
@@ -159,10 +147,10 @@ const PersonalLoan = (props) => {
       "Enter Employment type",
       formikInput.values.Employment_type,
       formikInput.touched.Employment_type &&
-      Boolean(formikInput.errors.Employment_type),
+        Boolean(formikInput.errors.Employment_type),
       formikInput.touched.Employment_type && formikInput.errors.Employment_type,
       true,
-      empList,
+      empTypeList,
     ],
   };
 

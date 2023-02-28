@@ -1,17 +1,7 @@
-import React, { useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
+import React from "react";
 import logo from "../../../src/images/logo.png";
 
-function HeaderHome(props) {
-  const [isShown, setIsShown] = useState(true);
-
-  const handleClick = () => {
-    setIsShown((current) => !current);
-
-    props.setToggleForm(!isShown);
-  };
+const HeaderHome = () => {
   return (
     <>
       <nav className="navbar fixed-top bg-white">
@@ -20,13 +10,6 @@ function HeaderHome(props) {
             <a className="navbar-brand" href="/service">
               <img src={logo} width="205" alt="" />
             </a>
-            {/* <ul>
-              <li>
-                <button type="button" className="btn btn-outline-primary register" onClick={handleClick} >
-                  {isShown ? "REGISTER" : "LOGIN"}
-                </button>
-              </li>
-            </ul> */}
           </div>
         </div>
       </nav>
@@ -65,5 +48,5 @@ function HeaderHome(props) {
     //   </Container>
     // </AppBar>
   );
-}
+};
 export default HeaderHome;

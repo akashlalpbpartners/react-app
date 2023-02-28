@@ -7,41 +7,41 @@ const LoginSignUpForm = () => {
   const navigate = useNavigate();
   const context = useContext(userContext);
   const { loginUser, fetchUser, fetchState, fetchCity } = context;
-  const [firstNo, setfirstNo] = useState("");
-  const [mobileNumber, setmobileNumber] = useState("");
   const [toggleShow, setToggleShow] = useState("hide");
+  const [FINCode, setFINCode] = useState("");
   const [disableOn, setDisableOn] = useState(true);
   const [otp, setOtp] = useState("");
   const [timeOutShow, setTimeOutShow] = useState("none");
-  const [loginCustomer, setLoginCustomer] = useState([]);
+  const [exist, setExist] = useState(false);
 
   useEffect(() => {
-    if (mobileNumber.length === 10 && toggleShow === "show") {
+    if (FINCode.length === 12) setDisableOn(false);
+    else setDisableOn(true);
+    if (toggleShow === "show") {
       setInputField(otp);
-      if (otp.length === 7) check.handleChange(otp);
     }
-  }, [mobileNumber.length, otp.length, toggleShow]);
+  }, [FINCode.length, otp.length]);
 
   const offDisable = () => {
     setTimeOutShow("");
   };
-
-  async function handleSendOtp() {
-    const response = await fetchUser(mobileNumber);
+  const handleChangeFINCode = (e) => {
+    if (e.target.value.length > e.target.maxLength) {
+      e.target.value = e.target.value.slice(0, e.target.maxLength);
+    } else setFINCode(e.target.value);
+  };
+  const handleSendOtp = async () => {
+    console.log("hello");
+    const response = await fetchUser(FINCode);
     if (response.length !== 0) {
-      check.handleClick({
-        toggleShow,
-        firstNo,
-        setDisableOn,
-        setToggleShow,
-      });
-      setLoginCustomer(response);
-      setfirstNo("");
+      // console.log(response);
+      setToggleShow("show");
+      setDisableOn(false);
       check.resendOtp({ offDisable, setTimeOutShow });
     } else {
-      setfirstNo("register");
+      setExist(true);
     }
-  }
+  };
 
   const otpField = {
     1: ["field-1"],
@@ -73,18 +73,15 @@ const LoginSignUpForm = () => {
     else return false;
   };
 
-  async function handleVerifyOtp() {
+  const handleVerifyOtp = async () => {
     try {
       if (handleVerify(otp)) {
-        loginUser(loginCustomer, otp);
-        fetchState();
-        fetchCity();
-        navigate("/service");
+        loginUser();
       }
     } catch (err) {
       console.error(err.message);
     }
-  }
+  };
 
   return (
     <>
@@ -97,60 +94,25 @@ const LoginSignUpForm = () => {
             </small>
           </h1>
 
-
           <form action="">
-
-            {/* <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="floatingInput" placeholder="Fincode" />
-              <label for="floatingInput">Fincode</label>
-            </div> */}
-
-
-            <div className="pb-form-floating form-group">
-              <div className="d-flex">
-                <input
-                  id="+91"
-                  className="form-control"
-                  style={{
-                    width: "57px",
-                    color: "grey",
-                    fontSize: "15px",
-                    marginRight: "5px",
-                  }}
-                  defaultValue={"+91"}
-                  readOnly
-                ></input>
-                <input
-                  id="mobileNumber"
-                  type="number"
-                  className="form-control"
-                  placeholder="9953000022"
-                  maxLength={10}
-                  onInput={(e) => {
-                    check.maxPhoneNumber({
-                      e,
-                      setmobileNumber,
-                      mobileNumber,
-                      firstNo,
-                      setDisableOn,
-                      setfirstNo,
-                    });
-                  }}
-                />
-              </div>
-              <label htmlFor="floatingInput">Mobile Number</label>
-              <div id="error_messages">
-                {firstNo === "first" ? (
-                  <small className="invalid">Invalid mobile number</small>
-                ) : (
-                  <div></div>
-                )}
-                {firstNo === "register" ? (
-                  <small className="invalid">Mobile number is not register.</small>
-                ) : (
-                  <div></div>
-                )}
-              </div>
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="FINCode"
+                placeholder="Fincode"
+                value={FINCode}
+                maxLength={12}
+                onChange={handleChangeFINCode}
+              />
+              <label htmlFor="floatingInput">Fincode</label>
+              {exist ? (
+                <small className="invalid error_messages">
+                  Invalid FINCode
+                </small>
+              ) : (
+                <></>
+              )}
             </div>
             {toggleShow === "show" ? (
               <div>
@@ -183,8 +145,9 @@ const LoginSignUpForm = () => {
                   <span className="otp-will-expire">
                     Your OTP will expire in 00:25s
                     <a
-                      className={`resend-otp text-decoration-none pe-${timeOutShow} ${timeOutShow === "none" ? "text-secondary " : ""
-                        }`}
+                      className={`resend-otp text-decoration-none pe-${timeOutShow} ${
+                        timeOutShow === "none" ? "text-secondary " : ""
+                      }`}
                       href="#x"
                       onClick={() => {
                         check.resendOtp({ offDisable, setTimeOutShow });
@@ -215,13 +178,6 @@ const LoginSignUpForm = () => {
                 Send OTP
               </button>
             )}
-
-            {/* <button
-              type="button"
-              className="btn btn-outline-primary btn-lg w-100 buyer-login"
-            >
-              Buyer Login
-            </button> */}
           </form>
         </div>
       </div>
