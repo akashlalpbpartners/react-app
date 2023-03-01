@@ -1,6 +1,6 @@
 import React from 'react';
 import "./../../styles/servicestyle.css";
-import Header from "./ServiceHeader";
+import ServiceHeader from "./ServiceHeader";
 import Footer from "./Footer";
 import OurServices from "./OurServices";
 import FinancialServices from "./FinancialServices";
@@ -26,7 +26,7 @@ function ServiceIndex() {
   return (
     <>
       <div className="wrapper">
-        <Header setTogglePage={setTogglePage} togglePage={togglePage} />
+        <ServiceHeader setTogglePage={setTogglePage} togglePage={togglePage} />
         <div className="services-with-bg">
           {/* <!-- Start Our Services Section --> */}
           <div className="container-fluid">

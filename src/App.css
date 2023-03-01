@@ -2,7 +2,6 @@
 @import "./styles/header.css";
 @import "./styles/banner-form.css";
 
-
 body {
   font-family: Roboto, sans-serif;
   background: #fff;
@@ -100,7 +99,8 @@ option {
 }
 
 .wrapper .product-with-bg {
-  background: transparent linear-gradient(300deg, #5e9ffa2d 0%, #ffffff 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(300deg, #5e9ffa2d 0%, #ffffff 100%) 0%
+    0% no-repeat padding-box;
 }
 
 .wrapper .header {
@@ -167,7 +167,6 @@ option {
   margin-bottom: 0;
   white-space: nowrap;
 }
-
 
 .wrapper .our-product .auth-form .otp-number ul {
   list-style-type: none;
@@ -285,7 +284,6 @@ option {
 }
 
 @media (min-width: 992px) {
-
   .wrapper #kycForm .modal-lg,
   .wrapper #kycForm .modal-xl {
     max-width: 1010px;
@@ -302,7 +300,7 @@ option {
   padding: 0;
 }
 
-.wrapper #kycForm .pb-form-floating>.form-select {
+.wrapper #kycForm .pb-form-floating > .form-select {
   height: 58px;
   border-radius: 8px;
 }
@@ -377,13 +375,21 @@ option {
   cursor: pointer;
 }
 
-.wrapper #kycForm .custom-radio-btn .form-check.form-check-inline .form-check-input {
+.wrapper
+  #kycForm
+  .custom-radio-btn
+  .form-check.form-check-inline
+  .form-check-input {
   position: absolute;
   left: 40px;
   top: 12px;
 }
 
-.wrapper #kycForm .custom-radio-btn .form-check.form-check-inline.checked label {
+.wrapper
+  #kycForm
+  .custom-radio-btn
+  .form-check.form-check-inline.checked
+  label {
   color: #0065ff;
   border: 1px solid #0065ff;
 }
@@ -526,27 +532,27 @@ input[type="number"]::-webkit-outer-spin-button {
   padding-left: 5px;
 }
 
-#BasicInfo .tab-content>.tab-pane {
+#BasicInfo .tab-content > .tab-pane {
   display: block;
 }
 
-#BasicInfo .tab-content>.tab-pane {
+#BasicInfo .tab-content > .tab-pane {
   opacity: 1;
 }
 
-#BankInfo .tab-content>.tab-pane {
+#BankInfo .tab-content > .tab-pane {
   display: block;
 }
 
-#BankInfo .tab-content>.tab-pane {
+#BankInfo .tab-content > .tab-pane {
   opacity: 1;
 }
 
-#kycForm .tab-content>.tab-pane {
+#kycForm .tab-content > .tab-pane {
   display: block;
 }
 
-#kycForm .tab-content>.tab-pane {
+#kycForm .tab-content > .tab-pane {
   opacity: 1;
 }
 
@@ -572,11 +578,6 @@ input[type="number"]::-webkit-outer-spin-button {
   background-color: red;
 }
 
-
-
-
-
-
 .wrapper .what-we-offer .offer-cards .box h1,
 .wrapper .what-we-offer .offer-cards .box h2,
 .wrapper .what-we-offer .offer-cards .box h3,
@@ -593,7 +594,6 @@ input[type="number"]::-webkit-outer-spin-button {
 .wrapper .what-we-offer .offer-cards .box .bg-light {
   background-color: #f4f8fa !important;
 }
-
 
 .wrapper .what-we-offer .offer-cards .box .card.card-shadow {
   -webkit-box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
