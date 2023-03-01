@@ -47,7 +47,7 @@ const PersonalLoanLeadDetails = () => {
       );
     }
   }, [loanLeadDetails]);
-  console.log(rows);
+
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     {

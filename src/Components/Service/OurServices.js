@@ -1,15 +1,7 @@
 import React from "react";
-import saving from "./../../images/saving.png"
-// import deal from "./../../images/deal.png"
-// import sunbed from "./../../images/sunbed.png"
-// import carwash from "./../../images/car-wash.png"
-// import car from "./../../images/car.png"
-// import shopping from "./../../images/shopping-bag.png"
-// import education from "./../../images/mortarboard.png"
-// import other from "./../../images/other.png"
+import saving from "./../../images/saving.png";
 const OurServices = (props) => {
   function handleClick(e) {
-    // Changing toggle menu state
     props.setToggleMenu(e.target.id);
   }
   return (
