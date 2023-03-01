@@ -19,7 +19,7 @@ function ServiceHeader(props) {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg fixed-top bg-white">
+      <nav className="navbar navbar-expand-lg fixed-top bg-white shadow">
         <div className="container">
           <div className="navbar-header">
             <a className="navbar-brand" href="/service">
@@ -29,9 +29,8 @@ function ServiceHeader(props) {
               <ul className="navbar-nav">
                 <li className="nav-item">
                   <a
-                    className={`nav-link ${
-                      props.togglePage === "leadrequest" ? "active" : ""
-                    }`}
+                    className={`nav-link ${props.togglePage === "leadrequest" ? "active" : ""
+                      }`}
                     aria-current="page"
                     href="#"
                     id="leadrequest"
@@ -42,9 +41,8 @@ function ServiceHeader(props) {
                 </li>
                 <li className="nav-item">
                   <a
-                    className={`nav-link ${
-                      props.togglePage === "leaddetails" ? "active" : ""
-                    }`}
+                    className={`nav-link ${props.togglePage === "leaddetails" ? "active" : ""
+                      }`}
                     id="leaddetails"
                     onClick={handleClick}
                   >

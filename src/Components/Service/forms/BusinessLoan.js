@@ -38,8 +38,7 @@ const PersonalLoan = (props) => {
         },
       };
       fetch(
-        `http://localhost:3001/product/readfinancialservices/${sub_product_ID}/${
-          JSON.parse(Cookies.get("userCookie")).CustomerID
+        `http://localhost:3001/product/readfinancialservices/${sub_product_ID}/${JSON.parse(Cookies.get("userCookie")).CustomerID
         }`,
         requestOptions
       )
@@ -134,9 +133,9 @@ const PersonalLoan = (props) => {
       "Enter Loan amount required",
       formikInput.values.Loan_amount_required,
       formikInput.touched.Loan_amount_required &&
-        Boolean(formikInput.errors.Loan_amount_required),
+      Boolean(formikInput.errors.Loan_amount_required),
       formikInput.touched.Loan_amount_required &&
-        formikInput.errors.Loan_amount_required,
+      formikInput.errors.Loan_amount_required,
       false,
       [],
     ],
@@ -146,9 +145,9 @@ const PersonalLoan = (props) => {
       "Enter Net monthly income",
       formikInput.values.Net_monthly_income,
       formikInput.touched.Net_monthly_income &&
-        Boolean(formikInput.errors.Net_monthly_income),
+      Boolean(formikInput.errors.Net_monthly_income),
       formikInput.touched.Net_monthly_income &&
-        formikInput.errors.Net_monthly_income,
+      formikInput.errors.Net_monthly_income,
       false,
       [],
     ],
@@ -158,7 +157,7 @@ const PersonalLoan = (props) => {
       "Enter Employment type",
       formikInput.values.Employment_type,
       formikInput.touched.Employment_type &&
-        Boolean(formikInput.errors.Employment_type),
+      Boolean(formikInput.errors.Employment_type),
       formikInput.touched.Employment_type && formikInput.errors.Employment_type,
       true,
       empList,
@@ -177,7 +176,6 @@ const PersonalLoan = (props) => {
           aria-labelledby=""
         >
           <form
-            className="container"
             id="my-form"
             onSubmit={formikInput.handleSubmit}
             autoComplete="off"
@@ -188,6 +186,7 @@ const PersonalLoan = (props) => {
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
+              <h1 class="main-heading">Business Loan</h1>
               <div className="row">
                 {Object.entries(inputField).map(([key, item]) => (
                   <>

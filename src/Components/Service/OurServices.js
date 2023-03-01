@@ -6,12 +6,11 @@ const OurServices = (props) => {
   }
   return (
     <>
-      <ul className="nav first nav-pills mb-3" id="pills-tab" role="tablist">
+      <ul className="nav first nav-pills mb-3 d-none" id="pills-tab" role="tablist">
         <li className="nav-item" role="presentation">
           <button
-            className={`nav-link ${
-              props.toggleMenu === "financialservices" ? "active" : ""
-            }`}
+            className={`nav-link ${props.toggleMenu === "financialservices" ? "active" : ""
+              }`}
             id="financialservices"
             type="button"
             onClick={handleClick}

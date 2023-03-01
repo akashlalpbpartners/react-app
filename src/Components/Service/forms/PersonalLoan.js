@@ -44,8 +44,7 @@ const PersonalLoan = (props) => {
       },
     };
     const response = await fetch(
-      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${
-        JSON.parse(Cookies.get("userCookie")).FINCode
+      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${JSON.parse(Cookies.get("userCookie")).FINCode
       }`,
       requestOptions
     );
@@ -232,9 +231,9 @@ const PersonalLoan = (props) => {
       "Enter Loan amount required",
       formikInput.values.Loan_amount_required,
       formikInput.touched.Loan_amount_required &&
-        Boolean(formikInput.errors.Loan_amount_required),
+      Boolean(formikInput.errors.Loan_amount_required),
       formikInput.touched.Loan_amount_required &&
-        formikInput.errors.Loan_amount_required,
+      formikInput.errors.Loan_amount_required,
       false,
       [],
       // handleLoanAmount,
@@ -245,9 +244,9 @@ const PersonalLoan = (props) => {
       "Enter Net monthly income",
       formikInput.values.Net_monthly_income,
       formikInput.touched.Net_monthly_income &&
-        Boolean(formikInput.errors.Net_monthly_income),
+      Boolean(formikInput.errors.Net_monthly_income),
       formikInput.touched.Net_monthly_income &&
-        formikInput.errors.Net_monthly_income,
+      formikInput.errors.Net_monthly_income,
       false,
       [],
     ],
@@ -257,7 +256,7 @@ const PersonalLoan = (props) => {
       "Enter Employment type",
       formikInput.values.Employment_type,
       formikInput.touched.Employment_type &&
-        Boolean(formikInput.errors.Employment_type),
+      Boolean(formikInput.errors.Employment_type),
       formikInput.touched.Employment_type && formikInput.errors.Employment_type,
       true,
       empTypeList,
@@ -276,7 +275,6 @@ const PersonalLoan = (props) => {
           aria-labelledby=""
         >
           <form
-            className="container"
             onSubmit={handleSubmit}
             autoComplete="off"
           >
@@ -286,6 +284,7 @@ const PersonalLoan = (props) => {
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
+              <h1 class="main-heading">Personal Loan</h1>
               <div className="row">
                 <div className="col-md-4">
                   <div className="form-floating mb-3">
@@ -314,7 +313,7 @@ const PersonalLoan = (props) => {
                 </div>
                 <div className="col-md-4">
                   <div class="form-floating mb-3">
-                    <select class="form-select" id="City" name="City" required>
+                    <select class="form-select form-control" id="City" name="City" required>
                       <option selected>City</option>
                       {cityList.map((value, key) => (
                         <option name="City" key={key} value={value[0]}>
@@ -357,6 +356,7 @@ const PersonalLoan = (props) => {
                       className="form-control"
                       id="NetMonthlyIncome"
                       name="NetMonthlyIncome"
+                      placeholder="Net Monthly Income"
                       onChange={handleMobileNumber}
                       onKeyDown={(evt) =>
                         ["e", "E", "+", "-"].includes(evt.key) &&
@@ -370,7 +370,7 @@ const PersonalLoan = (props) => {
                   <div class="form-floating mb-3">
                     <select
                       required
-                      class="form-select"
+                      class="form-select form-control"
                       id="EmploymentType"
                       name="EmploymentType"
                       aria-label="Default select example"
@@ -386,6 +386,7 @@ const PersonalLoan = (props) => {
                         </option>
                       ))}
                     </select>
+                    <label htmlFor="floatingInput">Employment Type</label>
                   </div>
                 </div>
               </div>
