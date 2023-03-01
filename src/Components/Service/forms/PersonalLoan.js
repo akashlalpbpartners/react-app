@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
 import Cookies from "js-cookie";
-import { useFormik } from "formik";
+import { Formik, useFormik } from "formik";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -12,7 +12,17 @@ const validationSchemaInput = Yup.object({
     .matches(/^[789]\d{9}$/, "Phone number is not valid.")
     .required("Phone Number is required."),
   City: Yup.string().required("City is required."),
-  Loan_amount_required: Yup.string().required("Loan amount is required."),
+  Loan_amount_required: Yup.string()
+    .test(
+      "test-name",
+      "Loan Amount must be ranged between 10000 to 25 Lacs",
+      function (value) {
+        const loan = parseInt(value);
+        if (loan <= 2500000 && loan >= 10000) return true;
+        else return false;
+      }
+    )
+    .required("Loan amount is required."),
   Net_monthly_income: Yup.string().required("Monthly income is required."),
   Employment_type: Yup.string().required("Employment type is required."),
 });
@@ -26,7 +36,6 @@ const PersonalLoan = (props) => {
     if (loanLeadDetails.length === 0) fetchLeads();
   }, [loanLeadDetails]);
   const Token = JSON.parse(user).Token;
-  console.log(user);
   const fetchLeads = async () => {
     const SubProductId = 1;
     const requestOptions = {
@@ -65,6 +74,9 @@ const PersonalLoan = (props) => {
       Employment_type: "",
     },
     validationSchema: validationSchemaInput,
+    onChange: (e) => {
+      console.log("hei");
+    },
     onSubmit: async (values) => {
       const isPresent = [];
       loanLeadDetails.filter((row) => {
@@ -89,6 +101,7 @@ const PersonalLoan = (props) => {
           IsPresent: isPresent.length === 0 ? 0 : 1,
         }),
       };
+      
       await fetch(
         "http://localhost:3001/product/insertfinancialservices",
         requestOptions
@@ -108,6 +121,9 @@ const PersonalLoan = (props) => {
       formikInput.touched.Mobile_no && formikInput.errors.Mobile_no,
       false,
       [],
+      ,
+      ,
+      10,
     ],
     2: [
       "City",
@@ -130,6 +146,8 @@ const PersonalLoan = (props) => {
         formikInput.errors.Loan_amount_required,
       false,
       [],
+      10000,
+      2500000,
     ],
     4: [
       "Net_monthly_income",
@@ -155,13 +173,32 @@ const PersonalLoan = (props) => {
       empTypeList,
     ],
   };
+  const checkNumber = (e) => {
+    // let firstNumber = e.target.value[0];
+    // if (firstNumber < 6) setfirstNo("first");
+    // else setfirstNo("");
+    // console.log(e.target.value.length);
+    // console.log(e.target.maxLength);
+    if (e.target.name === "Mobile_no") {
+      e.target.value = e.target.value.replace(/[^0-9]/g, "");
+      if (e.target.value.length > e.target.maxLength) {
+        e.target.value = e.target.value.slice(0, e.target.maxLength);
+      }
+    }
+    // if (e.target.value > 2500000) {
+    //   e.target.value = e.target.value.slice(0, e.target.maxLength);
+    // }
+    // if (e.target.value.length === 10 && firstNo === "") setDisableOn(false);
+    // else setDisableOn(true);
+    // setmobileNumber(e.target.value);
+  };
 
   return (
     <>
       <div className="tab-content" id="pills-tabContent">
         <Box
           sx={{
-            "& .MuiTextField-root": { m: "0.5ch 1.5ch 3ch", width: "40ch" },
+            "& .MuiTextField-root": { m: "0.5ch 1.5ch 3ch", width: "48ch" },
           }}
           id="personal-info"
           role="tabpanel"
@@ -185,14 +222,17 @@ const PersonalLoan = (props) => {
                     <TextField
                       key={key}
                       fullWidth
-                      required
                       id={item[0]}
                       select={item[6]}
                       name={item[0]}
                       label={item[1]}
                       placeholder={item[2]}
                       value={item[3]}
-                      onChange={formikInput.handleChange}
+                      InputProps={{ inputProps: { maxLength: item[10] } }}
+                      onChange={(e) => {
+                        checkNumber(e);
+                        formikInput.handleChange(e);
+                      }}
                       error={item[4]}
                       helperText={item[5]}
                     >

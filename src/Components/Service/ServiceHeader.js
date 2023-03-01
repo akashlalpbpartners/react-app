@@ -30,7 +30,9 @@ function ServiceHeader(props) {
               <ul className="navbar-nav">
                 <li className="nav-item">
                   <a
-                    className="nav-link active"
+                    className={`nav-link ${
+                      props.togglePage === "leadrequest" ? "active" : ""
+                    }`}
                     aria-current="page"
                     href="#"
                     id="leadrequest"
@@ -41,7 +43,9 @@ function ServiceHeader(props) {
                 </li>
                 <li className="nav-item">
                   <a
-                    className="nav-link"
+                    className={`nav-link ${
+                      props.togglePage === "leaddetails" ? "active" : ""
+                    }`}
                     id="leaddetails"
                     onClick={handleClick}
                   >
@@ -74,7 +78,7 @@ function ServiceHeader(props) {
                       <div className="user">
                         <img src={imguser} alt="" />
                         <h6>
-                          Testing abcd
+                          {JSON.parse(localStorage.getItem("UserDetails")).Name}
                           <small className="lastlogin">
                             <strong>Last Login -</strong> 2023-02-27 11:02:04
                           </small>
