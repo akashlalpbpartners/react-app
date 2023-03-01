@@ -21,17 +21,18 @@ const PersonalLoan = (props) => {
   const context = useContext(userContext);
   const { user, city, empType } = context;
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);
-  
-  useEffect(() => {
-    setLoanLeadDetails(fetchLeads());
-  }, []);
 
+  useEffect(() => {
+    if (loanLeadDetails.length === 0) fetchLeads();
+  }, [loanLeadDetails]);
+  const Token = JSON.parse(user).Token;
+  console.log(user);
   const fetchLeads = async () => {
     const SubProductId = 1;
     const requestOptions = {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${user.Token}`,
+        Authorization: `Bearer ${Token}`,
         "Content-Type": "application/json",
       },
     };
@@ -42,6 +43,7 @@ const PersonalLoan = (props) => {
       requestOptions
     );
     const result = await response.json();
+    setLoanLeadDetails(result);
     return result;
   };
 
@@ -64,14 +66,15 @@ const PersonalLoan = (props) => {
     },
     validationSchema: validationSchemaInput,
     onSubmit: async (values) => {
-      const isPresent = loanLeadDetails.filter((row) => {
-        return row.CustomerMobile === values.Mobile_no;
+      const isPresent = [];
+      loanLeadDetails.filter((row) => {
+        if (row.CustomerMobile === parseInt(values.Mobile_no))
+          isPresent.push(row);
       });
-      console.log(loanLeadDetails);
       const requestOptions = {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${user.Token}`,
+          Authorization: `Bearer ${Token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -86,12 +89,11 @@ const PersonalLoan = (props) => {
           IsPresent: isPresent.length === 0 ? 0 : 1,
         }),
       };
-      console.log(requestOptions.body);
       await fetch(
         "http://localhost:3001/product/insertfinancialservices",
         requestOptions
       );
-      // formikInput.handleReset();
+      formikInput.handleReset();
     },
   });
 

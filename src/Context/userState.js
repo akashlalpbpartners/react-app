@@ -12,29 +12,13 @@ const UserState = (props) => {
 
   useEffect(() => {
     if (Cookies.get("userCookie")) {
+      setUser(Cookies.get("userCookie"));
       fetchState();
       fetchCity();
       loadEmpType();
       navigate("/service");
     }
   }, [user]);
-
-  // function getCookie(name) {
-  //   var documentCookies = document.cookie;
-  //   var prefix = name + "=";
-  //   var begin = documentCookies.indexOf("; " + prefix);
-  //   if (begin === -1) {
-  //     begin = documentCookies.indexOf(prefix);
-  //     if (begin !== 0) return null;
-  //   } else {
-  //     begin += 2;
-  //     var end = document.cookie.indexOf(";", begin);
-  //     if (end === -1) {
-  //       end = documentCookies.length;
-  //     }
-  //   }
-  //   return decodeURI(documentCookies.substring(begin + prefix.length, end));
-  // }
 
   const loginUser = async () => {
     const response = await fetch("http://localhost:3001/api/login", {
@@ -50,7 +34,7 @@ const UserState = (props) => {
     const parseRes = await response.json();
     Cookies.remove("userCookie");
     Cookies.set("userCookie", JSON.stringify(parseRes));
-    setUser(parseRes);
+    setUser(JSON.stringify(parseRes));
     return parseRes;
   };
 
@@ -63,15 +47,16 @@ const UserState = (props) => {
       //     FINCode: FINCode,
       //   }),
       // });
-      // console.log(FINCode);
       // const result = await response.json();
       // console.log("Fetch user called!");
       // console.log(result);
-      await axios.post("http://localhost:3001/api/fincode",{
-        FinanceCode: FINCode
-      }).then((response)=>{
-        console.log(response.data);
-      })
+      // await axios
+      //   .post("http://localhost:3001/api/fincode", {
+      //     FinanceCode: FINCode,
+      //   })
+      //   .then((response) => {
+      //     console.log(response);
+      //   });
       const result = [
         {
           FINCode: "FIN100000104",
@@ -127,7 +112,7 @@ const UserState = (props) => {
     setEmpType(parseRes);
     return parseRes;
   };
-  
+
   const logoutUser = async () => {
     try {
       // id number name email

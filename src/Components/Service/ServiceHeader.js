@@ -7,7 +7,6 @@ import downarrow from "../../../src/images/icon-arrow.png";
 
 function ServiceHeader(props) {
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const navigate = useNavigate();
   const context = useContext(userContext);
   const { user, logoutUser } = context;
 
@@ -65,7 +64,9 @@ function ServiceHeader(props) {
                     <div className="userimg">
                       <img src={imguser} alt="" className="user-image" />
                     </div>
-                    <span className="name">Testing abcd</span>
+                    <span className="name">
+                      {JSON.parse(localStorage.getItem("UserDetails")).Name}
+                    </span>
                     <img src={downarrow} alt="" className="downarrow" />
                   </a>
                   <ul className="dropdown-menu" aria-labelledby="dropdown10">
