@@ -38,7 +38,8 @@ const PersonalLoan = (props) => {
       },
     };
     const response = await fetch(
-      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${JSON.parse(Cookies.get("userCookie")).FINCode
+      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${
+        JSON.parse(Cookies.get("userCookie")).FINCode
       }`,
       requestOptions
     );
@@ -139,9 +140,9 @@ const PersonalLoan = (props) => {
       "Enter Loan amount required",
       formikInput.values.Loan_amount_required,
       formikInput.touched.Loan_amount_required &&
-      Boolean(formikInput.errors.Loan_amount_required),
+        Boolean(formikInput.errors.Loan_amount_required),
       formikInput.touched.Loan_amount_required &&
-      formikInput.errors.Loan_amount_required,
+        formikInput.errors.Loan_amount_required,
       false,
       [],
     ],
@@ -151,7 +152,7 @@ const PersonalLoan = (props) => {
       "Enter gross sales",
       formikInput.values.Gross_sales,
       formikInput.touched.Gross_sales &&
-      Boolean(formikInput.errors.Gross_sales),
+        Boolean(formikInput.errors.Gross_sales),
       formikInput.touched.Gross_sales && formikInput.errors.Gross_sales,
       false,
       [],
@@ -162,7 +163,7 @@ const PersonalLoan = (props) => {
       "Enter Employment type",
       formikInput.values.Employment_type,
       formikInput.touched.Employment_type &&
-      Boolean(formikInput.errors.Employment_type),
+        Boolean(formikInput.errors.Employment_type),
       formikInput.touched.Employment_type && formikInput.errors.Employment_type,
       true,
       empTypeList,
@@ -186,12 +187,7 @@ const PersonalLoan = (props) => {
   return (
     <>
       <div className="tab-content" id="pills-tabContent">
-        <Box
-
-          id="personal-info"
-          role="tabpanel"
-          aria-labelledby=""
-        >
+        <Box id="personal-info" role="tabpanel" aria-labelledby="">
           <form
             className="container"
             id="my-form"

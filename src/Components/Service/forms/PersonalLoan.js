@@ -48,7 +48,8 @@ const PersonalLoan = (props) => {
       },
     };
     const response = await fetch(
-      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${JSON.parse(Cookies.get("userCookie")).FINCode
+      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${
+        JSON.parse(Cookies.get("userCookie")).FINCode
       }`,
       requestOptions
     );
@@ -149,9 +150,9 @@ const PersonalLoan = (props) => {
       "Enter Loan amount required",
       formikInput.values.Loan_amount_required,
       formikInput.touched.Loan_amount_required &&
-      Boolean(formikInput.errors.Loan_amount_required),
+        Boolean(formikInput.errors.Loan_amount_required),
       formikInput.touched.Loan_amount_required &&
-      formikInput.errors.Loan_amount_required,
+        formikInput.errors.Loan_amount_required,
       false,
       [],
     ],
@@ -161,9 +162,9 @@ const PersonalLoan = (props) => {
       "Enter Net monthly income",
       formikInput.values.Net_monthly_income,
       formikInput.touched.Net_monthly_income &&
-      Boolean(formikInput.errors.Net_monthly_income),
+        Boolean(formikInput.errors.Net_monthly_income),
       formikInput.touched.Net_monthly_income &&
-      formikInput.errors.Net_monthly_income,
+        formikInput.errors.Net_monthly_income,
       false,
       [],
     ],
@@ -173,7 +174,7 @@ const PersonalLoan = (props) => {
       "Enter Employment type",
       formikInput.values.Employment_type,
       formikInput.touched.Employment_type &&
-      Boolean(formikInput.errors.Employment_type),
+        Boolean(formikInput.errors.Employment_type),
       formikInput.touched.Employment_type && formikInput.errors.Employment_type,
       true,
       empTypeList,
@@ -197,11 +198,7 @@ const PersonalLoan = (props) => {
   return (
     <>
       <div className="tab-content" id="pills-tabContent">
-        <Box
-          id="personal-info"
-          role="tabpanel"
-          aria-labelledby=""
-        >
+        <Box id="personal-info" role="tabpanel" aria-labelledby="">
           <form
             id="my-form"
             onSubmit={formikInput.handleSubmit}
@@ -213,7 +210,6 @@ const PersonalLoan = (props) => {
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
-
               <h1 className="main-heading">Personal Loan</h1>
 
               <div class="alert alert-success" role="alert">
@@ -233,7 +229,14 @@ const PersonalLoan = (props) => {
                         label={item[1]}
                         placeholder={item[2]}
                         value={item[3]}
-                        InputProps={{ inputProps: { maxLength: item[8] } }}
+                        InputProps={{
+                          inputProps: {
+                            maxLength: item[8],
+                            style: {
+                              height: "15px",
+                            },
+                          },
+                        }}
                         onChange={(e) => {
                           checkNumber(e);
                           formikInput.handleChange(e);
@@ -277,8 +280,6 @@ const PersonalLoan = (props) => {
                     >
                       Submit Request
                     </button>
-
-
                   </div>
                 </div>
               </div>
@@ -287,14 +288,23 @@ const PersonalLoan = (props) => {
         </Box>
       </div>
 
-
       {/* <!-- Modal --> */}
-      <div className="modal fade" id="otpModal" tabindex="-1" aria-hidden="true">
+      <div
+        className="modal fade"
+        id="otpModal"
+        tabindex="-1"
+        aria-hidden="true"
+      >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title">Enter OTP</h1>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
             <div className="modal-body">
               <div class="alert alert-danger" role="alert">
@@ -333,13 +343,13 @@ const PersonalLoan = (props) => {
 
               <div className="timecount">00.30 sec left to respond OTP</div>
 
-              <button type="button" className="btn btn-primary">Verify</button>
-
+              <button type="button" className="btn btn-primary">
+                Verify
+              </button>
             </div>
           </div>
         </div>
       </div>
-
     </>
   );
 };
