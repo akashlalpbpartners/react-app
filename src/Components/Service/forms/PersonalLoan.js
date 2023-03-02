@@ -101,7 +101,7 @@ const PersonalLoan = (props) => {
           IsPresent: isPresent.length === 0 ? 0 : 1,
         }),
       };
-      
+
       await fetch(
         "http://localhost:3001/product/insertfinancialservices",
         requestOptions
@@ -174,23 +174,17 @@ const PersonalLoan = (props) => {
     ],
   };
   const checkNumber = (e) => {
-    // let firstNumber = e.target.value[0];
-    // if (firstNumber < 6) setfirstNo("first");
-    // else setfirstNo("");
-    // console.log(e.target.value.length);
-    // console.log(e.target.maxLength);
-    if (e.target.name === "Mobile_no") {
+    if (
+      e.target.name === "Mobile_no" ||
+      e.target.name === "Net_monthly_income" ||
+      e.target.name === "Loan_amount_required"
+    )
       e.target.value = e.target.value.replace(/[^0-9]/g, "");
+    if (e.target.name === "Mobile_no") {
       if (e.target.value.length > e.target.maxLength) {
         e.target.value = e.target.value.slice(0, e.target.maxLength);
       }
     }
-    // if (e.target.value > 2500000) {
-    //   e.target.value = e.target.value.slice(0, e.target.maxLength);
-    // }
-    // if (e.target.value.length === 10 && firstNo === "") setDisableOn(false);
-    // else setDisableOn(true);
-    // setmobileNumber(e.target.value);
   };
 
   return (
@@ -198,7 +192,7 @@ const PersonalLoan = (props) => {
       <div className="tab-content" id="pills-tabContent">
         <Box
           sx={{
-            "& .MuiTextField-root": { m: "0.5ch 1.5ch 3ch", width: "48ch" },
+            "& .MuiTextField-root": { m: "0.5ch 1.5ch 3ch", width: "41ch" },
           }}
           id="personal-info"
           role="tabpanel"
@@ -216,35 +210,38 @@ const PersonalLoan = (props) => {
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
+              <h1 class="main-heading">Personal Loan</h1>
               <div className="row">
                 {Object.entries(inputField).map(([key, item]) => (
                   <>
-                    <TextField
-                      key={key}
-                      fullWidth
-                      id={item[0]}
-                      select={item[6]}
-                      name={item[0]}
-                      label={item[1]}
-                      placeholder={item[2]}
-                      value={item[3]}
-                      InputProps={{ inputProps: { maxLength: item[10] } }}
-                      onChange={(e) => {
-                        checkNumber(e);
-                        formikInput.handleChange(e);
-                      }}
-                      error={item[4]}
-                      helperText={item[5]}
-                    >
-                      <MenuItem value="">
-                        <em>{item[1]}</em>
-                      </MenuItem>
-                      {item[7].map((value, key) => (
-                        <MenuItem name={item[1]} key={key} value={value[0]}>
-                          {value[1]}
+                    <div className="col-md-4">
+                      <TextField
+                        key={key}
+                        fullWidth
+                        id={item[0]}
+                        select={item[6]}
+                        name={item[0]}
+                        label={item[1]}
+                        placeholder={item[2]}
+                        value={item[3]}
+                        InputProps={{ inputProps: { maxLength: item[10] } }}
+                        onChange={(e) => {
+                          checkNumber(e);
+                          formikInput.handleChange(e);
+                        }}
+                        error={item[4]}
+                        helperText={item[5]}
+                      >
+                        <MenuItem value="">
+                          <em>{item[1]}</em>
                         </MenuItem>
-                      ))}
-                    </TextField>
+                        {item[7].map((value, key) => (
+                          <MenuItem name={item[1]} key={key} value={value[0]}>
+                            {value[1]}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </div>
                   </>
                 ))}
               </div>

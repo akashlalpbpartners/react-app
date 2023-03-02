@@ -39,7 +39,7 @@ const FinancialServices = (props) => {
         role="tabpanel"
         aria-labelledby="pills-home-tab"
       >
-        <div className="sub-services">
+        <div className="sub-services d-flex align-items-start">
           <FinancialServicesNavbar
             ToggleSubForm={ToggleSubForm}
             setToggleSubForm={setToggleSubForm}

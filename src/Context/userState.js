@@ -59,7 +59,7 @@ const UserState = (props) => {
       //   });
       const result = [
         {
-          FINCode: "FIN100000104",
+          FINCode: "FIN100000100",
           Name: "Ramesh",
           MobileNumber: 9999999999,
         },

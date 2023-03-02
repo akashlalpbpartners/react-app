@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import logo from "../../images/logo.png";
 import userContext from "../../Context/userContext";
 import imguser from "../../../src/images/img-user.png";
@@ -20,7 +19,7 @@ function ServiceHeader(props) {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg fixed-top bg-white">
+      <nav className="navbar navbar-expand-lg fixed-top bg-white shadow">
         <div className="container">
           <div className="navbar-header">
             <a className="navbar-brand" href="/service">

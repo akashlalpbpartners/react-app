@@ -18,7 +18,7 @@ const PersonalLoanLeadDetails = () => {
             Id: row.Id,
             FINCode: row.FINCode,
             CustomerMobile: row.CustomerMobile,
-            CityId: city[row.CityId].City,
+            CityId: city[row.CityId - 1].City,
             LoanAmount: row.LoanAmount,
             NetMonthlyIncome: row.NetMonthlyIncome,
           };
@@ -65,8 +65,8 @@ const PersonalLoanLeadDetails = () => {
       width: 190,
     },
     {
-      field: "NetMonthlyIncome",
-      headerName: "Net Monthly Income",
+      field: "GrossSales",
+      headerName: "Gross Sale",
       width: 190,
     },
   ];
