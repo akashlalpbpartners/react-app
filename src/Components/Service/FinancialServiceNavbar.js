@@ -21,7 +21,7 @@ const FinancialServicesNavbar = (props) => {
 
   return (
     <>
-      <ul className="nav second nav-pills mb-3" id="pills-tab" role="tablist">
+      <ul className="nav nav-pills flex-column" id="pills-tab" role="tablist">
         {/* {Object.entries(subProdArray).map(([value, key]) => {
           console.log("hello");
         })} */}
@@ -36,7 +36,7 @@ const FinancialServicesNavbar = (props) => {
             onClick={handleClick}
           >
             {/* {value.name} */}
-            Personal Loan
+            <i class="fa fa-home" aria-hidden="true"></i> Personal Loan
           </button>
         </li>
         {/* })} */}
@@ -60,7 +60,7 @@ const FinancialServicesNavbar = (props) => {
             type="button"
             onClick={handleClick}
           >
-            Home Loan
+            <i class="fa fa-home" aria-hidden="true"></i> Home Loan
           </button>
         </li>
         {/* <li className="nav-item" role="presentation">
@@ -107,7 +107,7 @@ const FinancialServicesNavbar = (props) => {
             type="button"
             onClick={handleClick}
           >
-            Business Loan
+            <i class="fa fa-home" aria-hidden="true"></i> Business Loan
           </button>
         </li>
       </ul>

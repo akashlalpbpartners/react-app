@@ -378,16 +378,50 @@ option {
     padding: 40px 20px;
   }
 
-  .wrapper .services-with-bg .sub-services .service-footer .service-footer-btn .btn {
-    padding-left: 25px !important;
-    padding-right: 25px !important;
-    font-size: 14px !important;
-  }
 }
 
-.wrapper .services-with-bg {}
+.wrapper .services-with-bg {
+  min-height: 472px;
+}
 
-.wrapper .services-with-bg .services {}
+.wrapper .services-with-bg .services {
+  /* padding: 25px 0; */
+}
+
+.wrapper .services-with-bg .services .sub-services {
+  padding-left: 230px;
+  position: relative;
+}
+
+.wrapper .services-with-bg .services .sub-services ul#pills-tab {
+  position: absolute;
+  left: 0;
+  width: 210px;
+  margin-top: 25px;
+}
+
+.wrapper .services-with-bg .services .sub-services ul#pills-tab li {
+  margin-bottom: 5px;
+}
+
+.wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link {
+  width: 100%;
+  text-align: left;
+  padding: 10px 15px 10px 35px;
+  color: #777;
+  position: relative;
+}
+
+.wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link i.fa {
+  position: absolute;
+  left: 14px;
+  top: 11px;
+  font-size: 15px;
+}
+
+.wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link.active {
+  color: #fff;
+}
 
 .wrapper .services-with-bg .services .nav.first {
   background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -456,27 +490,47 @@ option {
 }
 
 .wrapper .services-with-bg .sub-services .tab-content {
-  padding-top: 35px;
-  max-width: 90%;
-  margin: 0 auto;
+  padding: 25px;
+  background: #f9f9f9;
+  margin-top: 0;
+  height: calc(100vh - 146px);
 }
 
+.wrapper .services-with-bg .sub-services .tab-content .tab-pane {
+  height: calc(100vh - 256px);
+}
+
+.wrapper .services-with-bg .sub-services .tab-content h1.main-heading {
+  font-size: 16px;
+  padding: 10px 0px 30px 0px;
+  background: #f9f9f9;
+  margin-bottom: 20px;
+  color: #000;
+  height: 41px;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.wrapper .services-with-bg .sub-services .tab-content .form-control {
+  font-size: 13px;
+}
+
+/* 
 .wrapper .services-with-bg .sub-services .tab-content .pb-form-floating {
   margin-bottom: 2.5rem !important;
-}
+} */
 
 .wrapper .services-with-bg .sub-services .tab-content label span {
   color: red;
 }
 
 .wrapper .services-with-bg .sub-services .service-footer {
-  border-top: 1px solid #ebe8e8;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  background: #eee;
+  padding: 15px;
+  border-radius: 6px;
 }
 
 .wrapper .services-with-bg .sub-services .service-footer .service-footer-btn {
-  max-width: 90%;
+  max-width: 100%;
   margin: 0 auto;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -487,10 +541,8 @@ option {
 }
 
 .wrapper .services-with-bg .sub-services .service-footer .service-footer-btn .btn {
-  height: 58px;
-  font-size: 16px;
-  padding-left: 45px;
-  padding-right: 45px;
+  border-radius: 4px;
+  font-size: 14px;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,25 +1,16 @@
 import React from "react";
-import saving from "./../../images/saving.png"
-// import deal from "./../../images/deal.png"
-// import sunbed from "./../../images/sunbed.png"
-// import carwash from "./../../images/car-wash.png"
-// import car from "./../../images/car.png"
-// import shopping from "./../../images/shopping-bag.png"
-// import education from "./../../images/mortarboard.png"
-// import other from "./../../images/other.png"
+import saving from "./../../images/saving.png";
 const OurServices = (props) => {
   function handleClick(e) {
-    // Changing toggle menu state
     props.setToggleMenu(e.target.id);
   }
   return (
     <>
-      <ul className="nav first nav-pills mb-3" id="pills-tab" role="tablist">
+      <ul className="nav first nav-pills mb-3 d-none" id="pills-tab" role="tablist">
         <li className="nav-item" role="presentation">
           <button
-            className={`nav-link ${
-              props.toggleMenu === "financialservices" ? "active" : ""
-            }`}
+            className={`nav-link ${props.toggleMenu === "financialservices" ? "active" : ""
+              }`}
             id="financialservices"
             type="button"
             onClick={handleClick}

@@ -11,31 +11,14 @@ const UserState = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (getCookie("userCookie") !== null) {
-      setUser(JSON.parse(Cookies.get("userCookie")));
+    if (Cookies.get("userCookie")) {
+      setUser(Cookies.get("userCookie"));
       fetchState();
       fetchCity();
       loadEmpType();
       navigate("/service");
     }
-  }, []);
-
-  function getCookie(name) {
-    var documentCookies = document.cookie;
-    var prefix = name + "=";
-    var begin = documentCookies.indexOf("; " + prefix);
-    if (begin === -1) {
-      begin = documentCookies.indexOf(prefix);
-      if (begin !== 0) return null;
-    } else {
-      begin += 2;
-      var end = document.cookie.indexOf(";", begin);
-      if (end === -1) {
-        end = documentCookies.length;
-      }
-    }
-    return decodeURI(documentCookies.substring(begin + prefix.length, end));
-  }
+  }, [user]);
 
   const loginUser = async () => {
     const response = await fetch("http://localhost:3001/api/login", {
@@ -51,7 +34,7 @@ const UserState = (props) => {
     const parseRes = await response.json();
     Cookies.remove("userCookie");
     Cookies.set("userCookie", JSON.stringify(parseRes));
-    setUser(parseRes);
+    setUser(JSON.stringify(parseRes));
     return parseRes;
   };
 
@@ -64,18 +47,20 @@ const UserState = (props) => {
       //     FINCode: FINCode,
       //   }),
       // });
-      // console.log(FINCode);
       // const result = await response.json();
       // console.log("Fetch user called!");
       // console.log(result);
-      await axios.post("http://localhost:3001/api/fincode",{
-        FinanceCode: FINCode
-      }).then((response)=>{
-        console.log(response.data);
-      })
+      // await axios
+      //   .post("http://localhost:3001/api/fincode", {
+      //     FinanceCode: FINCode,
+      //   })
+      //   .then((response) => {
+      //     console.log(response);
+      //   });
       const result = [
         {
-          FINCode: "FIN100000104",
+          FINCode: "FIN100000100",
+          Name: "Ramesh",
           MobileNumber: 9999999999,
         },
       ];
@@ -87,58 +72,6 @@ const UserState = (props) => {
     }
   };
 
-  // const fetchBankInfo = async (id) => {
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:3001/details/getbankinfo/${id}`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           Authorization: `Bearer ${
-  //             JSON.parse(Cookies.get("userCookie")).Token
-  //           }`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     const parseRes = await response.json();
-  //     console.log("Fetch bank called!");
-  //     setBankInfo(parseRes);
-  //     console.log("bank", parseRes);
-  //     if (parseRes.length === 0)
-  //       localStorage.setItem("BankDetails", JSON.stringify([]));
-  //     else localStorage.setItem("BankDetails", JSON.stringify(parseRes[0]));
-  //     console.log(JSON.parse(localStorage.getItem("BankDetails")));
-  //     return parseRes;
-  //   } catch (err) {
-  //     alert(err);
-  //     console.error(err.message);
-  //   }
-  // };
-  // const fetchKycInfo = async (id) => {
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:3001/details/getkycinfo/${id}`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           Authorization: `Bearer ${
-  //             JSON.parse(Cookies.get("userCookie")).Token
-  //           }`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     const parseRes = await response.json();
-  //     console.log("Fetch kyc called!");
-  //     setKycInfo(parseRes);
-  //     localStorage.setItem("KycDetails", JSON.stringify(parseRes));
-  //     return parseRes;
-  //   } catch (err) {
-  //     alert(err);
-  //     console.error(err.message);
-  //   }
-  // };
   const fetchState = async () => {
     try {
       const response = await fetch("http://localhost:3001/geo/readstates", {
@@ -153,6 +86,7 @@ const UserState = (props) => {
       console.error(err.message);
     }
   };
+
   const fetchCity = async () => {
     try {
       const response = await fetch("http://localhost:3001/geo/readcity", {
@@ -168,6 +102,7 @@ const UserState = (props) => {
       console.error(err.message);
     }
   };
+
   const loadEmpType = async () => {
     const response = await fetch("http://localhost:3001/employmenttype/", {
       method: "GET",
@@ -177,6 +112,7 @@ const UserState = (props) => {
     setEmpType(parseRes);
     return parseRes;
   };
+
   const logoutUser = async () => {
     try {
       // id number name email
