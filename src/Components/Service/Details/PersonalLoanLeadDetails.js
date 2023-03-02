@@ -96,7 +96,7 @@ const PersonalLoanLeadDetails = () => {
       },
     };
     const response = await fetch(
-      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${
+      `http://localhost:3001/product/readallfinancialservices/${
         JSON.parse(Cookies.get("userCookie")).FINCode
       }`,
       requestOptions
