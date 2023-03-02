@@ -73,8 +73,9 @@ const PersonalLoanLeadDetails = () => {
           return {
             Id: detail.Id,
             FINCode:detail.FINCode,
+            Name:detail.Name,
             CustomerMobile: detail.CustomerMobile,
-            CityId: city[detail.CityId].City,
+            CityId: city[detail.CityId-1].City,
             LoanAmount: detail.LoanAmount,
             NetMonthlyIncome: detail.NetMonthlyIncome,
             employment_type: empType[detail.EmploymentType].EmploymentType,
@@ -113,6 +114,7 @@ const PersonalLoanLeadDetails = () => {
           return {
             Id: detail.Id,
             FINCode:detail.FINCode,
+            Name:detail.Name,
             CustomerMobile: detail.CustomerMobile,
             CityId: city[detail.CityId].City,
             LoanAmount: detail.LoanAmount,
@@ -129,6 +131,7 @@ const PersonalLoanLeadDetails = () => {
         return {
           Id: row.Id,
           FINCode:row.FINCode,
+          Name:row.Name,
           CustomerMobile: row.CustomerMobile,
           CityId: city[row.CityId].City,
           LoanAmount: row.LoanAmount,
@@ -143,6 +146,11 @@ const PersonalLoanLeadDetails = () => {
   const columns = [
     { field: "Id", headerName: "Id", width: 90 },
     { field: "FINCode", headerName: "FINCode", width: 150 },
+    {
+      field: "Name",
+      headerName: "Name",
+      width: 180,
+    },
     {
       field: "CustomerMobile",
       headerName: "Mobile Number",
