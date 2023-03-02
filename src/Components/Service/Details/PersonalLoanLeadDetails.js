@@ -65,8 +65,7 @@ const PersonalLoanLeadDetails = () => {
       JSON.parse(localStorage.getItem("UserDetails")).FINCode !== "ADMIN@PBPTNR"
     ) {
       response = await fetch(
-        `http://localhost:3001/product/readallfinancialservices/${
-          JSON.parse(Cookies.get("userCookie")).FINCode
+        `http://localhost:3001/product/readallfinancialservices/${JSON.parse(Cookies.get("userCookie")).FINCode
         }`,
         requestOptions
       );
@@ -202,31 +201,53 @@ const PersonalLoanLeadDetails = () => {
   };
   return (
     <>
-      <div className="container tab-content" id="pills-tabContent">
-        <Box
-          container
-          style={{ height: 260, width: "100%", margin: "0 0 5ch 0" }}
-        >
-          <DataGrid
-            rows={rows}
-            columns={col}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            getRowId={(row) => row.Id + row.FINCode}
-          />
+      <div className="container">
+        <div className="tab-content" id="pills-tabContent">
 
-          {subproduct.map((obj) => (
-            <label key={obj.SubProductId}>
-              <input
-                type="checkbox"
-                id={obj.docId}
-                value={obj.SubProductId}
-                onChange={handleFilterChange}
-              />
-              {obj.SubProductName}
-            </label>
-          ))}
-        </Box>
+          <h1 className="main-heading">
+            <span>Lead Details</span>
+          </h1>
+
+          <div className="filterdiv">
+            <div className="left">
+              {subproduct.map((obj) => (
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id={obj.docId}
+                    value={obj.SubProductId}
+                    onChange={handleFilterChange}
+                  />
+                  <label className="form-check-label" id={obj.docId} key={obj.SubProductId}>
+                    {obj.SubProductName}
+                  </label>
+                </div>
+              ))}
+            </div>
+            <div className="right">
+              <div className="search">
+                <input className="form-control" placeholder="Search ..." />
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+
+          <Box
+            container
+            style={{ height: 300, width: "100%", margin: "0 0 5ch 0" }}
+          >
+            <DataGrid
+              rows={rows}
+              columns={col}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              getRowId={(row) => row.Id + row.FINCode}
+            />
+
+
+          </Box>
+        </div>
       </div>
     </>
   );

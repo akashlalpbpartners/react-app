@@ -19,7 +19,7 @@
 }
 
 #otpModal .modal-dialog .modal-content .modal-body .imgbox {
-    background: url(/static/media/otp-img.df521ad8.svg) no-repeat center center;
+    background: url(../images/otp-img.svg) no-repeat center center;
     height: 120px;
     width: 154px;
     display: flex;
