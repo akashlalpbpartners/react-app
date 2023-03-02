@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
 import Cookies from "js-cookie";
-import { useFormik } from "formik";
+import { Formik, useFormik } from "formik";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -9,62 +9,61 @@ import userContext from "../../../Context/userContext";
 
 const validationSchemaInput = Yup.object({
   Mobile_no: Yup.string()
-    .min(10, "Invalid Mobile Number")
-    .max(10, "Invalid Mobile Number")
     .matches(/^[789]\d{9}$/, "Phone number is not valid.")
     .required("Phone Number is required."),
   City: Yup.string().required("City is required."),
-  Loan_amount_required: Yup.string().required("Loan amount is required."),
+  Loan_amount_required: Yup.string()
+    .test(
+      "test-name",
+      "Loan Amount must be ranged between 1 Lac to 5 Crore",
+      function (value) {
+        const loan = parseInt(value);
+        if (loan <= 50000000 && loan >= 100000) return true;
+        else return false;
+      }
+    )
+    .required("Loan amount is required."),
   Net_monthly_income: Yup.string().required("Monthly income is required."),
   Employment_type: Yup.string().required("Employment type is required."),
 });
 
 const PersonalLoan = (props) => {
-  ////////////////////////// Using state to store the values //////////////////////////
   const context = useContext(userContext);
-  const [empType, setEmpType] = useState([]);
+  const { user, city, empType } = context;
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);
-  const [rows, setRows] = useState([]);
-  const { city, userToken } = context;
-  useEffect(() => {
-    loadEmpType();
-    if (loanLeadDetails.length === 0) {
-      const sub_product_ID = 2;
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-          "Content-Type": "application/json",
-        },
-      };
-      fetch(
-        `http://localhost:3001/product/readfinancialservices/${sub_product_ID}/${JSON.parse(Cookies.get("userCookie")).CustomerID
-        }`,
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          setLoanLeadDetails(data);
-        });
-    } else {
-      setRows(loanLeadDetails);
-    }
-  }, [loanLeadDetails]);
 
-  const loadEmpType = async () => {
-    await fetch("http://localhost:3001/employmenttype/", {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((data) => setEmpType(data));
+  useEffect(() => {
+    if (loanLeadDetails.length === 0) fetchLeads();
+  }, [loanLeadDetails]);
+  const Token = JSON.parse(user).Token;
+  const fetchLeads = async () => {
+    const SubProductId = 2;
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${Token}`,
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch(
+      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${JSON.parse(Cookies.get("userCookie")).FINCode
+      }`,
+      requestOptions
+    );
+    const result = await response.json();
+    setLoanLeadDetails(result);
+    return result;
   };
 
   const cityList = [];
   Object.entries(city).map(([key, value]) => {
-    return cityList.push([value.id, value.city]);
+    cityList.push([value.Id, value.City]);
+  });
+  const empTypeList = [];
+  Object.entries(empType).map(([key, value]) => {
+    empTypeList.push([value.Id, value.EmploymentType]);
   });
 
-  ////////////////////////// Using custom hook of formik //////////////////////////
   const formikInput = useFormik({
     initialValues: {
       Mobile_no: "",
@@ -74,37 +73,41 @@ const PersonalLoan = (props) => {
       Employment_type: "",
     },
     validationSchema: validationSchemaInput,
+    onChange: (e) => {
+      console.log("hei");
+    },
     onSubmit: async (values) => {
-      const isPresent = rows.filter(
-        (row) => row.customer_mobile === values.Mobile_no
-      );
+      const isPresent = [];
+      loanLeadDetails.filter((row) => {
+        if (row.CustomerMobile === parseInt(values.Mobile_no))
+          isPresent.push(row);
+      });
       const requestOptions = {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${userToken}`,
+          Authorization: `Bearer ${Token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          sub_product_id: parseInt(props.ToggleSubForm),
-          customer_mobile: values.Mobile_no,
-          city_id: values.City,
-          loan_amount: values.Loan_amount_required,
-          net_monthly_income: values.Net_monthly_income,
-          employment_type: values.Employment_type,
-          created_by: JSON.parse(Cookies.get("userCookie")).CustomerID,
-          is_present: isPresent.length === 0 ? 0 : 1,
+          SubProductId: parseInt(props.ToggleSubForm),
+          CustomerMobile: parseInt(values.Mobile_no),
+          CityId: values.City,
+          LoanAmount: parseInt(values.Loan_amount_required),
+          NetMonthlyIncome: parseInt(values.Net_monthly_income),
+          EmploymentType: values.Employment_type,
+          FINCode: JSON.parse(Cookies.get("userCookie")).FINCode,
+          GrossSales: 0,
+          IsPresent: isPresent.length === 0 ? 0 : 1,
         }),
       };
       await fetch(
         "http://localhost:3001/product/insertfinancialservices",
         requestOptions
       );
+      formikInput.handleReset();
     },
   });
-  const empList = [];
-  Object.entries(empType).map(([key, value]) => {
-    return empList.push([value.id, value.EmploymentType]);
-  });
+
   ////////////////////////// Attribute dictionary //////////////////////////
   const inputField = {
     1: [
@@ -116,6 +119,9 @@ const PersonalLoan = (props) => {
       formikInput.touched.Mobile_no && formikInput.errors.Mobile_no,
       false,
       [],
+      ,
+      ,
+      10,
     ],
     2: [
       "City",
@@ -138,6 +144,8 @@ const PersonalLoan = (props) => {
       formikInput.errors.Loan_amount_required,
       false,
       [],
+      10000,
+      2500000,
     ],
     4: [
       "Net_monthly_income",
@@ -160,8 +168,27 @@ const PersonalLoan = (props) => {
       Boolean(formikInput.errors.Employment_type),
       formikInput.touched.Employment_type && formikInput.errors.Employment_type,
       true,
-      empList,
+      empTypeList,
     ],
+  };
+  const checkNumber = (e) => {
+    // let firstNumber = e.target.value[0];
+    // if (firstNumber < 6) setfirstNo("first");
+    // else setfirstNo("");
+    // console.log(e.target.value.length);
+    // console.log(e.target.maxLength);
+    if (e.target.name === "Mobile_no") {
+      e.target.value = e.target.value.replace(/[^0-9]/g, "");
+      if (e.target.value.length > e.target.maxLength) {
+        e.target.value = e.target.value.slice(0, e.target.maxLength);
+      }
+    }
+    // if (e.target.value > 2500000) {
+    //   e.target.value = e.target.value.slice(0, e.target.maxLength);
+    // }
+    // if (e.target.value.length === 10 && firstNo === "") setDisableOn(false);
+    // else setDisableOn(true);
+    // setmobileNumber(e.target.value);
   };
 
   return (
@@ -169,7 +196,7 @@ const PersonalLoan = (props) => {
       <div className="tab-content" id="pills-tabContent">
         <Box
           sx={{
-            "& .MuiTextField-root": { m: "0.5ch 1.5ch 3ch", width: "40ch" },
+            "& .MuiTextField-root": { m: "0.5ch 1.5ch 3ch", width: "41ch" },
           }}
           id="personal-info"
           role="tabpanel"
@@ -190,29 +217,34 @@ const PersonalLoan = (props) => {
               <div className="row">
                 {Object.entries(inputField).map(([key, item]) => (
                   <>
-                    <TextField
-                      key={key}
-                      fullWidth
-                      required
-                      id={item[0]}
-                      select={item[6]}
-                      name={item[0]}
-                      label={item[1]}
-                      placeholder={item[2]}
-                      value={item[3]}
-                      onChange={formikInput.handleChange}
-                      error={item[4]}
-                      helperText={item[5]}
-                    >
-                      <MenuItem value="">
-                        <em>{item[1]}</em>
-                      </MenuItem>
-                      {item[7].map((value, key) => (
-                        <MenuItem name={item[1]} key={key} value={value[0]}>
-                          {value[1]}
+                    <div className="col-md-4">
+                      <TextField
+                        key={key}
+                        fullWidth
+                        id={item[0]}
+                        select={item[6]}
+                        name={item[0]}
+                        label={item[1]}
+                        placeholder={item[2]}
+                        value={item[3]}
+                        InputProps={{ inputProps: { maxLength: item[10] } }}
+                        onChange={(e) => {
+                          checkNumber(e);
+                          formikInput.handleChange(e);
+                        }}
+                        error={item[4]}
+                        helperText={item[5]}
+                      >
+                        <MenuItem value="">
+                          <em>{item[1]}</em>
                         </MenuItem>
-                      ))}
-                    </TextField>
+                        {item[7].map((value, key) => (
+                          <MenuItem name={item[1]} key={key} value={value[0]}>
+                            {value[1]}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </div>
                   </>
                 ))}
               </div>
