@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
 import Cookies from "js-cookie";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -34,6 +34,7 @@ const PersonalLoan = (props) => {
 
   useEffect(() => {
     if (loanLeadDetails.length === 0) fetchLeads();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loanLeadDetails]);
   const Token = JSON.parse(user).Token;
   const fetchLeads = async () => {
@@ -58,11 +59,11 @@ const PersonalLoan = (props) => {
 
   const cityList = [];
   Object.entries(city).map(([key, value]) => {
-    cityList.push([value.Id, value.City]);
+    return cityList.push([value.Id, value.City]);
   });
   const empTypeList = [];
   Object.entries(empType).map(([key, value]) => {
-    empTypeList.push([value.Id, value.EmploymentType]);
+    return empTypeList.push([value.Id, value.EmploymentType]);
   });
 
   const formikInput = useFormik({
@@ -74,9 +75,6 @@ const PersonalLoan = (props) => {
       Employment_type: "",
     },
     validationSchema: validationSchemaInput,
-    onChange: (e) => {
-      console.log("hei");
-    },
     onSubmit: async (values) => {
       const isPresent = [];
       loanLeadDetails.filter((row) => {
@@ -109,7 +107,6 @@ const PersonalLoan = (props) => {
     },
   });
 
-  ////////////////////////// Attribute dictionary //////////////////////////
   const inputField = {
     1: [
       "Mobile_no",
@@ -120,8 +117,6 @@ const PersonalLoan = (props) => {
       formikInput.touched.Mobile_no && formikInput.errors.Mobile_no,
       false,
       [],
-      ,
-      ,
       10,
     ],
     2: [
@@ -145,8 +140,6 @@ const PersonalLoan = (props) => {
         formikInput.errors.Loan_amount_required,
       false,
       [],
-      10000,
-      2500000,
     ],
     4: [
       "Net_monthly_income",
@@ -173,23 +166,12 @@ const PersonalLoan = (props) => {
     ],
   };
   const checkNumber = (e) => {
-    // let firstNumber = e.target.value[0];
-    // if (firstNumber < 6) setfirstNo("first");
-    // else setfirstNo("");
-    // console.log(e.target.value.length);
-    // console.log(e.target.maxLength);
     if (e.target.name === "Mobile_no") {
       e.target.value = e.target.value.replace(/[^0-9]/g, "");
       if (e.target.value.length > e.target.maxLength) {
         e.target.value = e.target.value.slice(0, e.target.maxLength);
       }
     }
-    // if (e.target.value > 2500000) {
-    //   e.target.value = e.target.value.slice(0, e.target.maxLength);
-    // }
-    // if (e.target.value.length === 10 && firstNo === "") setDisableOn(false);
-    // else setDisableOn(true);
-    // setmobileNumber(e.target.value);
   };
 
   return (
@@ -229,7 +211,7 @@ const PersonalLoan = (props) => {
                         label={item[1]}
                         placeholder={item[2]}
                         value={item[3]}
-                        InputProps={{ inputProps: { maxLength: item[10] } }}
+                        InputProps={{ inputProps: { maxLength: item[8] } }}
                         onChange={(e) => {
                           checkNumber(e);
                           formikInput.handleChange(e);

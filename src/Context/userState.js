@@ -18,6 +18,7 @@ const UserState = (props) => {
       loadEmpType();
       navigate("/service");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const loginUser = async () => {
@@ -57,15 +58,27 @@ const UserState = (props) => {
       //   .then((response) => {
       //     console.log(response);
       //   });
-      const result = [
-        {
-          FINCode: "FIN100000100",
-          Name: "Ramesh",
-          MobileNumber: 9999999999,
-        },
-      ];
-      localStorage.setItem("UserDetails", JSON.stringify(result[0]));
-      return result;
+      if (FINCode !== "ADMIN@PBPTNR") {
+        const result = [
+          {
+            FINCode: "FIN100000100",
+            Name: "Ramesh",
+            MobileNumber: 9999999999,
+          },
+        ];
+        localStorage.setItem("UserDetails", JSON.stringify(result[0]));
+        return result;
+      } else {
+        const result = [
+          {
+            FINCode: "ADMIN@PBPTNR",
+            Name: "Administrator",
+            MobileNumber: "9999999999",
+          },
+        ];
+        localStorage.setItem("UserDetails", JSON.stringify(result[0]));
+        return result;
+      }
     } catch (err) {
       alert(err);
       console.error(err.message);

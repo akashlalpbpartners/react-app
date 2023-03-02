@@ -6,7 +6,7 @@ import userContext from "../../Context/userContext";
 const LoginSignUpForm = () => {
   const navigate = useNavigate();
   const context = useContext(userContext);
-  const { loginUser, fetchUser, fetchState, fetchCity } = context;
+  const { loginUser, fetchUser } = context;
   const [toggleShow, setToggleShow] = useState("hide");
   const [FINCode, setFINCode] = useState("");
   const [disableOn, setDisableOn] = useState(true);
@@ -31,10 +31,8 @@ const LoginSignUpForm = () => {
     } else setFINCode(e.target.value);
   };
   const handleSendOtp = async () => {
-    console.log("hello");
     const response = await fetchUser(FINCode);
     if (response.length !== 0) {
-      // console.log(response);
       setToggleShow("show");
       setDisableOn(false);
       check.resendOtp({ offDisable, setTimeOutShow });
@@ -69,8 +67,15 @@ const LoginSignUpForm = () => {
   };
 
   const handleVerify = (otp) => {
-    if (otp === "101010") return true;
-    else return false;
+    if (
+      JSON.parse(localStorage.getItem("UserDetails")).FINCode === "ADMIN@PBPTNR"
+    ) {
+      if (otp === process.env.REACT_APP_ADMIN_PASSWORD) return true;
+      else return false;
+    } else {
+      if (otp === "101010") return true;
+      else return false;
+    }
   };
 
   const handleVerifyOtp = async () => {

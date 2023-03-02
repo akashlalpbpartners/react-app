@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
 import Cookies from "js-cookie";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -34,6 +34,7 @@ const PersonalLoan = (props) => {
 
   useEffect(() => {
     if (loanLeadDetails.length === 0) fetchLeads();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loanLeadDetails]);
   const Token = JSON.parse(user).Token;
   const fetchLeads = async () => {
@@ -74,9 +75,6 @@ const PersonalLoan = (props) => {
       Employment_type: "",
     },
     validationSchema: validationSchemaInput,
-    onChange: (e) => {
-      console.log("hei");
-    },
     onSubmit: async (values) => {
       const isPresent = [];
       loanLeadDetails.filter((row) => {
@@ -121,8 +119,6 @@ const PersonalLoan = (props) => {
       formikInput.touched.Mobile_no && formikInput.errors.Mobile_no,
       false,
       [],
-      ,
-      ,
       10,
     ],
     2: [
@@ -146,8 +142,6 @@ const PersonalLoan = (props) => {
         formikInput.errors.Loan_amount_required,
       false,
       [],
-      10000,
-      2500000,
     ],
     4: [
       "Net_monthly_income",
@@ -173,6 +167,7 @@ const PersonalLoan = (props) => {
       empTypeList,
     ],
   };
+
   const checkNumber = (e) => {
     if (
       e.target.name === "Mobile_no" ||
@@ -224,7 +219,7 @@ const PersonalLoan = (props) => {
                         label={item[1]}
                         placeholder={item[2]}
                         value={item[3]}
-                        InputProps={{ inputProps: { maxLength: item[10] } }}
+                        InputProps={{ inputProps: { maxLength: item[8] } }}
                         onChange={(e) => {
                           checkNumber(e);
                           formikInput.handleChange(e);

@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 const PersonalLoanLeadDetails = () => {
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);
   const context = useContext(userContext);
-  const { user, city, empType } = context;
+  const { user, city } = context;
   const [rows, setRows] = useState([]);
   useEffect(() => {
     if (loanLeadDetails.length === 0) fetchLeads();
@@ -25,6 +25,7 @@ const PersonalLoanLeadDetails = () => {
         })
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loanLeadDetails]);
   const Token = JSON.parse(user).Token;
   const fetchLeads = async () => {

@@ -10,25 +10,32 @@ import BusinessLoanLeadDetails from "./Details/BusinessLoanLeadDetails";
 import { useState } from "react";
 const FinancialServices = (props) => {
   const [ToggleSubForm, setToggleSubForm] = useState("1");
+
   function renderElement(ToggleSubForm) {
-    if (ToggleSubForm === "1") {
-      if (props.togglePage === "leadrequest") {
-        return <PersonalLoan ToggleSubForm={ToggleSubForm} />;
-      } else {
-        return <PersonalLoanLeadDetails />;
+    if (
+      JSON.parse(localStorage.getItem("UserDetails")).FINCode !== "ADMIN@PBPTNR"
+    ) {
+      if (ToggleSubForm === "1") {
+        if (props.togglePage === "leadrequest") {
+          return <PersonalLoan ToggleSubForm={ToggleSubForm} />;
+        } else {
+          return <PersonalLoanLeadDetails />;
+        }
+      } else if (ToggleSubForm === "2") {
+        if (props.togglePage === "leadrequest") {
+          return <HomeLoan ToggleSubForm={ToggleSubForm} />;
+        } else {
+          return <HomeLoanLeadDetails />;
+        }
+      } else if (ToggleSubForm === "3") {
+        if (props.togglePage === "leadrequest") {
+          return <BusinessLoan ToggleSubForm={ToggleSubForm} />;
+        } else {
+          return <BusinessLoanLeadDetails />;
+        }
       }
-    } else if (ToggleSubForm === "2") {
-      if (props.togglePage === "leadrequest") {
-        return <HomeLoan ToggleSubForm={ToggleSubForm} />;
-      } else {
-        return <HomeLoanLeadDetails />;
-      }
-    } else if (ToggleSubForm === "3") {
-      if (props.togglePage === "leadrequest") {
-        return <BusinessLoan ToggleSubForm={ToggleSubForm} />;
-      } else {
-        return <BusinessLoanLeadDetails />;
-      }
+    } else {
+      return <PersonalLoanLeadDetails />;
     }
   }
   return (
@@ -40,10 +47,15 @@ const FinancialServices = (props) => {
         aria-labelledby="pills-home-tab"
       >
         <div className="sub-services d-flex align-items-start">
-          <FinancialServicesNavbar
-            ToggleSubForm={ToggleSubForm}
-            setToggleSubForm={setToggleSubForm}
-          />
+          {JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
+          "ADMIN@PBPTNR" ? (
+            <FinancialServicesNavbar
+              ToggleSubForm={ToggleSubForm}
+              setToggleSubForm={setToggleSubForm}
+            />
+          ) : (
+            <></>
+          )}
 
           {renderElement(ToggleSubForm)}
         </div>
