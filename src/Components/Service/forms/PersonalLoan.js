@@ -58,11 +58,11 @@ const PersonalLoan = (props) => {
 
   const cityList = [];
   Object.entries(city).map(([key, value]) => {
-    cityList.push([value.Id, value.City]);
+    return cityList.push([value.Id, value.City]);
   });
   const empTypeList = [];
   Object.entries(empType).map(([key, value]) => {
-    empTypeList.push([value.Id, value.EmploymentType]);
+    return empTypeList.push([value.Id, value.EmploymentType]);
   });
 
   const formikInput = useFormik({
