@@ -19,7 +19,7 @@ function ServiceHeader(props) {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg fixed-top bg-white">
+      <nav className="navbar navbar-expand-lg fixed-top bg-white shadow">
         <div className="container">
           <div className="navbar-header">
             <a className="navbar-brand" href="/service">

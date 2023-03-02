@@ -27,22 +27,24 @@ function ServiceIndex() {
     <>
       <div className="wrapper">
         <ServiceHeader setTogglePage={setTogglePage} togglePage={togglePage} />
-        <div className="services-with-bg">
+        <div className="services-with-bg innerContent">
           {/* <!-- Start Our Services Section --> */}
-          <div className="container-fluid">
-            <div className="row" style={{ paddingTop: "3ch" }}>
-              <div className="services">
-                {
-                  <OurServices
-                    setToggleMenu={setToggleMenu}
-                    toggleMenu={toggleMenu}
-                  />
-                }
-                <div className="tab-content" id="pills-tabContent">
-                  {renderElement(toggleMenu)}
-                </div>
+          <div className="container">
+
+            <div className="services">
+
+              {
+                <OurServices
+                  setToggleMenu={setToggleMenu}
+                  toggleMenu={toggleMenu}
+                />
+              }
+              <div className="tab-content" id="pills-tabContent">
+                {renderElement(toggleMenu)}
               </div>
+
             </div>
+
           </div>
         </div>
         {<Footer />}
