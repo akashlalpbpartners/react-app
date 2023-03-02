@@ -190,15 +190,11 @@ const PersonalLoan = (props) => {
     <>
       <div className="tab-content" id="pills-tabContent">
         <Box
-          sx={{
-            "& .MuiTextField-root": { m: "0.5ch 1.5ch 3ch", width: "41ch" },
-          }}
           id="personal-info"
           role="tabpanel"
           aria-labelledby=""
         >
           <form
-            className="container"
             id="my-form"
             onSubmit={formikInput.handleSubmit}
             autoComplete="off"
@@ -209,11 +205,11 @@ const PersonalLoan = (props) => {
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
-              <h1 class="main-heading">Personal Loan</h1>
+              <h1 className="main-heading">Personal Loan</h1>
               <div className="row">
                 {Object.entries(inputField).map(([key, item]) => (
                   <>
-                    <div className="col-md-4">
+                    <div className="form-group col-lg-4">
                       <TextField
                         key={key}
                         fullWidth
@@ -257,13 +253,18 @@ const PersonalLoan = (props) => {
                     >
                       Reset
                     </button>
+
                     <button
                       type="button"
                       className="btn btn-primary"
                       onClick={formikInput.handleSubmit}
+                      data-bs-toggle="modal"
+                      data-bs-target="#otpModal"
                     >
                       Submit Request
                     </button>
+
+
                   </div>
                 </div>
               </div>
@@ -271,6 +272,56 @@ const PersonalLoan = (props) => {
           </form>
         </Box>
       </div>
+
+
+      {/* <!-- Modal --> */}
+      <div className="modal fade" id="otpModal" tabindex="-1" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title">Enter OTP</h1>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <div className="imgbox">
+                <img src="../../../../images/otp-img.svg" alt="" />
+              </div>
+              {/* <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="FINCode" placeholder="Fincode" maxlength="12" value="" />
+                <label for="floatingInput">Fincode</label>
+              </div> */}
+              <div class="otp-number">
+                <ul>
+                  <li>
+                    <input type="number" class="form-control" maxlength="1" />
+                  </li>
+                  <li>
+                    <input type="number" class="form-control" maxlength="1" />
+                  </li>
+                  <li>
+                    <input type="number" class="form-control" maxlength="1" />
+                  </li>
+                  <li>
+                    <input type="number" class="form-control" maxlength="1" />
+                  </li>
+                  <li>
+                    <input type="number" class="form-control" maxlength="1" />
+                  </li>
+                  <li>
+                    <input type="number" class="form-control" maxlength="1" />
+                  </li>
+                </ul>
+              </div>
+
+              <div className="timecount">00.30 sec left to respond OTP</div>
+
+              <button type="button" className="btn btn-primary">Verify</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
     </>
   );
 };

@@ -183,9 +183,7 @@ const PersonalLoan = (props) => {
     <>
       <div className="tab-content" id="pills-tabContent">
         <Box
-          sx={{
-            "& .MuiTextField-root": { m: "0.5ch 1.5ch 3ch", width: "41ch" },
-          }}
+
           id="personal-info"
           role="tabpanel"
           aria-labelledby=""
@@ -205,7 +203,7 @@ const PersonalLoan = (props) => {
               <div className="row">
                 {Object.entries(inputField).map(([key, item]) => (
                   <>
-                    <div className="col-md-4">
+                    <div className="form-group col-lg-4">
                       <TextField
                         key={key}
                         fullWidth
