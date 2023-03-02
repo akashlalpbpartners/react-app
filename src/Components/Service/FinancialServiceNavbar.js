@@ -17,7 +17,7 @@ const FinancialServicesNavbar = (props) => {
             type="button"
             onClick={handleClick}
           >
-            <i class="fa fa-home" aria-hidden="true"></i> Personal Loan
+            <i className="fa fa-home" aria-hidden="true"></i> Personal Loan
           </button>
         </li>
         <li className="nav-item" role="presentation">
@@ -29,7 +29,7 @@ const FinancialServicesNavbar = (props) => {
             type="button"
             onClick={handleClick}
           >
-            <i class="fa fa-home" aria-hidden="true"></i> Home Loan
+            <i className="fa fa-home" aria-hidden="true"></i> Home Loan
           </button>
         </li>
         <li className="nav-item" role="presentation">
@@ -41,7 +41,7 @@ const FinancialServicesNavbar = (props) => {
             type="button"
             onClick={handleClick}
           >
-            <i class="fa fa-home" aria-hidden="true"></i> Business Loan
+            <i className="fa fa-home" aria-hidden="true"></i> Business Loan
           </button>
         </li>
       </ul>

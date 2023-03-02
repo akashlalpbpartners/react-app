@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-12">
-              <p class="m-0">© 2022 PBPartners. All Rights Reserved</p>
+              <p className="m-0">© 2022 PBPartners. All Rights Reserved</p>
             </div>
           </div>
         </div>

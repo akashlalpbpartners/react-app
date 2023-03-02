@@ -398,9 +398,9 @@ const PersonalLoan = (props) => {
                   </div>
                 </div>
                 <div className="col-md-4">
-                  <div class="form-floating mb-3">
+                  <div className="form-floating mb-3">
                     <select
-                      class="form-select"
+                      className="form-select"
                       id="City"
                       name="City"
                       value={formikInput.values.City}
@@ -442,7 +442,7 @@ const PersonalLoan = (props) => {
                   </div>
                 </div>
                 <div className="col-md-4">
-                  <div class="form-floating mb-3">
+                  <div className="form-floating mb-3">
                     <input
                       type="number"
                       className="form-control"
@@ -460,9 +460,9 @@ const PersonalLoan = (props) => {
                   </div>
                 </div>
                 <div className="col-md-4">
-                  <div class="form-floating mb-3">
+                  <div className="form-floating mb-3">
                     <select
-                      class="form-select"
+                      className="form-select"
                       id="EmploymentType"
                       name="EmploymentType"
                       placeholder="Employment Type"
@@ -512,26 +512,26 @@ const PersonalLoan = (props) => {
         </Box>
       </div>
       <div
-        class="modal fade"
+        className="modal fade"
         id="exampleModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
                 Verify Lead
               </h1>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <h6>Please enter the otp</h6>
               <div className="otp-number">
                 <ul>
@@ -552,15 +552,15 @@ const PersonalLoan = (props) => {
                 </ul>
               </div>
             </div>
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 Close
               </button>
-              <button type="button" class="btn btn-primary">
+              <button type="button" className="btn btn-primary">
                 Save changes
               </button>
             </div>

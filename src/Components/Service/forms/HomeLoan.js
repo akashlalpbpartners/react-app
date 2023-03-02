@@ -11,11 +11,12 @@ const validationSchemaInput = Yup.object({
   Mobile_no: Yup.string()
     .matches(/^[789]\d{9}$/, "Phone number is not valid.")
     .required("Phone Number is required."),
+  Name: Yup.string().required("Customer Name is required."),
   City: Yup.string().required("City is required."),
   Loan_amount_required: Yup.string()
     .test(
       "test-name",
-      "Loan Amount must be ranged between 1 Lac to 5 Crore",
+      "Loan Amount must be ranged between 10000 to 25 Lacs",
       function (value) {
         const loan = parseInt(value);
         if (loan <= 50000000 && loan >= 100000) return true;
@@ -35,10 +36,10 @@ const PersonalLoan = (props) => {
   useEffect(() => {
     if (loanLeadDetails.length === 0) fetchLeads();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loanLeadDetails]);
+  }, []);
   const Token = JSON.parse(user).Token;
   const fetchLeads = async () => {
-    const SubProductId = 2;
+    const SubProductId = 1;
     const requestOptions = {
       method: "POST",
       headers: {
@@ -69,6 +70,7 @@ const PersonalLoan = (props) => {
   const formikInput = useFormik({
     initialValues: {
       Mobile_no: "",
+      Name: "",
       City: "",
       Loan_amount_required: "",
       Net_monthly_income: "",
@@ -89,6 +91,7 @@ const PersonalLoan = (props) => {
         },
         body: JSON.stringify({
           SubProductId: parseInt(props.ToggleSubForm),
+          Name: values.Name,
           CustomerMobile: parseInt(values.Mobile_no),
           CityId: values.City,
           LoanAmount: parseInt(values.Loan_amount_required),
@@ -99,6 +102,7 @@ const PersonalLoan = (props) => {
           IsPresent: isPresent.length === 0 ? 0 : 1,
         }),
       };
+
       await fetch(
         "http://localhost:3001/product/insertfinancialservices",
         requestOptions
@@ -107,6 +111,7 @@ const PersonalLoan = (props) => {
     },
   });
 
+  ////////////////////////// Attribute dictionary //////////////////////////
   const inputField = {
     1: [
       "Mobile_no",
@@ -120,6 +125,16 @@ const PersonalLoan = (props) => {
       10,
     ],
     2: [
+      "Name",
+      "Name",
+      "Enter Customer Name",
+      formikInput.values.Name,
+      formikInput.touched.Name && Boolean(formikInput.errors.Name),
+      formikInput.touched.Name && formikInput.errors.Name,
+      false,
+      [],
+    ],
+    3: [
       "City",
       "City",
       "Enter City",
@@ -129,7 +144,7 @@ const PersonalLoan = (props) => {
       true,
       cityList,
     ],
-    3: [
+    4: [
       "Loan_amount_required",
       "Loan Amount Required",
       "Enter Loan amount required",
@@ -141,7 +156,7 @@ const PersonalLoan = (props) => {
       false,
       [],
     ],
-    4: [
+    5: [
       "Net_monthly_income",
       "Net Monthly Income",
       "Enter Net monthly income",
@@ -153,7 +168,7 @@ const PersonalLoan = (props) => {
       false,
       [],
     ],
-    5: [
+    6: [
       "Employment_type",
       "Employment Type",
       "Enter Employment type",
@@ -165,9 +180,15 @@ const PersonalLoan = (props) => {
       empTypeList,
     ],
   };
+
   const checkNumber = (e) => {
-    if (e.target.name === "Mobile_no") {
+    if (
+      e.target.name === "Mobile_no" ||
+      e.target.name === "Net_monthly_income" ||
+      e.target.name === "Loan_amount_required"
+    )
       e.target.value = e.target.value.replace(/[^0-9]/g, "");
+    if (e.target.name === "Mobile_no") {
       if (e.target.value.length > e.target.maxLength) {
         e.target.value = e.target.value.slice(0, e.target.maxLength);
       }
@@ -197,7 +218,7 @@ const PersonalLoan = (props) => {
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
-              <h1 class="main-heading">Home Loan</h1>
+              <h1 className="main-heading">Home Loan</h1>
               <div className="row">
                 {Object.entries(inputField).map(([key, item]) => (
                   <>

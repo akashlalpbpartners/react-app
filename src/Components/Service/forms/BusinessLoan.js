@@ -11,19 +11,10 @@ const validationSchemaInput = Yup.object({
   Mobile_no: Yup.string()
     .matches(/^[789]\d{9}$/, "Phone number is not valid.")
     .required("Phone Number is required."),
+  Name: Yup.string().required("Customer Name is required."),
   City: Yup.string().required("City is required."),
-  Loan_amount_required: Yup.string()
-    .test(
-      "test-name",
-      "Loan Amount must be ranged between 10000 to 25 Lacs",
-      function (value) {
-        const loan = parseInt(value);
-        if (loan <= 2500000 && loan >= 10000) return true;
-        else return false;
-      }
-    )
-    .required("Loan amount is required."),
-  Gross_sales: Yup.string().required("Net Gross Sales is required."),
+  Loan_amount_required: Yup.string().required("Loan amount is required."),
+  Gross_sales: Yup.string().required("Gross sales is required."),
   Employment_type: Yup.string().required("Employment type is required."),
 });
 
@@ -35,7 +26,7 @@ const PersonalLoan = (props) => {
   useEffect(() => {
     if (loanLeadDetails.length === 0) fetchLeads();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loanLeadDetails]);
+  }, []);
   const Token = JSON.parse(user).Token;
   const fetchLeads = async () => {
     const SubProductId = 1;
@@ -62,13 +53,14 @@ const PersonalLoan = (props) => {
     return cityList.push([value.Id, value.City]);
   });
   const empTypeList = [];
-  Object.entries(empType).forEach(([key, value]) => {
-    if (value.Id !== 1) empTypeList.push([value.Id, value.EmploymentType]);
+  Object.entries(empType).map(([key, value]) => {
+    return empTypeList.push([value.Id, value.EmploymentType]);
   });
 
   const formikInput = useFormik({
     initialValues: {
       Mobile_no: "",
+      Name: "",
       City: "",
       Loan_amount_required: "",
       Gross_sales: "",
@@ -89,6 +81,7 @@ const PersonalLoan = (props) => {
         },
         body: JSON.stringify({
           SubProductId: parseInt(props.ToggleSubForm),
+          Name: values.Name,
           CustomerMobile: parseInt(values.Mobile_no),
           CityId: values.City,
           LoanAmount: parseInt(values.Loan_amount_required),
@@ -99,6 +92,7 @@ const PersonalLoan = (props) => {
           IsPresent: isPresent.length === 0 ? 0 : 1,
         }),
       };
+
       await fetch(
         "http://localhost:3001/product/insertfinancialservices",
         requestOptions
@@ -107,6 +101,7 @@ const PersonalLoan = (props) => {
     },
   });
 
+  ////////////////////////// Attribute dictionary //////////////////////////
   const inputField = {
     1: [
       "Mobile_no",
@@ -120,6 +115,16 @@ const PersonalLoan = (props) => {
       10,
     ],
     2: [
+      "Name",
+      "Name",
+      "Enter Customer Name",
+      formikInput.values.Name,
+      formikInput.touched.Name && Boolean(formikInput.errors.Name),
+      formikInput.touched.Name && formikInput.errors.Name,
+      false,
+      [],
+    ],
+    3: [
       "City",
       "City",
       "Enter City",
@@ -129,7 +134,7 @@ const PersonalLoan = (props) => {
       true,
       cityList,
     ],
-    3: [
+    4: [
       "Loan_amount_required",
       "Loan Amount Required",
       "Enter Loan amount required",
@@ -141,10 +146,10 @@ const PersonalLoan = (props) => {
       false,
       [],
     ],
-    4: [
+    5: [
       "Gross_sales",
-      "Net Gross Sales",
-      "Enter Net gross sales",
+      "Gross Sales",
+      "Enter gross sales",
       formikInput.values.Gross_sales,
       formikInput.touched.Gross_sales &&
         Boolean(formikInput.errors.Gross_sales),
@@ -152,7 +157,7 @@ const PersonalLoan = (props) => {
       false,
       [],
     ],
-    5: [
+    6: [
       "Employment_type",
       "Employment Type",
       "Enter Employment type",
@@ -164,9 +169,15 @@ const PersonalLoan = (props) => {
       empTypeList,
     ],
   };
+
   const checkNumber = (e) => {
-    if (e.target.name === "Mobile_no") {
+    if (
+      e.target.name === "Mobile_no" ||
+      e.target.name === "Gross_sales" ||
+      e.target.name === "Loan_amount_required"
+    )
       e.target.value = e.target.value.replace(/[^0-9]/g, "");
+    if (e.target.name === "Mobile_no") {
       if (e.target.value.length > e.target.maxLength) {
         e.target.value = e.target.value.slice(0, e.target.maxLength);
       }
@@ -196,7 +207,7 @@ const PersonalLoan = (props) => {
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
-              <h1 class="main-heading">Business Loan</h1>
+              <h1 className="main-heading">Business Loan</h1>
               <div className="row">
                 {Object.entries(inputField).map(([key, item]) => (
                   <>

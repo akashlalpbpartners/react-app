@@ -11,6 +11,7 @@ const validationSchemaInput = Yup.object({
   Mobile_no: Yup.string()
     .matches(/^[789]\d{9}$/, "Phone number is not valid.")
     .required("Phone Number is required."),
+  Name: Yup.string().required("Customer Name is required."),
   City: Yup.string().required("City is required."),
   Loan_amount_required: Yup.string()
     .test(
@@ -35,7 +36,7 @@ const PersonalLoan = (props) => {
   useEffect(() => {
     if (loanLeadDetails.length === 0) fetchLeads();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loanLeadDetails]);
+  }, []);
   const Token = JSON.parse(user).Token;
   const fetchLeads = async () => {
     const SubProductId = 1;
@@ -69,6 +70,7 @@ const PersonalLoan = (props) => {
   const formikInput = useFormik({
     initialValues: {
       Mobile_no: "",
+      Name: "",
       City: "",
       Loan_amount_required: "",
       Net_monthly_income: "",
@@ -89,6 +91,7 @@ const PersonalLoan = (props) => {
         },
         body: JSON.stringify({
           SubProductId: parseInt(props.ToggleSubForm),
+          Name: values.Name,
           CustomerMobile: parseInt(values.Mobile_no),
           CityId: values.City,
           LoanAmount: parseInt(values.Loan_amount_required),
@@ -122,6 +125,16 @@ const PersonalLoan = (props) => {
       10,
     ],
     2: [
+      "Name",
+      "Name",
+      "Enter Customer Name",
+      formikInput.values.Name,
+      formikInput.touched.Name && Boolean(formikInput.errors.Name),
+      formikInput.touched.Name && formikInput.errors.Name,
+      false,
+      [],
+    ],
+    3: [
       "City",
       "City",
       "Enter City",
@@ -131,7 +144,7 @@ const PersonalLoan = (props) => {
       true,
       cityList,
     ],
-    3: [
+    4: [
       "Loan_amount_required",
       "Loan Amount Required",
       "Enter Loan amount required",
@@ -143,7 +156,7 @@ const PersonalLoan = (props) => {
       false,
       [],
     ],
-    4: [
+    5: [
       "Net_monthly_income",
       "Net Monthly Income",
       "Enter Net monthly income",
@@ -155,7 +168,7 @@ const PersonalLoan = (props) => {
       false,
       [],
     ],
-    5: [
+    6: [
       "Employment_type",
       "Employment Type",
       "Enter Employment type",
@@ -205,7 +218,7 @@ const PersonalLoan = (props) => {
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
-              <h1 class="main-heading">Personal Loan</h1>
+              <h1 className="main-heading">Personal Loan</h1>
               <div className="row">
                 {Object.entries(inputField).map(([key, item]) => (
                   <>

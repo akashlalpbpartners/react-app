@@ -3,9 +3,7 @@ import FinancialServicesNavbar from "./FinancialServiceNavbar";
 import PersonalLoan from "./forms/PersonalLoan";
 import PersonalLoanLeadDetails from "./Details/PersonalLoanLeadDetails";
 import HomeLoan from "./forms/HomeLoan";
-import HomeLoanLeadDetails from "./Details/HomeLoanLeadDetails";
 import BusinessLoan from "./forms/BusinessLoan";
-import BusinessLoanLeadDetails from "./Details/BusinessLoanLeadDetails";
 
 import { useState } from "react";
 const FinancialServices = (props) => {
@@ -25,13 +23,13 @@ const FinancialServices = (props) => {
         if (props.togglePage === "leadrequest") {
           return <HomeLoan ToggleSubForm={ToggleSubForm} />;
         } else {
-          return <HomeLoanLeadDetails />;
+          return <PersonalLoanLeadDetails />;
         }
       } else if (ToggleSubForm === "3") {
         if (props.togglePage === "leadrequest") {
           return <BusinessLoan ToggleSubForm={ToggleSubForm} />;
         } else {
-          return <BusinessLoanLeadDetails />;
+          return <PersonalLoanLeadDetails />;
         }
       }
     } else {
@@ -46,19 +44,34 @@ const FinancialServices = (props) => {
         role="tabpanel"
         aria-labelledby="pills-home-tab"
       >
-        <div className="sub-services d-flex align-items-start">
-          {JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
-          "ADMIN@PBPTNR" ? (
-            <FinancialServicesNavbar
-              ToggleSubForm={ToggleSubForm}
-              setToggleSubForm={setToggleSubForm}
-            />
-          ) : (
-            <></>
-          )}
-
-          {renderElement(ToggleSubForm)}
-        </div>
+        {JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
+        "ADMIN@PBPTNR" ? (
+          <>
+            {props.togglePage === "leadrequest" ? (
+              <>
+                <div className="sub-services d-flex align-items-start">
+                  <FinancialServicesNavbar
+                    ToggleSubForm={ToggleSubForm}
+                    setToggleSubForm={setToggleSubForm}
+                  />
+                  {renderElement(ToggleSubForm)}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="sub-services d-flex align-items-start p-0">
+                  {renderElement(ToggleSubForm)}
+                </div>
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            <div className="sub-services d-flex align-items-start p-0">
+              {renderElement(ToggleSubForm)}
+            </div>
+          </>
+        )}
       </div>
     </>
   );

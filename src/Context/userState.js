@@ -36,6 +36,7 @@ const UserState = (props) => {
     Cookies.remove("userCookie");
     Cookies.set("userCookie", JSON.stringify(parseRes));
     setUser(JSON.stringify(parseRes));
+    fetchCity();
     return parseRes;
   };
 
