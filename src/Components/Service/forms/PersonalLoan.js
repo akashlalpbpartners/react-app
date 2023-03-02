@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
 import Cookies from "js-cookie";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -11,6 +11,7 @@ const validationSchemaInput = Yup.object({
   Mobile_no: Yup.string()
     .matches(/^[789]\d{9}$/, "Phone number is not valid.")
     .required("Phone Number is required."),
+  Name: Yup.string().required("Customer Name is required."),
   City: Yup.string().required("City is required."),
   Loan_amount_required: Yup.string()
     .test(
@@ -34,7 +35,8 @@ const PersonalLoan = (props) => {
 
   useEffect(() => {
     if (loanLeadDetails.length === 0) fetchLeads();
-  }, [loanLeadDetails]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const Token = JSON.parse(user).Token;
   const fetchLeads = async () => {
     const SubProductId = 1;
@@ -67,15 +69,13 @@ const PersonalLoan = (props) => {
   const formikInput = useFormik({
     initialValues: {
       Mobile_no: "",
+      Name: "",
       City: "",
       Loan_amount_required: "",
       Net_monthly_income: "",
       Employment_type: "",
     },
     validationSchema: validationSchemaInput,
-    onChange: (e) => {
-      console.log("hei");
-    },
     onSubmit: async (values) => {
       const isPresent = [];
       loanLeadDetails.filter((row) => {
@@ -90,6 +90,7 @@ const PersonalLoan = (props) => {
         },
         body: JSON.stringify({
           SubProductId: parseInt(props.ToggleSubForm),
+          Name: values.Name,
           CustomerMobile: parseInt(values.Mobile_no),
           CityId: values.City,
           LoanAmount: parseInt(values.Loan_amount_required),
@@ -120,11 +121,19 @@ const PersonalLoan = (props) => {
       formikInput.touched.Mobile_no && formikInput.errors.Mobile_no,
       false,
       [],
-      ,
-      ,
       10,
     ],
     2: [
+      "Name",
+      "Name",
+      "Enter Customer Name",
+      formikInput.values.Name,
+      formikInput.touched.Name && Boolean(formikInput.errors.Name),
+      formikInput.touched.Name && formikInput.errors.Name,
+      false,
+      [],
+    ],
+    3: [
       "City",
       "City",
       "Enter City",
@@ -134,7 +143,7 @@ const PersonalLoan = (props) => {
       true,
       cityList,
     ],
-    3: [
+    4: [
       "Loan_amount_required",
       "Loan Amount Required",
       "Enter Loan amount required",
@@ -145,10 +154,8 @@ const PersonalLoan = (props) => {
       formikInput.errors.Loan_amount_required,
       false,
       [],
-      10000,
-      2500000,
     ],
-    4: [
+    5: [
       "Net_monthly_income",
       "Net Monthly Income",
       "Enter Net monthly income",
@@ -160,7 +167,7 @@ const PersonalLoan = (props) => {
       false,
       [],
     ],
-    5: [
+    6: [
       "Employment_type",
       "Employment Type",
       "Enter Employment type",
@@ -172,6 +179,7 @@ const PersonalLoan = (props) => {
       empTypeList,
     ],
   };
+
   const checkNumber = (e) => {
     if (
       e.target.name === "Mobile_no" ||
@@ -205,7 +213,13 @@ const PersonalLoan = (props) => {
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
+
               <h1 className="main-heading">Personal Loan</h1>
+
+              <div class="alert alert-success" role="alert">
+                A simple success alert—check it out!
+              </div>
+
               <div className="row">
                 {Object.entries(inputField).map(([key, item]) => (
                   <>
@@ -219,7 +233,7 @@ const PersonalLoan = (props) => {
                         label={item[1]}
                         placeholder={item[2]}
                         value={item[3]}
-                        InputProps={{ inputProps: { maxLength: item[10] } }}
+                        InputProps={{ inputProps: { maxLength: item[8] } }}
                         onChange={(e) => {
                           checkNumber(e);
                           formikInput.handleChange(e);
@@ -283,6 +297,10 @@ const PersonalLoan = (props) => {
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
+              <div class="alert alert-danger" role="alert">
+                A simple danger alert—check it out!
+              </div>
+
               <div className="imgbox">
                 <img src="../../../../images/otp-img.svg" alt="" />
               </div>
