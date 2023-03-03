@@ -75,9 +75,7 @@ const LoginSignUpForm = () => {
 
   const handleVerify = (otp) => {
     if (
-      JSON.parse(localStorage.getItem("UserDetails")).FINCode ===
-      process.env.REACT_APP_ADMIN_USERNAME
-    ) {
+      JSON.parse(localStorage.getItem("UserDetails")).FINCode ===  "ADMIN@123456") {
       if (otp === '121212') return true;
       else return false;
     } else {

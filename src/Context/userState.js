@@ -59,7 +59,7 @@ const UserState = (props) => {
       //   .then((response) => {
       //     console.log(response);
       //   });
-      if (FINCode !== process.env.REACT_APP_ADMIN_USERNAME) {
+      if (FINCode !== "ADMIN@123456") {
         const result = [
           {
             FINCode: "FIN100000100",
@@ -72,9 +72,9 @@ const UserState = (props) => {
       } else {
         const result = [
           {
-            FINCode: process.env.REACT_APP_ADMIN_USERNAME,
+            FINCode: "ADMIN@123456",
             Name: "Administrator",
-            MobileNumber: "9999999999",
+            MobileNumber: 9999999999,
           },
         ];
         localStorage.setItem("UserDetails", JSON.stringify(result[0]));

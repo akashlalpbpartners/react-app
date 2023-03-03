@@ -8,6 +8,7 @@ const PersonalLoanLeadDetails = () => {
   const context = useContext(userContext);
   const { user, city, empType } = context;
   const [rows, setRows] = useState([]);
+  const [searchFinCode, setSearchFinCode] = useState("");
   const subproduct = [
     {
       SubProductId: 1,
@@ -32,23 +33,23 @@ const PersonalLoanLeadDetails = () => {
 
   useEffect(() => {
     if (loanLeadDetails.length === 0) fetchLeads();
-    setRows(
-      loanLeadDetails.map(function(detail) {
-        return {
-          Id: detail.Id,
-          FINCode: detail.FINCode,
-          Name: detail.Name,
-          CustomerMobile: detail.CustomerMobile,
-          CityId: city[detail.CityId - 1].City,
-          LoanAmount: detail.LoanAmount,
-          NetMonthlyIncome: detail.NetMonthlyIncome,
-          employment_type: empType[detail.EmploymentType - 1].EmploymentType,
-          is_present: detail.IsPresent,
-          sub_product_id: subproduct[detail.SubProductId - 1].ListName,
-        };
-      })
-    );
-
+    else
+      setRows(
+        loanLeadDetails.map(function(detail) {
+          return {
+            Id: detail.Id,
+            FINCode: detail.FINCode,
+            Name: detail.Name,
+            CustomerMobile: detail.CustomerMobile,
+            CityId: city[detail.CityId - 1].City,
+            LoanAmount: detail.LoanAmount,
+            NetMonthlyIncome: detail.NetMonthlyIncome,
+            employment_type: empType[detail.EmploymentType].EmploymentType,
+            is_present: detail.IsPresent,
+            sub_product_id: subproduct[detail.SubProductId - 1].ListName,
+          };
+        })
+      );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loanLeadDetails]);
   const Token = JSON.parse(user).Token;
@@ -62,9 +63,9 @@ const PersonalLoanLeadDetails = () => {
     };
     var response;
     if (
-      JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
-      process.env.REACT_APP_ADMIN_USERNAME
+      JSON.parse(localStorage.getItem("UserDetails")).FINCode !== "ADMIN@123456"
     ) {
+      console.log("agent");
       response = await fetch(
         `http://localhost:3001/product/readallfinancialservices/${
           JSON.parse(Cookies.get("userCookie")).FINCode
@@ -72,6 +73,7 @@ const PersonalLoanLeadDetails = () => {
         requestOptions
       );
     } else {
+      console.log("admin");
       response = await fetch(
         `http://localhost:3001/product/readfinancialservices`,
         requestOptions
@@ -79,46 +81,90 @@ const PersonalLoanLeadDetails = () => {
     }
     const result = await response.json();
     setLoanLeadDetails(result);
-    return result;
   };
   useEffect(() => {
-    setRows(
-      loanLeadDetails
-        .filter((row) => filterValue.includes(row.SubProductId))
-        .map(function(detail) {
-          return {
-            Id: detail.Id,
-            FINCode: detail.FINCode,
-            Name: detail.Name,
-            CustomerMobile: detail.CustomerMobile,
-            CityId: city[detail.CityId - 1].City,
-            LoanAmount: detail.LoanAmount,
-            NetMonthlyIncome: detail.NetMonthlyIncome,
-            employment_type: empType[detail.EmploymentType - 1].EmploymentType,
-            is_present: detail.IsPresent,
-            sub_product_id: subproduct[detail.SubProductId - 1].ListName,
-          };
-        })
-    );
-    if (filterValue.length === 0) {
+    if (searchFinCode !== "") {
       setRows(
-        loanLeadDetails.map(function(row) {
-          return {
-            Id: row.Id,
-            FINCode: row.FINCode,
-            Name: row.Name,
-            CustomerMobile: row.CustomerMobile,
-            CityId: city[row.CityId].City,
-            LoanAmount: row.LoanAmount,
-            NetMonthlyIncome: row.NetMonthlyIncome,
-            employment_type: empType[row.EmploymentType].EmploymentType,
-            is_present: row.IsPresent,
-            sub_product_id: row.SubProductId,
-          };
-        })
+        loanLeadDetails
+          .filter(
+            (row) =>
+              filterValue.includes(row.SubProductId) &&
+              row.FINCode.includes(searchFinCode)
+          )
+          .map(function(detail) {
+            return {
+              Id: detail.Id,
+              FINCode: detail.FINCode,
+              Name: detail.Name,
+              CustomerMobile: detail.CustomerMobile,
+              CityId: city[detail.CityId - 1].City,
+              LoanAmount: detail.LoanAmount,
+              NetMonthlyIncome: detail.NetMonthlyIncome,
+              employment_type: empType[detail.EmploymentType].EmploymentType,
+              is_present: detail.IsPresent,
+              sub_product_id: subproduct[detail.SubProductId - 1].ListName,
+            };
+          })
       );
+      if (filterValue.length === 0) {
+        setRows(
+          loanLeadDetails
+            .filter((row) => row.FINCode.includes(searchFinCode))
+            .map(function(row) {
+              return {
+                Id: row.Id,
+                FINCode: row.FINCode,
+                Name: row.Name,
+                CustomerMobile: row.CustomerMobile,
+                CityId: city[row.CityId].City,
+                LoanAmount: row.LoanAmount,
+                NetMonthlyIncome: row.NetMonthlyIncome,
+                employment_type: empType[row.EmploymentType].EmploymentType,
+                is_present: row.IsPresent,
+                sub_product_id: row.SubProductId,
+              };
+            })
+        );
+      }
+    } else {
+      setRows(
+        loanLeadDetails
+          .filter((row) => filterValue.includes(row.SubProductId))
+          .map(function(detail) {
+            return {
+              Id: detail.Id,
+              FINCode: detail.FINCode,
+              Name: detail.Name,
+              CustomerMobile: detail.CustomerMobile,
+              CityId: city[detail.CityId - 1].City,
+              LoanAmount: detail.LoanAmount,
+              NetMonthlyIncome: detail.NetMonthlyIncome,
+              employment_type: empType[detail.EmploymentType].EmploymentType,
+              is_present: detail.IsPresent,
+              sub_product_id: subproduct[detail.SubProductId - 1].ListName,
+            };
+          })
+      );
+      if (filterValue.length === 0) {
+        setRows(
+          loanLeadDetails.map(function(row) {
+            return {
+              Id: row.Id,
+              FINCode: row.FINCode,
+              Name: row.Name,
+              CustomerMobile: row.CustomerMobile,
+              CityId: city[row.CityId].City,
+              LoanAmount: row.LoanAmount,
+              NetMonthlyIncome: row.NetMonthlyIncome,
+              employment_type: empType[row.EmploymentType].EmploymentType,
+              is_present: row.IsPresent,
+              sub_product_id: row.SubProductId,
+            };
+          })
+        );
+      }
     }
-  }, [filterValue]);
+  }, [filterValue, searchFinCode]);
   var col = [];
   if (
     JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
@@ -202,6 +248,9 @@ const PersonalLoanLeadDetails = () => {
         );
     }
   };
+  const handleSearchChange = (event) => {
+    setSearchFinCode(event.target.value);
+  };
   return (
     <>
       <div className="container">
@@ -233,7 +282,11 @@ const PersonalLoanLeadDetails = () => {
             </div>
             <div className="right">
               <div className="search">
-                <input className="form-control" placeholder="Search ..." />
+                <input
+                  className="form-control"
+                  placeholder="Search ..."
+                  onChange={handleSearchChange}
+                />
                 <i className="fa fa-search" aria-hidden="true"></i>
               </div>
             </div>
@@ -245,10 +298,10 @@ const PersonalLoanLeadDetails = () => {
           >
             <DataGrid
               rows={rows}
-              rowHeight={40}
+              rowHeight={30}
               columns={col}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
+              pageSize={10}
+              rowsPerPageOptions={[10]}
               getRowId={(row) => row.Id + row.FINCode}
             />
           </Box>
