@@ -102,7 +102,7 @@ function ServiceHeader(props) {
                     <li>
                       <a
                         className="dropdown-item logout"
-                        href="/"
+                        href="#"
                         onClick={handleLogout}
                       >
                         Logout

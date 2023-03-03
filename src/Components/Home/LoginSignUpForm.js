@@ -70,7 +70,7 @@ const LoginSignUpForm = () => {
     if (
       JSON.parse(localStorage.getItem("UserDetails")).FINCode === "ADMIN@PBPTNR"
     ) {
-      if (otp === process.env.REACT_APP_ADMIN_PASSWORD) return true;
+      if (otp === '121212') return true;
       else return false;
     } else {
       if (otp === "101010") return true;
