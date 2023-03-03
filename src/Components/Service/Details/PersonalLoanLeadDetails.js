@@ -33,7 +33,7 @@ const PersonalLoanLeadDetails = () => {
   useEffect(() => {
     if (loanLeadDetails.length === 0) fetchLeads();
     setRows(
-      loanLeadDetails.map(function (detail) {
+      loanLeadDetails.map(function(detail) {
         return {
           Id: detail.Id,
           FINCode: detail.FINCode,
@@ -84,7 +84,7 @@ const PersonalLoanLeadDetails = () => {
     setRows(
       loanLeadDetails
         .filter((row) => filterValue.includes(row.SubProductId))
-        .map(function (detail) {
+        .map(function(detail) {
           return {
             Id: detail.Id,
             FINCode: detail.FINCode,
@@ -101,7 +101,7 @@ const PersonalLoanLeadDetails = () => {
     );
     if (filterValue.length === 0) {
       setRows(
-        loanLeadDetails.map(function (row) {
+        loanLeadDetails.map(function(row) {
           return {
             Id: row.Id,
             FINCode: row.FINCode,
@@ -202,31 +202,54 @@ const PersonalLoanLeadDetails = () => {
   };
   return (
     <>
-      <div className="container tab-content" id="pills-tabContent">
-        <Box
-          container
-          style={{ height: 260, width: "100%", margin: "0 0 5ch 0" }}
-        >
-          <DataGrid
-            rows={rows}
-            columns={col}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            getRowId={(row) => row.Id + row.FINCode}
-          />
+      <div className="container">
+        <div className="tab-content" id="pills-tabContent">
+          <h1 className="main-heading">
+            <span>Lead Details</span>
+          </h1>
 
-          {subproduct.map((obj) => (
-            <label key={obj.SubProductId}>
-              <input
-                type="checkbox"
-                id={obj.docId}
-                value={obj.SubProductId}
-                onChange={handleFilterChange}
-              />
-              {obj.SubProductName}
-            </label>
-          ))}
-        </Box>
+          <div className="filterdiv">
+            <div className="left">
+              {subproduct.map((obj) => (
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id={obj.docId}
+                    value={obj.SubProductId}
+                    onChange={handleFilterChange}
+                  />
+                  <label
+                    className="form-check-label"
+                    id={obj.docId}
+                    key={obj.SubProductId}
+                  >
+                    {obj.SubProductName}
+                  </label>
+                </div>
+              ))}
+            </div>
+            <div className="right">
+              <div className="search">
+                <input className="form-control" placeholder="Search ..." />
+                <i className="fa fa-search" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+
+          <Box
+            container
+            style={{ height: 300, width: "100%", margin: "0 0 5ch 0" }}
+          >
+            <DataGrid
+              rows={rows}
+              columns={col}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              getRowId={(row) => row.Id + row.FINCode}
+            />
+          </Box>
+        </div>
       </div>
     </>
   );

@@ -48,7 +48,8 @@ const PersonalLoan = (props) => {
       },
     };
     const response = await fetch(
-      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${JSON.parse(Cookies.get("userCookie")).FINCode
+      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${
+        JSON.parse(Cookies.get("userCookie")).FINCode
       }`,
       requestOptions
     );
@@ -197,12 +198,7 @@ const PersonalLoan = (props) => {
   return (
     <>
       <div className="tab-content" id="pills-tabContent">
-        <Box
-
-          id="personal-info"
-          role="tabpanel"
-          aria-labelledby=""
-        >
+        <Box id="personal-info" role="tabpanel" aria-labelledby="">
           <form
             className="container"
             id="my-form"
@@ -229,7 +225,14 @@ const PersonalLoan = (props) => {
                         label={item[1]}
                         placeholder={item[2]}
                         value={item[3]}
-                        InputProps={{ inputProps: { maxLength: item[8] } }}
+                        InputProps={{
+                          inputProps: {
+                            maxLength: item[8],
+                            style: {
+                              height: "15px",
+                            },
+                          },
+                        }}
                         onChange={(e) => {
                           checkNumber(e);
                           formikInput.handleChange(e);

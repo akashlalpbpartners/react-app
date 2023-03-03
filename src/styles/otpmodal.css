@@ -1,25 +1,25 @@
 #otpModal {
 }
 
-#otpModal .modal-dialog .modal-content .modal-header {
+#otpModal.modal-dialog .modal-content .modal-header {
   border-bottom: none;
 }
 
-#otpModal .modal-dialog .modal-content .modal-header h1.modal-title {
+#otpModal.modal-dialog .modal-content .modal-header h1.modal-title {
   font-size: 16px;
 }
 
-#otpModal .modal-dialog {
+#otpModal.modal-dialog {
   max-width: 420px;
   width: 96%;
 }
 
-#otpModal .modal-dialog .modal-content .modal-body {
+#otpModal.modal-dialog .modal-content .modal-body {
   padding: 0px 50px 50px 50px;
   text-align: center;
 }
 
-#otpModal .modal-dialog .modal-content .modal-body .imgbox {
+#otpModal.modal-dialog .modal-content .modal-body .imgbox {
   background: url(../images/otp-img.svg) no-repeat center center;
   height: 120px;
   width: 154px;
@@ -28,31 +28,30 @@
   margin-bottom: 25px;
 }
 
-#otpModal .modal-dialog .modal-content .modal-body .otp-number {
+#otpModal.modal-dialog .modal-content .modal-body .otp-number {
   margin-bottom: 15px;
 }
 
-#otpModal .modal-dialog .modal-content .modal-body .otp-number label.lblText {
+#otpModal.modal-dialog .modal-content .modal-body .otp-number label.lblText {
   margin-bottom: 5px;
   font-weight: 500;
   display: block;
 }
 
-#otpModal .modal-dialog .modal-content .modal-body .otp-number ul {
+#otpModal.modal-dialog .modal-content .modal-body .otp-number ul {
   list-style-type: none;
   display: flex;
   justify-content: space-evenly;
   padding-left: 0;
 }
 
-#otpModal .modal-dialog .modal-content .modal-body .otp-number ul li {
+#otpModal.modal-dialog .modal-content .modal-body .otp-number ul li {
   width: 16.66%;
   text-align: center;
   margin: 0px 5px;
 }
 
-#otpModal
-  .modal-dialog
+#otpModal.modal-dialog
   .modal-content
   .modal-body
   .otp-number
@@ -61,18 +60,11 @@
   margin-left: 0;
 }
 
-#otpModal
-  .modal-dialog
-  .modal-content
-  .modal-body
-  .otp-number
-  ul
-  li:last-child {
+#otpModal.modal-dialog .modal-content .modal-body .otp-number ul li:last-child {
   margin-right: 0;
 }
 
-#otpModal
-  .modal-dialog
+#otpModal.modal-dialog
   .modal-content
   .modal-body
   .otp-number
@@ -83,13 +75,13 @@
   height: 56px;
 }
 
-#otpModal .modal-dialog .modal-content .modal-body .timecount {
+#otpModal.modal-dialog .modal-content .modal-body .timecount {
   color: orange;
   text-align: center;
   margin-bottom: 25px;
 }
 
-#otpModal .modal-dialog .modal-content .modal-body .btn {
+#otpModal.modal-dialog .modal-content .modal-body .btn {
   font-size: 13px;
   padding: 10px 15px;
   min-width: 140px;

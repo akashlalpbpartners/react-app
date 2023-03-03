@@ -214,7 +214,14 @@ const PersonalLoan = (props) => {
                         label={item[1]}
                         placeholder={item[2]}
                         value={item[3]}
-                        InputProps={{ inputProps: { maxLength: item[8] } }}
+                        InputProps={{
+                          inputProps: {
+                            maxLength: item[8],
+                            style: {
+                              height: "15px",
+                            },
+                          },
+                        }}
                         onChange={(e) => {
                           checkNumber(e);
                           formikInput.handleChange(e);

@@ -6,7 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import userContext from "../../../Context/userContext";
-
+import Modal from "../Modal";
 const validationSchemaInput = Yup.object({
   Mobile_no: Yup.string()
     .matches(/^[789]\d{9}$/, "Phone number is not valid.")
@@ -17,7 +17,7 @@ const validationSchemaInput = Yup.object({
     .test(
       "test-name",
       "Loan Amount must be ranged between 10000 to 25 Lacs",
-      function (value) {
+      function(value) {
         const loan = parseInt(value);
         if (loan <= 2500000 && loan >= 10000) return true;
         else return false;
@@ -31,6 +31,8 @@ const validationSchemaInput = Yup.object({
 const PersonalLoan = (props) => {
   const context = useContext(userContext);
   const { user, city, empType } = context;
+  const [toggleModal, setToggleModal] = useState(false);
+  const [verified, setVerified] = useState(false);
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);
 
   useEffect(() => {
@@ -78,36 +80,42 @@ const PersonalLoan = (props) => {
     },
     validationSchema: validationSchemaInput,
     onSubmit: async (values) => {
-      const isPresent = [];
-      loanLeadDetails.filter((row) => {
-        if (row.CustomerMobile === parseInt(values.Mobile_no))
-          isPresent.push(row);
-      });
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${Token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          SubProductId: parseInt(props.ToggleSubForm),
-          Name: values.Name,
-          CustomerMobile: parseInt(values.Mobile_no),
-          CityId: values.City,
-          LoanAmount: parseInt(values.Loan_amount_required),
-          NetMonthlyIncome: parseInt(values.Net_monthly_income),
-          EmploymentType: values.Employment_type,
-          FINCode: JSON.parse(Cookies.get("userCookie")).FINCode,
-          GrossSales: 0,
-          IsPresent: isPresent.length === 0 ? 0 : 1,
-        }),
-      };
-
-      await fetch(
-        "http://localhost:3001/product/insertfinancialservices",
-        requestOptions
-      );
-      formikInput.handleReset();
+      setToggleModal(true);
+      if (verified === true) {
+        setVerified(false);
+        const isPresent = [];
+        loanLeadDetails.filter((row) => {
+          if (row.CustomerMobile === parseInt(values.Mobile_no))
+            isPresent.push(row);
+        });
+        const requestOptions = {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${Token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            SubProductId: parseInt(props.ToggleSubForm),
+            Name: values.Name,
+            CustomerMobile: parseInt(values.Mobile_no),
+            CityId: values.City,
+            LoanAmount: parseInt(values.Loan_amount_required),
+            NetMonthlyIncome: parseInt(values.Net_monthly_income),
+            EmploymentType: values.Employment_type,
+            FINCode: JSON.parse(Cookies.get("userCookie")).FINCode,
+            GrossSales: 0,
+            IsPresent: isPresent.length === 0 ? 0 : 1,
+          }),
+        };
+        console.log(requestOptions.body);
+        //   await fetch(
+        //     "http://localhost:3001/product/insertfinancialservices",
+        //     requestOptions
+        //   );
+        //   formikInput.handleReset();
+      } else {
+        console.log("verified : ", verified);
+      }
     },
   });
 
@@ -212,8 +220,8 @@ const PersonalLoan = (props) => {
             >
               <h1 className="main-heading">Personal Loan</h1>
 
-              <div class="alert alert-success" role="alert">
-                A simple success alert—check it out!
+              <div className="alert alert-success" role="alert">
+                Lead is generated successfully!
               </div>
 
               <div className="row">
@@ -275,8 +283,6 @@ const PersonalLoan = (props) => {
                       type="button"
                       className="btn btn-primary"
                       onClick={formikInput.handleSubmit}
-                      data-bs-toggle="modal"
-                      data-bs-target="#otpModal"
                     >
                       Submit Request
                     </button>
@@ -286,69 +292,11 @@ const PersonalLoan = (props) => {
             </div>
           </form>
         </Box>
-      </div>
-
-      {/* <!-- Modal --> */}
-      <div
-        className="modal fade"
-        id="otpModal"
-        tabindex="-1"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title">Enter OTP</h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <div class="alert alert-danger" role="alert">
-                A simple danger alert—check it out!
-              </div>
-
-              <div className="imgbox">
-                <img src="../../../../images/otp-img.svg" alt="" />
-              </div>
-              {/* <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="FINCode" placeholder="Fincode" maxlength="12" value="" />
-                <label for="floatingInput">Fincode</label>
-              </div> */}
-              <div class="otp-number">
-                <ul>
-                  <li>
-                    <input type="number" class="form-control" maxlength="1" />
-                  </li>
-                  <li>
-                    <input type="number" class="form-control" maxlength="1" />
-                  </li>
-                  <li>
-                    <input type="number" class="form-control" maxlength="1" />
-                  </li>
-                  <li>
-                    <input type="number" class="form-control" maxlength="1" />
-                  </li>
-                  <li>
-                    <input type="number" class="form-control" maxlength="1" />
-                  </li>
-                  <li>
-                    <input type="number" class="form-control" maxlength="1" />
-                  </li>
-                </ul>
-              </div>
-
-              <div className="timecount">00.30 sec left to respond OTP</div>
-
-              <button type="button" className="btn btn-primary">
-                Verify
-              </button>
-            </div>
-          </div>
-        </div>
+        {toggleModal === true ? (
+          <Modal setToggleModal={setToggleModal} />
+        ) : (
+          <></>
+        )}
       </div>
     </>
   );
