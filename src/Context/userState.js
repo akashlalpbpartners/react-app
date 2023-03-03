@@ -132,12 +132,13 @@ const UserState = (props) => {
       // id number name email
       await fetch(
         `http://localhost:3001/api/logout/${
-          JSON.parse(Cookies.get("userCookie")).id
+          JSON.parse(Cookies.get("userCookie")).Id
         }`,
         {
           method: "PUT",
         }
       );
+      // console.log(JSON.parse(Cookies.get("userCookie")).Id);
       console.log("Logout Api called");
       setUser([]);
       localStorage.clear();

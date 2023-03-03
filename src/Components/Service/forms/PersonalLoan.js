@@ -33,12 +33,33 @@ const PersonalLoan = (props) => {
   const { user, city, empType } = context;
   const [toggleModal, setToggleModal] = useState(false);
   const [verified, setVerified] = useState(false);
+  const [APIRequest, setAPIRequest] = useState();
+  const [Alert, setAlert] = useState(false);
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);
 
   useEffect(() => {
     if (loanLeadDetails.length === 0) fetchLeads();
+    if (verified === true) insertLead();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [verified]);
+
+  const setTimeOutFalse = () => {
+    setTimeout(() => {
+      setAlert(false);
+    }, 5000);
+  };
+
+  const insertLead = async () => {
+    setVerified(false);
+    await fetch(
+      "http://localhost:3001/product/insertfinancialservices",
+      APIRequest
+    ).then(() => {
+      setAlert(true);
+      setTimeOutFalse();
+    });
+    formikInput.handleReset();
+  };
   const Token = JSON.parse(user).Token;
   const fetchLeads = async () => {
     const SubProductId = 1;
@@ -81,41 +102,31 @@ const PersonalLoan = (props) => {
     validationSchema: validationSchemaInput,
     onSubmit: async (values) => {
       setToggleModal(true);
-      if (verified === true) {
-        setVerified(false);
-        const isPresent = [];
-        loanLeadDetails.filter((row) => {
-          if (row.CustomerMobile === parseInt(values.Mobile_no))
-            isPresent.push(row);
-        });
-        const requestOptions = {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${Token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            SubProductId: parseInt(props.ToggleSubForm),
-            Name: values.Name,
-            CustomerMobile: parseInt(values.Mobile_no),
-            CityId: values.City,
-            LoanAmount: parseInt(values.Loan_amount_required),
-            NetMonthlyIncome: parseInt(values.Net_monthly_income),
-            EmploymentType: values.Employment_type,
-            FINCode: JSON.parse(Cookies.get("userCookie")).FINCode,
-            GrossSales: 0,
-            IsPresent: isPresent.length === 0 ? 0 : 1,
-          }),
-        };
-        console.log(requestOptions.body);
-        //   await fetch(
-        //     "http://localhost:3001/product/insertfinancialservices",
-        //     requestOptions
-        //   );
-        //   formikInput.handleReset();
-      } else {
-        console.log("verified : ", verified);
-      }
+      const isPresent = [];
+      loanLeadDetails.filter((row) => {
+        if (row.CustomerMobile === parseInt(values.Mobile_no))
+          isPresent.push(row);
+      });
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${Token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          SubProductId: parseInt(props.ToggleSubForm),
+          Name: values.Name,
+          CustomerMobile: parseInt(values.Mobile_no),
+          CityId: values.City,
+          LoanAmount: parseInt(values.Loan_amount_required),
+          NetMonthlyIncome: parseInt(values.Net_monthly_income),
+          EmploymentType: values.Employment_type,
+          FINCode: JSON.parse(Cookies.get("userCookie")).FINCode,
+          GrossSales: 0,
+          IsPresent: isPresent.length === 0 ? 0 : 1,
+        }),
+      };
+      setAPIRequest(requestOptions);
     },
   });
 
@@ -220,9 +231,13 @@ const PersonalLoan = (props) => {
             >
               <h1 className="main-heading">Personal Loan</h1>
 
-              <div className="alert alert-success" role="alert">
-                Lead is generated successfully!
-              </div>
+              {Alert === true ? (
+                <div className="alert alert-success" role="alert">
+                  Lead is generated successfully!
+                </div>
+              ) : (
+                <></>
+              )}
 
               <div className="row">
                 {Object.entries(inputField).map(([key, item]) => (
@@ -293,7 +308,11 @@ const PersonalLoan = (props) => {
           </form>
         </Box>
         {toggleModal === true ? (
-          <Modal setToggleModal={setToggleModal} />
+          <Modal
+            verified={verified}
+            setToggleModal={setToggleModal}
+            setVerified={setVerified}
+          />
         ) : (
           <></>
         )}

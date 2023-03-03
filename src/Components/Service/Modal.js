@@ -12,12 +12,19 @@ const OtpModal = (props) => {
   };
   const modalShow = () => setShow(true);
   const [disableOn, setDisableOn] = useState(true);
+  const [Alert, setAlert] = useState(false);
 
   useEffect(() => {
     if (show === true) {
       setInputField(otp);
     }
   }, [otp.length]);
+
+  const setTimeOutFalse = () => {
+    setTimeout(() => {
+      setAlert(false);
+    }, 5000);
+  };
 
   const otpField = {
     1: ["field-1"],
@@ -69,9 +76,11 @@ const OtpModal = (props) => {
   };
   const handleVerifyOtp = () => {
     if (otp === "101010") {
-      setShow(false);
       props.setVerified(true);
+      props.setToggleModal(false);
     } else {
+      setAlert(true);
+      setTimeOutFalse();
       props.setVerified(false);
     }
   };
@@ -90,9 +99,13 @@ const OtpModal = (props) => {
         </div>
 
         <div className="modal-body">
-          <div className="alert alert-danger" role="alert">
-            Invalid OTP, Please enter a correct OTP!
-          </div>
+          {Alert === true ? (
+            <div className="alert alert-danger" role="alert">
+              Invalid OTP, Please enter a correct OTP!
+            </div>
+          ) : (
+            <></>
+          )}
 
           <div className="imgbox">
             <img src="../../../../images/otp-img.svg" alt="" />
