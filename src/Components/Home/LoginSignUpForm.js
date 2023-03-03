@@ -13,6 +13,7 @@ const LoginSignUpForm = () => {
   const [otp, setOtp] = useState("");
   const [timeOutShow, setTimeOutShow] = useState("none");
   const [exist, setExist] = useState(false);
+  const [Alert, setALert] = useState(false);
 
   useEffect(() => {
     if (FINCode.length === 12) setDisableOn(false);
@@ -21,6 +22,12 @@ const LoginSignUpForm = () => {
       setInputField(otp);
     }
   }, [FINCode.length, otp.length]);
+
+  const setTimeOutAlert = () => {
+    setTimeout(() => {
+      setALert(false);
+    }, 5000);
+  };
 
   const offDisable = () => {
     setTimeOutShow("");
@@ -68,7 +75,8 @@ const LoginSignUpForm = () => {
 
   const handleVerify = (otp) => {
     if (
-      JSON.parse(localStorage.getItem("UserDetails")).FINCode === "ADMIN@PBPTNR"
+      JSON.parse(localStorage.getItem("UserDetails")).FINCode ===
+      process.env.REACT_APP_ADMIN_USERNAME
     ) {
       if (otp === process.env.REACT_APP_ADMIN_PASSWORD) return true;
       else return false;
@@ -83,6 +91,9 @@ const LoginSignUpForm = () => {
       if (handleVerify(otp)) {
         await loginUser();
         navigate("/service");
+      } else {
+        setALert(true);
+        setTimeOutAlert();
       }
     } catch (err) {
       console.error(err.message);
@@ -93,9 +104,13 @@ const LoginSignUpForm = () => {
     <>
       <div className="col-md-5">
         <div className="auth-form">
-          <div class="alert alert-danger w-100" role="alert">
-            A simple danger alert—check it out!
-          </div>
+          {Alert === true ? (
+            <div class="alert alert-danger w-100" role="alert">
+              Invalid OTP, Please enter valid OTP!
+            </div>
+          ) : (
+            <></>
+          )}
           <h1>
             Login to your seller account
             <small>
@@ -154,8 +169,9 @@ const LoginSignUpForm = () => {
                   <span className="otp-will-expire">
                     Your OTP will expire in 00:25s
                     <a
-                      className={`resend-otp text-decoration-none pe-${timeOutShow} ${timeOutShow === "none" ? "text-secondary " : ""
-                        }`}
+                      className={`resend-otp text-decoration-none pe-${timeOutShow} ${
+                        timeOutShow === "none" ? "text-secondary " : ""
+                      }`}
                       href="#x"
                       onClick={() => {
                         check.resendOtp({ offDisable, setTimeOutShow });

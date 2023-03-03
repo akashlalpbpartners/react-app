@@ -62,7 +62,7 @@ const PersonalLoanLeadDetails = () => {
     };
     var response;
     if (
-      JSON.parse(localStorage.getItem("UserDetails")).FINCode !== "ADMIN@PBPTNR"
+      JSON.parse(localStorage.getItem("UserDetails")).FINCode !== process.env.REACT_APP_ADMIN_USERNAME
     ) {
       response = await fetch(
         `http://localhost:3001/product/readallfinancialservices/${
@@ -120,7 +120,7 @@ const PersonalLoanLeadDetails = () => {
   }, [filterValue]);
   var col = [];
   if (
-    JSON.parse(localStorage.getItem("UserDetails")).FINCode !== "ADMIN@PBPTNR"
+    JSON.parse(localStorage.getItem("UserDetails")).FINCode !== process.env.REACT_APP_ADMIN_USERNAME
   ) {
     col = [
       { field: "Id", headerName: "Id", width: 90 },
