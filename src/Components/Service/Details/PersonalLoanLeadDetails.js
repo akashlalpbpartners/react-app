@@ -34,7 +34,7 @@ const PersonalLoanLeadDetails = () => {
   useEffect(() => {
     if (loanLeadDetails.length === 0) fetchLeads();
     setRows(
-      loanLeadDetails.map(function(detail) {
+      loanLeadDetails.map(function (detail) {
         return {
           Id: detail.Id,
           FINCode: detail.FINCode,
@@ -67,8 +67,7 @@ const PersonalLoanLeadDetails = () => {
       process.env.REACT_APP_ADMIN_USERNAME
     ) {
       response = await fetch(
-        `http://localhost:3001/product/readallfinancialservices/${
-          JSON.parse(Cookies.get("userCookie")).FINCode
+        `http://localhost:3001/product/readallfinancialservices/${JSON.parse(Cookies.get("userCookie")).FINCode
         }`,
         requestOptions
       );
@@ -86,7 +85,7 @@ const PersonalLoanLeadDetails = () => {
     setRows(
       loanLeadDetails
         .filter((row) => filterValue.includes(row.SubProductId))
-        .map(function(detail) {
+        .map(function (detail) {
           return {
             Id: detail.Id,
             FINCode: detail.FINCode,
@@ -103,7 +102,7 @@ const PersonalLoanLeadDetails = () => {
     );
     if (filterValue.length === 0) {
       setRows(
-        loanLeadDetails.map(function(detail) {
+        loanLeadDetails.map(function (detail) {
           return {
             Id: detail.Id,
             FINCode: detail.FINCode,
@@ -246,9 +245,9 @@ const PersonalLoanLeadDetails = () => {
     <>
       <div className="container">
         <div className="tab-content" id="pills-tabContent">
-          <h1 className="main-heading">
+          {/* <h1 className="main-heading">
             <span>Lead Details</span>
-          </h1>
+          </h1> */}
 
           <div className="filterdiv">
             <div className="left">
