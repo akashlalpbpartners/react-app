@@ -11,13 +11,17 @@ const LoginSignUpForm = () => {
   const [FINCode, setFINCode] = useState("");
   const [disableOn, setDisableOn] = useState(true);
   const [otp, setOtp] = useState("");
-  const [timeOutShow, setTimeOutShow] = useState("none");
   const [exist, setExist] = useState(false);
   const [Alert, setALert] = useState(false);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(30);
 
   useEffect(() => {
     if (FINCode.length === 12) setDisableOn(false);
-    else setDisableOn(true);
+    else {
+      setExist(false);
+      setDisableOn(true);
+    }
     if (toggleShow === "show") {
       setInputField(otp);
     }
@@ -29,20 +33,39 @@ const LoginSignUpForm = () => {
     }, 5000);
   };
 
-  const offDisable = () => {
-    setTimeOutShow("");
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      }
+
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(interval);
+        } else {
+          setSeconds(59);
+          setMinutes(minutes - 1);
+        }
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [seconds]);
+
   const handleChangeFINCode = (e) => {
     if (e.target.value.length > e.target.maxLength) {
       e.target.value = e.target.value.slice(0, e.target.maxLength);
     } else setFINCode(e.target.value);
   };
   const handleSendOtp = async () => {
+    setMinutes(0);
+    setSeconds(30);
     const response = await fetchUser(FINCode);
     if (response.length !== 0) {
       setToggleShow("show");
       setDisableOn(false);
-      check.resendOtp({ offDisable, setTimeOutShow });
     } else {
       setExist(true);
     }
@@ -167,14 +190,17 @@ const LoginSignUpForm = () => {
                 </div>
                 <div className="otp-expire-msg">
                   <span className="otp-will-expire">
-                    Your OTP will expire in 00:25s
+                    Your OTP will expire in :{" "}
+                    {minutes < 10 ? `0${minutes}` : minutes}:
+                    {seconds < 10 ? `0${seconds}` : seconds}
                     <a
-                      className={`resend-otp text-decoration-none pe-${timeOutShow} ${
-                        timeOutShow === "none" ? "text-secondary " : ""
-                      }`}
+                      className={`resend-otp text-decoration-none d-${
+                        seconds > 0 || minutes > 0 ? "none" : "inline"
+                      } `}
                       href="#x"
                       onClick={() => {
-                        check.resendOtp({ offDisable, setTimeOutShow });
+                        setMinutes(0);
+                        setSeconds(30);
                       }}
                     >
                       Resend OTP

@@ -3,10 +3,11 @@ import userContext from "../../../Context/userContext";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/system";
 import Cookies from "js-cookie";
+import clsx from "clsx";
 const PersonalLoanLeadDetails = () => {
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);
   const context = useContext(userContext);
-  const { user, city, empType } = context;
+  const { user, city } = context;
   const [rows, setRows] = useState([]);
   const subproduct = [
     {
@@ -42,9 +43,9 @@ const PersonalLoanLeadDetails = () => {
           CityId: city[detail.CityId - 1].City,
           LoanAmount: detail.LoanAmount,
           NetMonthlyIncome: detail.NetMonthlyIncome,
-          employment_type: empType[detail.EmploymentType - 1].EmploymentType,
-          is_present: detail.IsPresent,
+          status: detail.IsPresent === 1 ? "Rejected" : "",
           sub_product_id: subproduct[detail.SubProductId - 1].ListName,
+          Date: detail.CreatedAt,
         };
       })
     );
@@ -94,26 +95,26 @@ const PersonalLoanLeadDetails = () => {
             CityId: city[detail.CityId - 1].City,
             LoanAmount: detail.LoanAmount,
             NetMonthlyIncome: detail.NetMonthlyIncome,
-            employment_type: empType[detail.EmploymentType - 1].EmploymentType,
-            is_present: detail.IsPresent,
+            status: detail.IsPresent === 1 ? "Rejected" : "",
             sub_product_id: subproduct[detail.SubProductId - 1].ListName,
+            Date: detail.CreatedAt,
           };
         })
     );
     if (filterValue.length === 0) {
       setRows(
-        loanLeadDetails.map(function(row) {
+        loanLeadDetails.map(function(detail) {
           return {
-            Id: row.Id,
-            FINCode: row.FINCode,
-            Name: row.Name,
-            CustomerMobile: row.CustomerMobile,
-            CityId: city[row.CityId].City,
-            LoanAmount: row.LoanAmount,
-            NetMonthlyIncome: row.NetMonthlyIncome,
-            employment_type: empType[row.EmploymentType].EmploymentType,
-            is_present: row.IsPresent,
-            sub_product_id: row.SubProductId,
+            Id: detail.Id,
+            FINCode: detail.FINCode,
+            Name: detail.Name,
+            CustomerMobile: detail.CustomerMobile,
+            CityId: city[detail.CityId].City,
+            LoanAmount: detail.LoanAmount,
+            NetMonthlyIncome: detail.NetMonthlyIncome,
+            status: detail.IsPresent === 1 ? "Rejected" : "",
+            sub_product_id: subproduct[detail.SubProductId - 1].ListName,
+            Date: detail.CreatedAt,
           };
         })
       );
@@ -125,7 +126,7 @@ const PersonalLoanLeadDetails = () => {
     process.env.REACT_APP_ADMIN_USERNAME
   ) {
     col = [
-      { field: "Id", headerName: "Id", width: 90 },
+      { field: "Id", headerName: "Id", width: 90, hide: true },
       {
         field: "Name",
         headerName: "Name",
@@ -150,12 +151,32 @@ const PersonalLoanLeadDetails = () => {
       {
         field: "sub_product_id",
         headerName: "Product",
+        width: 170,
+      },
+      {
+        field: "Date",
+        headerName: "Date",
+        width: 170,
+      },
+      {
+        field: "status",
+        headerName: "Status",
         width: 150,
+        cellClassName: (params) => {
+          if (params.value !== "Rejected") {
+            return "";
+          }
+
+          return clsx("super-app", {
+            positive: params.value === "Rejected",
+            // positive: params.value > 0,
+          });
+        },
       },
     ];
   } else {
     col = [
-      { field: "Id", headerName: "Id", width: 90 },
+      { field: "Id", headerName: "Id", width: 90, hide: true },
       {
         field: "Name",
         headerName: "Name",
@@ -180,11 +201,30 @@ const PersonalLoanLeadDetails = () => {
       {
         field: "sub_product_id",
         headerName: "Product",
-        width: 150,
+        width: 160,
+      },
+      {
+        field: "Date",
+        headerName: "Date",
+        width: 170,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        width: 75,
+        cellClassName: (params) => {
+          if (params.value !== "Rejected") {
+            return "";
+          }
+
+          return clsx("super-app", {
+            positive: params.value === "Rejected",
+            // positive: params.value > 0,
+          });
+        },
       },
     ];
   }
-
   function NumberFormat(props) {
     const MobileNumber = props.value;
     return MobileNumber.toString().replace(/(\d{6})$/, "XXXXXX");
@@ -242,6 +282,13 @@ const PersonalLoanLeadDetails = () => {
           <Box
             container
             style={{ height: 371, width: "100%", margin: "0 0 5ch 0" }}
+            sx={{
+              "& .super-app.positive": {
+                backgroundColor: "#FF0000",
+                color: "white",
+                fontWeight: "600",
+              },
+            }}
           >
             <DataGrid
               rows={rows}

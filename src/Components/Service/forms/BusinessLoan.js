@@ -77,7 +77,7 @@ const PersonalLoan = (props) => {
     return cityList.push([value.Id, value.City]);
   });
   const empTypeList = [];
-  Object.entries(empType).map(([key, value]) => {
+  Object.entries(empType).forEach(([key, value]) => {
     if (value.Id !== 1) empTypeList.push([value.Id, value.EmploymentType]);
   });
 
@@ -94,7 +94,7 @@ const PersonalLoan = (props) => {
     onSubmit: async (values) => {
       setToggleModal(true);
       const isPresent = [];
-      loanLeadDetails.filter((row) => {
+      loanLeadDetails.forEach((row) => {
         if (row.CustomerMobile === parseInt(values.Mobile_no))
           isPresent.push(row);
       });

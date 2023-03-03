@@ -42,39 +42,31 @@ const UserState = (props) => {
 
   const fetchUser = async (FINCode) => {
     try {
-      // const response = await fetch(`http://localhost:3001/api/fincode`, {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({
-      //     FINCode: FINCode,
-      //   }),
-      // });
-      // const result = await response.json();
-      // console.log("Fetch user called!");
-      // console.log(result);
-      // await axios
-      //   .post("http://localhost:3001/api/fincode", {
-      //     FinanceCode: FINCode,
-      //   })
-      //   .then((response) => {
-      //     console.log(response);
-      //   });
       if (FINCode !== process.env.REACT_APP_ADMIN_USERNAME) {
-        const result = [
-          {
-            FINCode: "FIN100000100",
-            Name: "Ramesh",
-            MobileNumber: 9999999999,
-          },
-        ];
-        localStorage.setItem("UserDetails", JSON.stringify(result[0]));
-        return result;
+        const response = await axios.post("http://localhost:3001/api/fincode", {
+          FinanceCode: FINCode,
+        });
+        const res = response.data.data;
+        console.log(response);
+        if (res.length !== 0) {
+          const result = [
+            {
+              FINCode: FINCode,
+              Name: res.Name,
+              MobileNumber: res.MobileNo,
+            },
+          ];
+          localStorage.setItem("UserDetails", JSON.stringify(result[0]));
+          return result;
+        } else {
+          return [];
+        }
       } else {
         const result = [
           {
             FINCode: process.env.REACT_APP_ADMIN_USERNAME,
-            Name: "Administrator",
-            MobileNumber: "9999999999",
+            Name: process.env.REACT_APP_ADMIN_NAME,
+            MobileNumber: process.env.REACT_APP_ADMIN_MOBILE_NUMBER,
           },
         ];
         localStorage.setItem("UserDetails", JSON.stringify(result[0]));

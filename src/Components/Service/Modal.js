@@ -10,15 +10,37 @@ const OtpModal = (props) => {
     setShow(false);
     props.setToggleModal(false);
   };
-  const modalShow = () => setShow(true);
   const [disableOn, setDisableOn] = useState(true);
   const [Alert, setAlert] = useState(false);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(30);
 
   useEffect(() => {
     if (show === true) {
       setInputField(otp);
     }
   }, [otp.length]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      }
+
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(interval);
+        } else {
+          setSeconds(59);
+          setMinutes(minutes - 1);
+        }
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [seconds]);
 
   const setTimeOutFalse = () => {
     setTimeout(() => {
@@ -129,7 +151,24 @@ const OtpModal = (props) => {
             </ul>
           </div>
 
-          <div className="timecount">00.30 sec left to respond OTP</div>
+          <div className="timecount">
+            <span className="otp-will-expire">
+              Your OTP will expire in : {minutes < 10 ? `0${minutes}` : minutes}
+              :{seconds < 10 ? `0${seconds}` : seconds}
+              <a
+                className={`resend-otp text-decoration-none d-${
+                  seconds > 0 || minutes > 0 ? "none" : "inline"
+                } `}
+                href="#x"
+                onClick={() => {
+                  setMinutes(0);
+                  setSeconds(30);
+                }}
+              >
+                Resend OTP
+              </a>
+            </span>
+          </div>
 
           <button
             type="button"

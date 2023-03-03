@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import "./App.css";
 import Home from "./Home";
 import NotFound from "./NotFound";
 import { Routes, Route } from "react-router-dom";
 import ServiceIndex from "./Components/Service/index";
 import userContext from "./Context/userContext";
-import Cookies from "js-cookie";
 function App() {
   const context = useContext(userContext);
   const { user } = context;
