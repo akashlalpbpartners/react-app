@@ -33,7 +33,7 @@ const PersonalLoanLeadDetails = () => {
   useEffect(() => {
     if (loanLeadDetails.length === 0) fetchLeads();
     setRows(
-      loanLeadDetails.map(function (detail) {
+      loanLeadDetails.map(function(detail) {
         return {
           Id: detail.Id,
           FINCode: detail.FINCode,
@@ -62,10 +62,12 @@ const PersonalLoanLeadDetails = () => {
     };
     var response;
     if (
-      JSON.parse(localStorage.getItem("UserDetails")).FINCode !== process.env.REACT_APP_ADMIN_USERNAME
+      JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
+      process.env.REACT_APP_ADMIN_USERNAME
     ) {
       response = await fetch(
-        `http://localhost:3001/product/readallfinancialservices/${JSON.parse(Cookies.get("userCookie")).FINCode
+        `http://localhost:3001/product/readallfinancialservices/${
+          JSON.parse(Cookies.get("userCookie")).FINCode
         }`,
         requestOptions
       );
@@ -83,24 +85,24 @@ const PersonalLoanLeadDetails = () => {
     setRows(
       loanLeadDetails
         .filter((row) => filterValue.includes(row.SubProductId))
-        .map(function (detail) {
+        .map(function(detail) {
           return {
             Id: detail.Id,
             FINCode: detail.FINCode,
             Name: detail.Name,
             CustomerMobile: detail.CustomerMobile,
-            CityId: city[detail.CityId].City,
+            CityId: city[detail.CityId - 1].City,
             LoanAmount: detail.LoanAmount,
             NetMonthlyIncome: detail.NetMonthlyIncome,
-            employment_type: empType[detail.EmploymentType].EmploymentType,
+            employment_type: empType[detail.EmploymentType - 1].EmploymentType,
             is_present: detail.IsPresent,
-            sub_product_id: detail.SubProductId,
+            sub_product_id: subproduct[detail.SubProductId - 1].ListName,
           };
         })
     );
     if (filterValue.length === 0) {
       setRows(
-        loanLeadDetails.map(function (row) {
+        loanLeadDetails.map(function(row) {
           return {
             Id: row.Id,
             FINCode: row.FINCode,
@@ -119,7 +121,8 @@ const PersonalLoanLeadDetails = () => {
   }, [filterValue]);
   var col = [];
   if (
-    JSON.parse(localStorage.getItem("UserDetails")).FINCode !== process.env.REACT_APP_ADMIN_USERNAME
+    JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
+    process.env.REACT_APP_ADMIN_USERNAME
   ) {
     col = [
       { field: "Id", headerName: "Id", width: 90 },
