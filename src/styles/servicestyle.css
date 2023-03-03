@@ -553,6 +553,19 @@ option {
   display: none;
 }
 
+.wrapper .services-with-bg .sub-services .tab-content .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-row {
+  position: relative;
+}
+
+.wrapper .services-with-bg .sub-services .tab-content .super-app.positive.MuiDataGrid-cell {
+  min-width: auto !important;
+  max-width: none !important;
+  min-height: auto !important;
+  max-height: none !important;
+  position: absolute;
+  right: 15px;
+}
+
 .wrapper .services-with-bg .sub-services .service-footer {
   background: #eee;
   padding: 15px;
