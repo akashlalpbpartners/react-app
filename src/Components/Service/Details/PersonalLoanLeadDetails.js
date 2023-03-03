@@ -4,6 +4,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/system";
 import Cookies from "js-cookie";
 import clsx from "clsx";
+import { format } from "date-fns";
+
 const PersonalLoanLeadDetails = () => {
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);
   const context = useContext(userContext);
@@ -45,7 +47,9 @@ const PersonalLoanLeadDetails = () => {
           NetMonthlyIncome: detail.NetMonthlyIncome,
           status: detail.IsPresent === 1 ? "Rejected" : "",
           sub_product_id: subproduct[detail.SubProductId - 1].ListName,
-          Date: detail.CreatedAt,
+          // Date: format(toString(detail.CreatedAt.slice(0, 10)), "mm-yyyy"),
+          Date: format(new Date(), "mmm-yyyy"),
+          // Date: detail.CreatedAt.slice(0, 10),
         };
       })
     );
