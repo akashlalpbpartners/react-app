@@ -33,7 +33,7 @@ const PersonalLoanLeadDetails = () => {
   useEffect(() => {
     if (loanLeadDetails.length === 0) fetchLeads();
     setRows(
-      loanLeadDetails.map(function(detail) {
+      loanLeadDetails.map(function (detail) {
         return {
           Id: detail.Id,
           FINCode: detail.FINCode,
@@ -42,7 +42,7 @@ const PersonalLoanLeadDetails = () => {
           CityId: city[detail.CityId - 1].City,
           LoanAmount: detail.LoanAmount,
           NetMonthlyIncome: detail.NetMonthlyIncome,
-          employment_type: empType[detail.EmploymentType].EmploymentType,
+          employment_type: empType[detail.EmploymentType - 1].EmploymentType,
           is_present: detail.IsPresent,
           sub_product_id: subproduct[detail.SubProductId - 1].ListName,
         };
@@ -65,8 +65,7 @@ const PersonalLoanLeadDetails = () => {
       JSON.parse(localStorage.getItem("UserDetails")).FINCode !== process.env.REACT_APP_ADMIN_USERNAME
     ) {
       response = await fetch(
-        `http://localhost:3001/product/readallfinancialservices/${
-          JSON.parse(Cookies.get("userCookie")).FINCode
+        `http://localhost:3001/product/readallfinancialservices/${JSON.parse(Cookies.get("userCookie")).FINCode
         }`,
         requestOptions
       );
@@ -84,7 +83,7 @@ const PersonalLoanLeadDetails = () => {
     setRows(
       loanLeadDetails
         .filter((row) => filterValue.includes(row.SubProductId))
-        .map(function(detail) {
+        .map(function (detail) {
           return {
             Id: detail.Id,
             FINCode: detail.FINCode,
@@ -101,7 +100,7 @@ const PersonalLoanLeadDetails = () => {
     );
     if (filterValue.length === 0) {
       setRows(
-        loanLeadDetails.map(function(row) {
+        loanLeadDetails.map(function (row) {
           return {
             Id: row.Id,
             FINCode: row.FINCode,
@@ -239,10 +238,11 @@ const PersonalLoanLeadDetails = () => {
 
           <Box
             container
-            style={{ height: 300, width: "100%", margin: "0 0 5ch 0" }}
+            style={{ height: 371, width: "100%", margin: "0 0 5ch 0" }}
           >
             <DataGrid
               rows={rows}
+              rowHeight={40}
               columns={col}
               pageSize={5}
               rowsPerPageOptions={[5]}
