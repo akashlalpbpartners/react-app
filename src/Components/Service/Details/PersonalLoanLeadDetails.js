@@ -42,7 +42,7 @@ const PersonalLoanLeadDetails = () => {
           CityId: city[detail.CityId - 1].City,
           LoanAmount: detail.LoanAmount,
           NetMonthlyIncome: detail.NetMonthlyIncome,
-          employment_type: empType[detail.EmploymentType].EmploymentType,
+          employment_type: empType[detail.EmploymentType - 1].EmploymentType,
           is_present: detail.IsPresent,
           sub_product_id: subproduct[detail.SubProductId - 1].ListName,
         };
@@ -62,11 +62,10 @@ const PersonalLoanLeadDetails = () => {
     };
     var response;
     if (
-      JSON.parse(localStorage.getItem("UserDetails")).FINCode !== "ADMIN@PBPTNR"
+      JSON.parse(localStorage.getItem("UserDetails")).FINCode !== process.env.REACT_APP_ADMIN_USERNAME
     ) {
       response = await fetch(
-        `http://localhost:3001/product/readallfinancialservices/${
-          JSON.parse(Cookies.get("userCookie")).FINCode
+        `http://localhost:3001/product/readallfinancialservices/${JSON.parse(Cookies.get("userCookie")).FINCode
         }`,
         requestOptions
       );
@@ -120,7 +119,7 @@ const PersonalLoanLeadDetails = () => {
   }, [filterValue]);
   var col = [];
   if (
-    JSON.parse(localStorage.getItem("UserDetails")).FINCode !== "ADMIN@PBPTNR"
+    JSON.parse(localStorage.getItem("UserDetails")).FINCode !== process.env.REACT_APP_ADMIN_USERNAME
   ) {
     col = [
       { field: "Id", headerName: "Id", width: 90 },
@@ -202,31 +201,55 @@ const PersonalLoanLeadDetails = () => {
   };
   return (
     <>
-      <div className="container tab-content" id="pills-tabContent">
-        <Box
-          container
-          style={{ height: 260, width: "100%", margin: "0 0 5ch 0" }}
-        >
-          <DataGrid
-            rows={rows}
-            columns={col}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            getRowId={(row) => row.Id + row.FINCode}
-          />
+      <div className="container">
+        <div className="tab-content" id="pills-tabContent">
+          <h1 className="main-heading">
+            <span>Lead Details</span>
+          </h1>
 
-          {subproduct.map((obj) => (
-            <label key={obj.SubProductId}>
-              <input
-                type="checkbox"
-                id={obj.docId}
-                value={obj.SubProductId}
-                onChange={handleFilterChange}
-              />
-              {obj.SubProductName}
-            </label>
-          ))}
-        </Box>
+          <div className="filterdiv">
+            <div className="left">
+              {subproduct.map((obj) => (
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id={obj.docId}
+                    value={obj.SubProductId}
+                    onChange={handleFilterChange}
+                  />
+                  <label
+                    className="form-check-label"
+                    id={obj.docId}
+                    key={obj.SubProductId}
+                  >
+                    {obj.SubProductName}
+                  </label>
+                </div>
+              ))}
+            </div>
+            <div className="right">
+              <div className="search">
+                <input className="form-control" placeholder="Search ..." />
+                <i className="fa fa-search" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+
+          <Box
+            container
+            style={{ height: 371, width: "100%", margin: "0 0 5ch 0" }}
+          >
+            <DataGrid
+              rows={rows}
+              rowHeight={40}
+              columns={col}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              getRowId={(row) => row.Id + row.FINCode}
+            />
+          </Box>
+        </div>
       </div>
     </>
   );

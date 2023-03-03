@@ -11,7 +11,8 @@ const FinancialServices = (props) => {
 
   function renderElement(ToggleSubForm) {
     if (
-      JSON.parse(localStorage.getItem("UserDetails")).FINCode !== "ADMIN@PBPTNR"
+      JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
+      process.env.REACT_APP_ADMIN_USERNAME
     ) {
       if (ToggleSubForm === "1") {
         if (props.togglePage === "leadrequest") {
@@ -45,7 +46,7 @@ const FinancialServices = (props) => {
         aria-labelledby="pills-home-tab"
       >
         {JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
-        "ADMIN@PBPTNR" ? (
+        process.env.REACT_APP_ADMIN_USERNAME ? (
           <>
             {props.togglePage === "leadrequest" ? (
               <>

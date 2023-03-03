@@ -26,7 +26,7 @@ function ServiceHeader(props) {
             </a>
             <div className="collapse navbar-collapse" id="navbarNav">
               {JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
-              "ADMIN@PBPTNR" ? (
+              process.env.REACT_APP_ADMIN_USERNAME ? (
                 <ul className="navbar-nav">
                   <li className="nav-item">
                     <a

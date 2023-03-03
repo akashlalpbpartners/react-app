@@ -381,7 +381,7 @@ option {
 }
 
 .wrapper .services-with-bg {
-  min-height: 472px;
+  /* min-height: 472px; */
 }
 
 .wrapper .services-with-bg .services {
@@ -407,7 +407,7 @@ option {
 .wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link {
   width: 100%;
   text-align: left;
-  padding: 10px 15px 10px 35px;
+  padding: 10px 15px 10px 40px;
   color: #777;
   position: relative;
 }
@@ -417,6 +417,18 @@ option {
   left: 14px;
   top: 11px;
   font-size: 15px;
+}
+
+.form-group .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
+  line-height: 1.8375em;
+}
+
+.form-group .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
+  padding: 12.5px 14px;
+}
+
+.wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link i.fa.fa-home {
+  font-size: 18px;
 }
 
 .wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link.active {
@@ -493,20 +505,21 @@ option {
   padding: 25px;
   background: #f9f9f9;
   margin-top: 0;
-  height: calc(100vh - 146px);
+  min-height: 470px;
+  /* height: calc(100vh - 145px); */
 }
 
 .wrapper .services-with-bg .sub-services .tab-content .tab-pane {
-  height: calc(100vh - 256px);
+  height: calc(100vh - 265px);
 }
 
 .wrapper .services-with-bg .sub-services .tab-content h1.main-heading {
   font-size: 16px;
   padding: 10px 0px 30px 0px;
   background: #f9f9f9;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   color: #000;
-  height: 41px;
+  height: 45px;
   border-bottom: 1px solid #d9d9d9;
 }
 
@@ -521,6 +534,23 @@ option {
 
 .wrapper .services-with-bg .sub-services .tab-content label span {
   color: red;
+}
+
+.wrapper .services-with-bg .sub-services .tab-content .css-1e2bxag-MuiDataGrid-root {
+  background: #fff;
+  font-size: 13px;
+}
+
+.wrapper .services-with-bg .sub-services .tab-content .css-z8fhq1-MuiDataGrid-columnHeaders {
+  background: #f1f1f1;
+  color: #6d7b99;
+  min-height: 44px !important;
+  max-height: 44px !important;
+  line-height: 44px !important;
+}
+
+.wrapper .services-with-bg .sub-services .tab-content .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-columnSeparator--sideRight svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiDataGrid-iconSeparator.css-i4bv87-MuiSvgIcon-root {
+  display: none;
 }
 
 .wrapper .services-with-bg .sub-services .service-footer {
@@ -542,7 +572,46 @@ option {
 
 .wrapper .services-with-bg .sub-services .service-footer .service-footer-btn .btn {
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 13px;
+  padding: 8px 15px;
+  font-weight: 500;
 }
 
 /*# sourceMappingURL=style.css.map */
+
+
+.wrapper .services-with-bg .sub-services .tab-content .filterdiv {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.wrapper .services-with-bg .sub-services .tab-content .filterdiv .left {
+  display: flex;
+  align-items: center;
+}
+
+.wrapper .services-with-bg .sub-services .tab-content .filterdiv .left .form-check {
+  min-height: auto;
+  margin-bottom: 0;
+  margin-right: 10px;
+}
+
+.wrapper .services-with-bg .sub-services .tab-content .filterdiv .right {}
+
+.wrapper .services-with-bg .sub-services .tab-content .filterdiv .right .search {
+  position: relative;
+}
+
+.wrapper .services-with-bg .sub-services .tab-content .filterdiv .right .search .form-control {
+  padding-right: 30px;
+  padding: .475rem 30px .475rem .75rem;
+  font-size: 12px;
+}
+
+.wrapper .services-with-bg .sub-services .tab-content .filterdiv .right .search i {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #0d6efd;
+}

@@ -59,7 +59,7 @@ const UserState = (props) => {
       //   .then((response) => {
       //     console.log(response);
       //   });
-      if (FINCode !== "ADMIN@PBPTNR") {
+      if (FINCode !== process.env.REACT_APP_ADMIN_USERNAME) {
         const result = [
           {
             FINCode: "FIN100000100",
@@ -72,7 +72,7 @@ const UserState = (props) => {
       } else {
         const result = [
           {
-            FINCode: "ADMIN@PBPTNR",
+            FINCode: process.env.REACT_APP_ADMIN_USERNAME,
             Name: "Administrator",
             MobileNumber: "9999999999",
           },
@@ -138,6 +138,7 @@ const UserState = (props) => {
           method: "PUT",
         }
       );
+      // console.log(JSON.parse(Cookies.get("userCookie")).Id);
       console.log("Logout Api called");
       setUser([]);
       localStorage.clear();

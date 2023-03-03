@@ -11,12 +11,16 @@ body {
   padding-top: 80px;
 }
 
+.alert {
+  padding: 10px;
+}
+
 .form-control {
   font-size: 14px;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 ul,
@@ -609,4 +613,14 @@ input[type="number"]::-webkit-outer-spin-button {
 .wrapper .what-we-offer .offer-cards .box .btn-md {
   padding: 15px 45px;
   font-size: 16px;
+}
+
+.MuiInputLabel-root {
+  font-size: 13px !important;
+  padding-bottom: 20px !important;
+}
+
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  font-size: "13px" !important;
+  padding: "13px" !important;
 }

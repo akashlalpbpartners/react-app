@@ -6,7 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import userContext from "../../../Context/userContext";
-
+import Modal from "../Modal";
 const validationSchemaInput = Yup.object({
   Mobile_no: Yup.string()
     .matches(/^[789]\d{9}$/, "Phone number is not valid.")
@@ -16,8 +16,8 @@ const validationSchemaInput = Yup.object({
   Loan_amount_required: Yup.string()
     .test(
       "test-name",
-      "Loan Amount must be ranged between 10000 to 25 Lacs",
-      function (value) {
+      "Loan Amount must be ranged between 100000 to 5 crores.",
+      function(value) {
         const loan = parseInt(value);
         if (loan <= 50000000 && loan >= 100000) return true;
         else return false;
@@ -31,15 +31,38 @@ const validationSchemaInput = Yup.object({
 const PersonalLoan = (props) => {
   const context = useContext(userContext);
   const { user, city, empType } = context;
+  const [toggleModal, setToggleModal] = useState(false);
+  const [verified, setVerified] = useState(false);
+  const [APIRequest, setAPIRequest] = useState();
+  const [Alert, setAlert] = useState(false);
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);
 
   useEffect(() => {
     if (loanLeadDetails.length === 0) fetchLeads();
+    if (verified === true) insertLead();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [verified]);
+
+  const setTimeOutFalse = () => {
+    setTimeout(() => {
+      setAlert(false);
+    }, 5000);
+  };
+
+  const insertLead = async () => {
+    setVerified(false);
+    await fetch(
+      "http://localhost:3001/product/insertfinancialservices",
+      APIRequest
+    ).then(() => {
+      setAlert(true);
+      setTimeOutFalse();
+    });
+    formikInput.handleReset();
+  };
   const Token = JSON.parse(user).Token;
   const fetchLeads = async () => {
-    const SubProductId = 1;
+    const SubProductId = 2;
     const requestOptions = {
       method: "POST",
       headers: {
@@ -48,7 +71,8 @@ const PersonalLoan = (props) => {
       },
     };
     const response = await fetch(
-      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${JSON.parse(Cookies.get("userCookie")).FINCode
+      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${
+        JSON.parse(Cookies.get("userCookie")).FINCode
       }`,
       requestOptions
     );
@@ -77,6 +101,7 @@ const PersonalLoan = (props) => {
     },
     validationSchema: validationSchemaInput,
     onSubmit: async (values) => {
+      setToggleModal(true);
       const isPresent = [];
       loanLeadDetails.filter((row) => {
         if (row.CustomerMobile === parseInt(values.Mobile_no))
@@ -101,12 +126,7 @@ const PersonalLoan = (props) => {
           IsPresent: isPresent.length === 0 ? 0 : 1,
         }),
       };
-
-      await fetch(
-        "http://localhost:3001/product/insertfinancialservices",
-        requestOptions
-      );
-      formikInput.handleReset();
+      setAPIRequest(requestOptions);
     },
   });
 
@@ -197,14 +217,8 @@ const PersonalLoan = (props) => {
   return (
     <>
       <div className="tab-content" id="pills-tabContent">
-        <Box
-
-          id="personal-info"
-          role="tabpanel"
-          aria-labelledby=""
-        >
+        <Box id="personal-info" role="tabpanel" aria-labelledby="">
           <form
-            className="container"
             id="my-form"
             onSubmit={formikInput.handleSubmit}
             autoComplete="off"
@@ -216,6 +230,15 @@ const PersonalLoan = (props) => {
               aria-labelledby="pills-home-tab"
             >
               <h1 className="main-heading">Home Loan</h1>
+
+              {Alert === true ? (
+                <div className="alert alert-success" role="alert">
+                  Lead is generated successfully!
+                </div>
+              ) : (
+                <></>
+              )}
+
               <div className="row">
                 {Object.entries(inputField).map(([key, item]) => (
                   <>
@@ -229,7 +252,14 @@ const PersonalLoan = (props) => {
                         label={item[1]}
                         placeholder={item[2]}
                         value={item[3]}
-                        InputProps={{ inputProps: { maxLength: item[8] } }}
+                        InputProps={{
+                          inputProps: {
+                            maxLength: item[8],
+                            style: {
+                              height: "15px",
+                            },
+                          },
+                        }}
                         onChange={(e) => {
                           checkNumber(e);
                           formikInput.handleChange(e);
@@ -263,6 +293,7 @@ const PersonalLoan = (props) => {
                     >
                       Reset
                     </button>
+
                     <button
                       type="button"
                       className="btn btn-primary"
@@ -276,6 +307,15 @@ const PersonalLoan = (props) => {
             </div>
           </form>
         </Box>
+        {toggleModal === true ? (
+          <Modal
+            verified={verified}
+            setToggleModal={setToggleModal}
+            setVerified={setVerified}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     </>
   );

@@ -6,7 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import userContext from "../../../Context/userContext";
-
+import Modal from "../Modal";
 const validationSchemaInput = Yup.object({
   Mobile_no: Yup.string()
     .matches(/^[789]\d{9}$/, "Phone number is not valid.")
@@ -17,7 +17,7 @@ const validationSchemaInput = Yup.object({
     .test(
       "test-name",
       "Loan Amount must be ranged between 10000 to 25 Lacs",
-      function (value) {
+      function(value) {
         const loan = parseInt(value);
         if (loan <= 2500000 && loan >= 10000) return true;
         else return false;
@@ -31,12 +31,35 @@ const validationSchemaInput = Yup.object({
 const PersonalLoan = (props) => {
   const context = useContext(userContext);
   const { user, city, empType } = context;
+  const [toggleModal, setToggleModal] = useState(false);
+  const [verified, setVerified] = useState(false);
+  const [APIRequest, setAPIRequest] = useState();
+  const [Alert, setAlert] = useState(false);
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);
 
   useEffect(() => {
     if (loanLeadDetails.length === 0) fetchLeads();
+    if (verified === true) insertLead();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [verified]);
+
+  const setTimeOutFalse = () => {
+    setTimeout(() => {
+      setAlert(false);
+    }, 5000);
+  };
+
+  const insertLead = async () => {
+    setVerified(false);
+    await fetch(
+      "http://localhost:3001/product/insertfinancialservices",
+      APIRequest
+    ).then(() => {
+      setAlert(true);
+      setTimeOutFalse();
+    });
+    formikInput.handleReset();
+  };
   const Token = JSON.parse(user).Token;
   const fetchLeads = async () => {
     const SubProductId = 1;
@@ -48,7 +71,8 @@ const PersonalLoan = (props) => {
       },
     };
     const response = await fetch(
-      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${JSON.parse(Cookies.get("userCookie")).FINCode
+      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${
+        JSON.parse(Cookies.get("userCookie")).FINCode
       }`,
       requestOptions
     );
@@ -77,6 +101,7 @@ const PersonalLoan = (props) => {
     },
     validationSchema: validationSchemaInput,
     onSubmit: async (values) => {
+      setToggleModal(true);
       const isPresent = [];
       loanLeadDetails.filter((row) => {
         if (row.CustomerMobile === parseInt(values.Mobile_no))
@@ -101,12 +126,7 @@ const PersonalLoan = (props) => {
           IsPresent: isPresent.length === 0 ? 0 : 1,
         }),
       };
-
-      await fetch(
-        "http://localhost:3001/product/insertfinancialservices",
-        requestOptions
-      );
-      formikInput.handleReset();
+      setAPIRequest(requestOptions);
     },
   });
 
@@ -149,9 +169,9 @@ const PersonalLoan = (props) => {
       "Enter Loan amount required",
       formikInput.values.Loan_amount_required,
       formikInput.touched.Loan_amount_required &&
-      Boolean(formikInput.errors.Loan_amount_required),
+        Boolean(formikInput.errors.Loan_amount_required),
       formikInput.touched.Loan_amount_required &&
-      formikInput.errors.Loan_amount_required,
+        formikInput.errors.Loan_amount_required,
       false,
       [],
     ],
@@ -161,9 +181,9 @@ const PersonalLoan = (props) => {
       "Enter Net monthly income",
       formikInput.values.Net_monthly_income,
       formikInput.touched.Net_monthly_income &&
-      Boolean(formikInput.errors.Net_monthly_income),
+        Boolean(formikInput.errors.Net_monthly_income),
       formikInput.touched.Net_monthly_income &&
-      formikInput.errors.Net_monthly_income,
+        formikInput.errors.Net_monthly_income,
       false,
       [],
     ],
@@ -173,7 +193,7 @@ const PersonalLoan = (props) => {
       "Enter Employment type",
       formikInput.values.Employment_type,
       formikInput.touched.Employment_type &&
-      Boolean(formikInput.errors.Employment_type),
+        Boolean(formikInput.errors.Employment_type),
       formikInput.touched.Employment_type && formikInput.errors.Employment_type,
       true,
       empTypeList,
@@ -197,11 +217,7 @@ const PersonalLoan = (props) => {
   return (
     <>
       <div className="tab-content" id="pills-tabContent">
-        <Box
-          id="personal-info"
-          role="tabpanel"
-          aria-labelledby=""
-        >
+        <Box id="personal-info" role="tabpanel" aria-labelledby="">
           <form
             id="my-form"
             onSubmit={formikInput.handleSubmit}
@@ -213,12 +229,15 @@ const PersonalLoan = (props) => {
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
-
               <h1 className="main-heading">Personal Loan</h1>
 
-              <div class="alert alert-success" role="alert">
-                A simple success alert—check it out!
-              </div>
+              {Alert === true ? (
+                <div className="alert alert-success" role="alert">
+                  Lead is generated successfully!
+                </div>
+              ) : (
+                <></>
+              )}
 
               <div className="row">
                 {Object.entries(inputField).map(([key, item]) => (
@@ -233,7 +252,14 @@ const PersonalLoan = (props) => {
                         label={item[1]}
                         placeholder={item[2]}
                         value={item[3]}
-                        InputProps={{ inputProps: { maxLength: item[8] } }}
+                        InputProps={{
+                          inputProps: {
+                            maxLength: item[8],
+                            style: {
+                              height: "15px",
+                            },
+                          },
+                        }}
                         onChange={(e) => {
                           checkNumber(e);
                           formikInput.handleChange(e);
@@ -272,74 +298,25 @@ const PersonalLoan = (props) => {
                       type="button"
                       className="btn btn-primary"
                       onClick={formikInput.handleSubmit}
-                      data-bs-toggle="modal"
-                      data-bs-target="#otpModal"
                     >
                       Submit Request
                     </button>
-
-
                   </div>
                 </div>
               </div>
             </div>
           </form>
         </Box>
+        {toggleModal === true ? (
+          <Modal
+            verified={verified}
+            setToggleModal={setToggleModal}
+            setVerified={setVerified}
+          />
+        ) : (
+          <></>
+        )}
       </div>
-
-
-      {/* <!-- Modal --> */}
-      <div className="modal fade" id="otpModal" tabindex="-1" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title">Enter OTP</h1>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
-              <div class="alert alert-danger" role="alert">
-                A simple danger alert—check it out!
-              </div>
-
-              <div className="imgbox">
-                <img src="../../../../images/otp-img.svg" alt="" />
-              </div>
-              {/* <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="FINCode" placeholder="Fincode" maxlength="12" value="" />
-                <label for="floatingInput">Fincode</label>
-              </div> */}
-              <div class="otp-number">
-                <ul>
-                  <li>
-                    <input type="number" class="form-control" maxlength="1" />
-                  </li>
-                  <li>
-                    <input type="number" class="form-control" maxlength="1" />
-                  </li>
-                  <li>
-                    <input type="number" class="form-control" maxlength="1" />
-                  </li>
-                  <li>
-                    <input type="number" class="form-control" maxlength="1" />
-                  </li>
-                  <li>
-                    <input type="number" class="form-control" maxlength="1" />
-                  </li>
-                  <li>
-                    <input type="number" class="form-control" maxlength="1" />
-                  </li>
-                </ul>
-              </div>
-
-              <div className="timecount">00.30 sec left to respond OTP</div>
-
-              <button type="button" className="btn btn-primary">Verify</button>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
     </>
   );
 };
