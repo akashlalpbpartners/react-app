@@ -407,7 +407,7 @@ option {
 .wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link {
   width: 100%;
   text-align: left;
-  padding: 10px 15px 10px 35px;
+  padding: 10px 15px 10px 40px;
   color: #777;
   position: relative;
 }
@@ -417,6 +417,18 @@ option {
   left: 14px;
   top: 11px;
   font-size: 15px;
+}
+
+.form-group .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
+  line-height: 1.8375em;
+}
+
+.form-group .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
+  padding: 12.5px 14px;
+}
+
+.wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link i.fa.fa-home {
+  font-size: 18px;
 }
 
 .wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link.active {

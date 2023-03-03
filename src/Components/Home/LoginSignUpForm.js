@@ -93,6 +93,9 @@ const LoginSignUpForm = () => {
     <>
       <div className="col-md-5">
         <div className="auth-form">
+          <div class="alert alert-danger w-100" role="alert">
+            A simple danger alert—check it out!
+          </div>
           <h1>
             Login to your seller account
             <small>
@@ -151,9 +154,8 @@ const LoginSignUpForm = () => {
                   <span className="otp-will-expire">
                     Your OTP will expire in 00:25s
                     <a
-                      className={`resend-otp text-decoration-none pe-${timeOutShow} ${
-                        timeOutShow === "none" ? "text-secondary " : ""
-                      }`}
+                      className={`resend-otp text-decoration-none pe-${timeOutShow} ${timeOutShow === "none" ? "text-secondary " : ""
+                        }`}
                       href="#x"
                       onClick={() => {
                         check.resendOtp({ offDisable, setTimeOutShow });
