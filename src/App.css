@@ -3,12 +3,24 @@
 @import "./styles/banner-form.css";
 @import "./styles/otpmodal.css";
 
+html {
+  height: 100%;
+}
+
 body {
   font-family: Roboto, sans-serif;
   background: #fff;
   color: #707070;
   font-size: 13px;
   padding-top: 80px;
+  height: 100%;
+}
+
+:focus,
+:focus-visible {
+  /* ... */
+  outline: none;
+  box-shadow: none;
 }
 
 .alert {
@@ -220,16 +232,7 @@ option {
   padding-bottom: 50px;
 }
 
-.wrapper .what-we-offer .offer-cards {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: space-evenly;
-  -ms-flex-pack: space-evenly;
-  justify-content: space-evenly;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
+.wrapper .what-we-offer .offer-cards {}
 
 .wrapper .what-we-offer .offer-cards .offer-card {
   width: 525px;
@@ -597,12 +600,23 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .wrapper .what-we-offer .offer-cards .box .card.card-shadow {
-  -webkit-box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
-  box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
+  box-shadow: 0px 0px 30px rgb(115 128 157 / 10%);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.wrapper .what-we-offer .offer-cards .box .card.card-shadow .imagebox {
+  width: 80px;
+}
+
+.wrapper .what-we-offer .offer-cards .box .card.card-shadow .imagebox>img {
+  width: 80px;
+  max-width: inherit;
 }
 
 .wrapper .what-we-offer .offer-cards .box .card.card-shadow .description {
-  padding-left: 0;
+  padding-left: 15px;
 }
 
 .wrapper .what-we-offer .offer-cards .box .card.card-shadow img.img-fluid {

@@ -62,8 +62,7 @@ const PersonalLoan = (props) => {
       },
     };
     const response = await fetch(
-      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${
-        JSON.parse(Cookies.get("userCookie")).FINCode
+      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${JSON.parse(Cookies.get("userCookie")).FINCode
       }`,
       requestOptions
     );
@@ -161,9 +160,9 @@ const PersonalLoan = (props) => {
       "Enter Loan amount required",
       formikInput.values.Loan_amount_required,
       formikInput.touched.Loan_amount_required &&
-        Boolean(formikInput.errors.Loan_amount_required),
+      Boolean(formikInput.errors.Loan_amount_required),
       formikInput.touched.Loan_amount_required &&
-        formikInput.errors.Loan_amount_required,
+      formikInput.errors.Loan_amount_required,
       false,
       [],
     ],
@@ -173,7 +172,7 @@ const PersonalLoan = (props) => {
       "Enter Net Gross Sales",
       formikInput.values.Gross_sales,
       formikInput.touched.Gross_sales &&
-        Boolean(formikInput.errors.Gross_sales),
+      Boolean(formikInput.errors.Gross_sales),
       formikInput.touched.Gross_sales && formikInput.errors.Gross_sales,
       false,
       [],
@@ -184,7 +183,7 @@ const PersonalLoan = (props) => {
       "Enter Employment type",
       formikInput.values.Employment_type,
       formikInput.touched.Employment_type &&
-        Boolean(formikInput.errors.Employment_type),
+      Boolean(formikInput.errors.Employment_type),
       formikInput.touched.Employment_type && formikInput.errors.Employment_type,
       true,
       empTypeList,
@@ -220,78 +219,86 @@ const PersonalLoan = (props) => {
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
-              <h1 className="main-heading">Business Loan</h1>
-
-              {Alert === true ? (
-                <div className="alert alert-success" role="alert">
-                  Lead is generated successfully!
+              <div className="card form">
+                <div className="leftImg bl">
+                  <h2>Business Loan</h2>
+                  <p>Unlock Best Personal Loan Offers suitable
+                    for your needs from 30+ Lenders</p>
+                  <div className="img"></div>
                 </div>
-              ) : (
-                <></>
-              )}
+                <div className="right">
 
-              <div className="row">
-                {Object.entries(inputField).map(([key, item]) => (
-                  <>
-                    <div className="form-group col-lg-4">
-                      <TextField
-                        key={key}
-                        fullWidth
-                        id={item[0]}
-                        select={item[6]}
-                        name={item[0]}
-                        label={item[1]}
-                        placeholder={item[2]}
-                        value={item[3]}
-                        InputProps={{
-                          inputProps: {
-                            maxLength: item[8],
-                            style: {
-                              height: "15px",
-                            },
-                          },
-                        }}
-                        onChange={(e) => {
-                          checkNumber(e);
-                          formikInput.handleChange(e);
-                        }}
-                        error={item[4]}
-                        helperText={item[5]}
-                      >
-                        <MenuItem value="">
-                          <em>{item[1]}</em>
-                        </MenuItem>
-                        {item[7].map((value, key) => (
-                          <MenuItem name={item[1]} key={key} value={value[0]}>
-                            {value[1]}
-                          </MenuItem>
-                        ))}
-                      </TextField>
+                  {Alert === true ? (
+                    <div className="alert alert-success" role="alert">
+                      Lead is generated successfully!
                     </div>
-                  </>
-                ))}
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12">
-                <div className="service-footer">
-                  <div className="service-footer-btn">
-                    <button
-                      type="button"
-                      className="btn btn-outline-secondary"
-                      onClick={formikInput.handleReset}
-                      form="my-form"
-                    >
-                      Reset
-                    </button>
+                  ) : (
+                    <></>
+                  )}
+                  <div className="row">
+                    {Object.entries(inputField).map(([key, item]) => (
+                      <>
+                        <div className="form-group col-lg-6">
+                          <TextField
+                            key={key}
+                            fullWidth
+                            id={item[0]}
+                            select={item[6]}
+                            name={item[0]}
+                            label={item[1]}
+                            placeholder={item[2]}
+                            value={item[3]}
+                            InputProps={{
+                              inputProps: {
+                                maxLength: item[8],
+                                style: {
+                                  height: "15px",
+                                },
+                              },
+                            }}
+                            onChange={(e) => {
+                              checkNumber(e);
+                              formikInput.handleChange(e);
+                            }}
+                            error={item[4]}
+                            helperText={item[5]}
+                          >
+                            <MenuItem value="">
+                              <em>{item[1]}</em>
+                            </MenuItem>
+                            {item[7].map((value, key) => (
+                              <MenuItem name={item[1]} key={key} value={value[0]}>
+                                {value[1]}
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                        </div>
+                      </>
+                    ))}
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="service-footer">
+                        <div className="service-footer-btn">
+                          <button
+                            type="button"
+                            className="btn btn-outline-secondary"
+                            onClick={formikInput.handleReset}
+                            form="my-form"
+                          >
+                            Reset
+                          </button>
 
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      onClick={formikInput.handleSubmit}
-                    >
-                      Submit Request
-                    </button>
+                          <button
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={formikInput.handleSubmit}
+                          >
+                            Submit Request
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

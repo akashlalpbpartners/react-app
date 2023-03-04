@@ -79,16 +79,7 @@ option {
   padding-bottom: 50px;
 }
 
-.wrapper .what-we-offer .offer-cards {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: space-evenly;
-  -ms-flex-pack: space-evenly;
-  justify-content: space-evenly;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
+.wrapper .what-we-offer .offer-cards {}
 
 .wrapper .what-we-offer .offer-cards .offer-card {
   width: 525px;
@@ -131,6 +122,7 @@ option {
   text-align: center;
   padding-top: 25px;
   padding-bottom: 25px;
+
 }
 
 .wrapper .footer p {
@@ -381,7 +373,8 @@ option {
 }
 
 .wrapper .services-with-bg {
-  /* min-height: 472px; */
+  min-height: 570px;
+  /* height: calc(100vh - 80px); */
 }
 
 .wrapper .services-with-bg .services {
@@ -389,34 +382,38 @@ option {
 }
 
 .wrapper .services-with-bg .services .sub-services {
-  padding-left: 230px;
+  /* padding-left: 230px; */
   position: relative;
+  padding: 25px 0;
 }
 
 .wrapper .services-with-bg .services .sub-services ul#pills-tab {
+  margin-bottom: 25px;
+  /* border-bottom: 1px solid #f6f6f6; */
   position: absolute;
-  left: 0;
-  width: 210px;
-  margin-top: 25px;
+  right: 45px;
+  z-index: 1;
+  top: 55px;
 }
 
 .wrapper .services-with-bg .services .sub-services ul#pills-tab li {
-  margin-bottom: 5px;
+  margin-left: 5px;
 }
 
 .wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link {
   width: 100%;
   text-align: left;
-  padding: 10px 15px 10px 40px;
+  padding: 10px 5px 10px 25px;
   color: #777;
   position: relative;
+  border-radius: 0;
 }
 
 .wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link i.fa {
   position: absolute;
-  left: 14px;
-  top: 11px;
-  font-size: 15px;
+  left: 5px;
+  top: 13px;
+  font-size: 14px;
 }
 
 .form-group .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
@@ -427,12 +424,15 @@ option {
   padding: 12.5px 14px;
 }
 
-.wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link i.fa.fa-home {
-  font-size: 18px;
+.wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link i.fa.fa-briefcase {
+  font-size: 13px;
+  top: 14px;
 }
 
 .wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link.active {
-  color: #fff;
+  color: #0d6efd;
+  background: none;
+  border-bottom: 2px solid #0d6efd;
 }
 
 .wrapper .services-with-bg .services .nav.first {
@@ -502,15 +502,14 @@ option {
 }
 
 .wrapper .services-with-bg .sub-services .tab-content {
-  padding: 25px;
-  background: #f9f9f9;
-  margin-top: 0;
-  min-height: 470px;
+
+  /* min-height: 470px; */
   /* height: calc(100vh - 145px); */
+
 }
 
 .wrapper .services-with-bg .sub-services .tab-content .tab-pane {
-  height: calc(100vh - 265px);
+  /* height: calc(100vh - 265px); */
 }
 
 .wrapper .services-with-bg .sub-services .tab-content h1.main-heading {
@@ -563,13 +562,26 @@ option {
   min-height: auto !important;
   max-height: none !important;
   position: absolute;
-  right: 15px;
+  right: 9px;
+  border-radius: 10px;
+  border: none;
+  top: 8px;
+  font-size: 11px;
+  font-weight: normal;
+  background: #fef6f6;
+  color: red;
+  padding: 3px 10px;
+}
+
+.wrapper .services-with-bg .sub-services .tab-content .css-levciy-MuiTablePagination-displayedRows {
+  margin-bottom: 0;
 }
 
 .wrapper .services-with-bg .sub-services .service-footer {
-  background: #eee;
+  background: #f6f6f6;
   padding: 15px;
   border-radius: 6px;
+  margin-top: 25px;
 }
 
 .wrapper .services-with-bg .sub-services .service-footer .service-footer-btn {
@@ -627,4 +639,157 @@ option {
   top: 10px;
   right: 10px;
   color: #0d6efd;
+}
+
+.wrapper .services-with-bg .services .sub-services .card.form {
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px #aaaaaa29;
+  background: #fff;
+  border-color: #f6f6f6;
+  padding: 45px;
+  padding-left: 500px;
+  min-height: 480px;
+}
+
+.wrapper .services-with-bg .services .sub-services .card.form .leftImg {
+  text-align: left;
+  background: #f6f6f6;
+  width: 450px;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  bottom: 5px;
+  border-radius: 10px 0 0 10px;
+  padding: 40px;
+}
+
+.wrapper .services-with-bg .services .sub-services .card.form .leftImg h2 {
+  font-size: 20px;
+  color: black;
+  position: relative;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+}
+
+.wrapper .services-with-bg .services .sub-services .card.form .leftImg p {
+  font-size: 14px;
+  color: #333;
+  line-height: 24px;
+}
+
+.wrapper .services-with-bg .services .sub-services .card.form .leftImg h2:after {
+  content: "";
+  position: absolute;
+  background: blue;
+  height: 2px;
+  width: 50px;
+  left: 0;
+  bottom: 0;
+}
+
+.wrapper .services-with-bg .services .sub-services .card.form .leftImg .img {
+  width: 100%;
+  height: 280px;
+  display: inline-flex;
+}
+
+.wrapper .services-with-bg .services .sub-services .card.form .leftImg.pl .img {
+  background: url(../images/img-pl.png) no-repeat center center;
+  background-size: contain;
+}
+
+.wrapper .services-with-bg .services .sub-services .card.form .leftImg.hl .img {
+  background: url(../images/img-hl.png) no-repeat center center;
+  background-size: contain;
+}
+
+.wrapper .services-with-bg .services .sub-services .card.form .leftImg.bl .img {
+  background: url(../images/img-bl.png) no-repeat center center;
+  background-size: contain;
+}
+
+.wrapper .services-with-bg .services .sub-services .card.form .right {
+  margin-top: 60px;
+}
+
+.wrapper .services-with-bg .services .sub-services .card.form .right .form-group {
+  margin-bottom: 30px;
+}
+
+.wrapper .services-with-bg .services .sub-services .card.form .right .form-group .css-1wc848c-MuiFormHelperText-root {
+  font-size: 11px;
+  margin-left: 0;
+}
+
+
+@media (max-width: 768px) {
+  .navbar .navbar-header form {
+    margin-left: auto;
+  }
+
+  nav.navbar ul.navbar-nav.nav-user li.nav-item.user>a.circle-icon span.name {
+    display: none;
+  }
+
+  .wrapper .services-with-bg .services .sub-services .card.form .leftImg {
+    display: none;
+  }
+
+  .wrapper .services-with-bg .services .sub-services .card.form {
+    padding: 25px;
+  }
+
+  .wrapper .services-with-bg {
+    height: auto;
+  }
+
+  .wrapper .services-with-bg .services .sub-services ul#pills-tab {
+    left: 25px;
+    top: 40px;
+    right: auto;
+  }
+}
+
+@media (max-width: 450px) {
+  .wrapper .services-with-bg .services .sub-services .card.form {
+    padding: 15px;
+  }
+
+  .wrapper .services-with-bg .services .sub-services ul#pills-tab {
+    left: 15px;
+  }
+
+  .wrapper .services-with-bg .services .sub-services ul#pills-tab li {
+    margin-right: 5px;
+  }
+
+  .wrapper .services-with-bg .services .sub-services ul#pills-tab li:last-child {
+    margin-right: 0;
+  }
+
+  .wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link {
+    font-size: 12px;
+    padding-right: 0;
+    padding-left: 20px;
+  }
+
+  .wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link i.fa {
+    left: 2px;
+
+  }
+}
+
+
+@media (max-width: 400px) {
+  .wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link {
+    font-size: 11px;
+  }
+
+  .wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link i.fa {
+    top: 10px;
+  }
+
+  .wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link i.fa.fa-briefcase {
+    top: 11px;
+  }
 }

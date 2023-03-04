@@ -133,38 +133,38 @@ const PersonalLoanLeadDetails = () => {
       {
         field: "Name",
         headerName: "Name",
-        width: 180,
+        width: 166,
       },
       {
         field: "CustomerMobile",
         headerName: "Mobile Number",
-        width: 190,
+        width: 156,
         valueGetter: NumberFormat,
       },
       {
         field: "CityId",
         headerName: "City",
-        width: 180,
+        width: 156,
       },
       {
         field: "LoanAmount",
         headerName: "Loan Amount",
-        width: 190,
+        width: 156,
       },
       {
         field: "sub_product_id",
         headerName: "Product",
-        width: 170,
+        width: 156,
       },
       {
         field: "Date",
         headerName: "Date",
-        width: 170,
+        width: 156,
       },
       {
         field: "status",
         headerName: "Status",
-        width: 150,
+        width: 146,
         cellClassName: (params) => {
           if (params.value !== "Rejected") {
             return "";
@@ -284,7 +284,7 @@ const PersonalLoanLeadDetails = () => {
 
           <Box
             container
-            style={{ height: 371, width: "100%", margin: "0 0 5ch 0" }}
+            style={{ height: 512, width: "100%", margin: "0 0 5ch 0" }}
             sx={{
               "& .super-app.positive": {
                 backgroundColor: "#FF0000",
@@ -297,8 +297,8 @@ const PersonalLoanLeadDetails = () => {
               rows={rows}
               rowHeight={40}
               columns={col}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
+              pageSize={10}
+              rowsPerPageOptions={[10]}
               getRowId={(row) => row.Id + row.FINCode}
             />
           </Box>

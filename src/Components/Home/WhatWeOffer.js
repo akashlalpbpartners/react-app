@@ -15,17 +15,16 @@ const WhatWeOffer = () => {
               return (
                 <div className="col-lg-4 box" key={key}>
                   <div className="card card-shadow border-0 mb-4">
-                    <div className="row no-gutters align-items-center">
-                      <div className="col-md-4 d-flex align-items-center">
-                        <img src={offer.imgSrc} alt="" className="img-fluid rounded" />
-                      </div>
-                      <div className="col-md-8 description d-flex align-items-center">
-                        <div className="ml-2">
-                          <h6 className="font-weight-medium mt-2">{offer.title}</h6>
-                          <p className="mt-1">{offer.description}</p>
-                        </div>
+                    <div className="imagebox">
+                      <img src={offer.imgSrc} alt="" className="img-fluid rounded" />
+                    </div>
+                    <div className="description">
+                      <div className="ml-2">
+                        <h6 className="font-weight-medium mt-2">{offer.title}</h6>
+                        <p className="mt-1">{offer.description}</p>
                       </div>
                     </div>
+
                   </div>
                 </div>
               );

@@ -46,11 +46,11 @@ const FinancialServices = (props) => {
         aria-labelledby="pills-home-tab"
       >
         {JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
-        process.env.REACT_APP_ADMIN_USERNAME ? (
+          process.env.REACT_APP_ADMIN_USERNAME ? (
           <>
             {props.togglePage === "leadrequest" ? (
               <>
-                <div className="sub-services d-flex align-items-start">
+                <div className="sub-services">
                   <FinancialServicesNavbar
                     ToggleSubForm={ToggleSubForm}
                     setToggleSubForm={setToggleSubForm}
@@ -60,7 +60,7 @@ const FinancialServices = (props) => {
               </>
             ) : (
               <>
-                <div className="sub-services d-flex align-items-start p-0">
+                <div className="sub-services">
                   {renderElement(ToggleSubForm)}
                 </div>
               </>
@@ -68,7 +68,7 @@ const FinancialServices = (props) => {
           </>
         ) : (
           <>
-            <div className="sub-services d-flex align-items-start p-0">
+            <div className="sub-services">
               {renderElement(ToggleSubForm)}
             </div>
           </>

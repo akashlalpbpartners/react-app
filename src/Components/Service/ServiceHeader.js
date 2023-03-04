@@ -21,18 +21,25 @@ function ServiceHeader(props) {
       <nav className="navbar navbar-expand-lg fixed-top bg-white shadow">
         <div className="container">
           <div className="navbar-header">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
             <a className="navbar-brand" href="/service">
               <img src={logo} width="205" alt="" />
             </a>
+
             <div className="collapse navbar-collapse" id="navbarNav">
               {JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
-              process.env.REACT_APP_ADMIN_USERNAME ? (
-                <ul className="navbar-nav">
+                process.env.REACT_APP_ADMIN_USERNAME ? (
+                <ul className="navbar-nav topmenu">
+                  <li className="nav-item">
+                    <a className="nav-link">Dashboard</a>
+                  </li>
                   <li className="nav-item">
                     <a
-                      className={`nav-link ${
-                        props.togglePage === "leadrequest" ? "active" : ""
-                      }`}
+                      className={`nav-link ${props.togglePage === "leadrequest" ? "active" : ""
+                        }`}
                       aria-current="page"
                       href="#"
                       id="leadrequest"
@@ -43,9 +50,8 @@ function ServiceHeader(props) {
                   </li>
                   <li className="nav-item">
                     <a
-                      className={`nav-link ${
-                        props.togglePage === "leaddetails" ? "active" : ""
-                      }`}
+                      className={`nav-link ${props.togglePage === "leaddetails" ? "active" : ""
+                        }`}
                       href="#"
                       id="leaddetails"
                       onClick={handleClick}
