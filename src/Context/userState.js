@@ -42,27 +42,30 @@ const UserState = (props) => {
 
   const fetchUser = async (FINCode) => {
     try {
+      // if (FINCode !== process.env.REACT_APP_ADMIN_USERNAME) {
+      //   const response = await axios.post("http://localhost:3001/api/fincode", {
+      //     FinanceCode: FINCode,
+      //   });
+      //   const res = response.data.data;
+      //   console.log(res);
+      //   if (res.length !== 0) {
       if (FINCode !== process.env.REACT_APP_ADMIN_USERNAME) {
-        const response = await axios.post("http://localhost:3001/api/fincode", {
-          FinanceCode: FINCode,
-        });
-        const res = response.data.data;
-        console.log(response);
-        if (res.length !== 0) {
-          const result = [
-            {
-              FINCode: FINCode,
-              Name: res.Name,
-              MobileNumber: res.MobileNo,
-            },
-          ];
-          localStorage.setItem("UserDetails", JSON.stringify(result[0]));
-          return result;
-        } else {
-          return [];
-        }
-      } else {
-        const result = [
+        var result = [
+          {
+            FINCode: FINCode,
+            Name: "Ramesh",
+            MobileNumber: 9999999999,
+          },
+        ];
+        localStorage.setItem("UserDetails", JSON.stringify(result[0]));
+        return result;
+      }
+      // } else {
+      //   return [];
+      // }
+      // } else {
+      else {
+        result = [
           {
             FINCode: process.env.REACT_APP_ADMIN_USERNAME,
             Name: process.env.REACT_APP_ADMIN_NAME,
@@ -123,8 +126,7 @@ const UserState = (props) => {
     try {
       // id number name email
       await fetch(
-        `http://localhost:3001/api/logout/${
-          JSON.parse(Cookies.get("userCookie")).Id
+        `http://localhost:3001/api/logout/${JSON.parse(Cookies.get("userCookie")).Id
         }`,
         {
           method: "PUT",
