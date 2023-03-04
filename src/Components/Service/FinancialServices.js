@@ -51,7 +51,7 @@ const FinancialServices = (props) => {
           <>
             {props.togglePage === "leadrequest" ? (
               <>
-                <div className="sub-services d-flex align-items-start">
+                <div className="sub-services">
                   <FinancialServicesNavbar
                     ToggleSubForm={ToggleSubForm}
                     setToggleSubForm={setToggleSubForm}
@@ -65,7 +65,7 @@ const FinancialServices = (props) => {
               </div>
             ) : (
               <>
-                <div className="sub-services d-flex align-items-start p-0">
+                <div className="sub-services">
                   {renderElement(ToggleSubForm)}
                 </div>
               </>
@@ -75,9 +75,7 @@ const FinancialServices = (props) => {
           <Dashboard />
         ) : (
           <>
-            <div className="sub-services d-flex align-items-start p-0">
-              {renderElement(ToggleSubForm)}
-            </div>
+            <div className="sub-services">{renderElement(ToggleSubForm)}</div>
           </>
         )}
       </div>

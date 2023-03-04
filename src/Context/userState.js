@@ -9,7 +9,7 @@ const UserState = (props) => {
   const [city, setCity] = useState([]);
   const [empType, setEmpType] = useState([]);
   const navigate = useNavigate();
-
+  const [resetFlag,setResetFlag]=useState(0);
   useEffect(() => {
     if (Cookies.get("userCookie")) {
       setUser(Cookies.get("userCookie"));
