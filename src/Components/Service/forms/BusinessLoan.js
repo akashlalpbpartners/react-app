@@ -258,9 +258,7 @@ const PersonalLoan = (props) => {
                         error={item[4]}
                         helperText={item[5]}
                       >
-                        <MenuItem value="">
-                          <em>{item[1]}</em>
-                        </MenuItem>
+                        <MenuItem value="">{item[1]}</MenuItem>
                         {item[7].map((value, key) => (
                           <MenuItem name={item[1]} key={key} value={value[0]}>
                             {value[1]}

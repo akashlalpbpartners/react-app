@@ -45,7 +45,7 @@ const PersonalLoanLeadDetails = () => {
           CityId: city[detail.CityId - 1].City,
           LoanAmount: detail.LoanAmount,
           NetMonthlyIncome: detail.NetMonthlyIncome,
-          status: detail.IsPresent === 1 ? "Rejected" : "",
+          status: detail.IsPresent === 1 ? "Rejected" : "-",
           sub_product_id: subproduct[detail.SubProductId - 1].ListName,
           // Date: format(toString(detail.CreatedAt.slice(0, 10)), "mm-yyyy"),
           Date: format(new Date(), "mmm-yyyy"),
@@ -99,7 +99,7 @@ const PersonalLoanLeadDetails = () => {
             CityId: city[detail.CityId - 1].City,
             LoanAmount: detail.LoanAmount,
             NetMonthlyIncome: detail.NetMonthlyIncome,
-            status: detail.IsPresent === 1 ? "Rejected" : "",
+            status: detail.IsPresent === 1 ? "Rejected" : "-",
             sub_product_id: subproduct[detail.SubProductId - 1].ListName,
             Date: detail.CreatedAt,
           };
@@ -116,7 +116,7 @@ const PersonalLoanLeadDetails = () => {
             CityId: city[detail.CityId].City,
             LoanAmount: detail.LoanAmount,
             NetMonthlyIncome: detail.NetMonthlyIncome,
-            status: detail.IsPresent === 1 ? "Rejected" : "",
+            status: detail.IsPresent === 1 ? "Rejected" : "-",
             sub_product_id: subproduct[detail.SubProductId - 1].ListName,
             Date: detail.CreatedAt,
           };
@@ -134,38 +134,59 @@ const PersonalLoanLeadDetails = () => {
       {
         field: "Name",
         headerName: "Name",
-        width: 180,
+        width: 200,
+        align: "center",
+        headerAlign: "center",
+        sortable: false,
       },
       {
         field: "CustomerMobile",
         headerName: "Mobile Number",
-        width: 190,
+        width: 180,
         valueGetter: NumberFormat,
+        align: "center",
+        headerAlign: "center",
+        sortable: false,
       },
       {
         field: "CityId",
         headerName: "City",
         width: 180,
+        align: "center",
+        headerAlign: "center",
+        sortable: false,
       },
       {
         field: "LoanAmount",
         headerName: "Loan Amount",
-        width: 190,
+        width: 180,
+        align: "center",
+        headerAlign: "center",
+        sortable: false,
       },
       {
         field: "sub_product_id",
         headerName: "Product",
-        width: 170,
+        width: 160,
+        align: "center",
+        headerAlign: "center",
+        sortable: false,
       },
       {
         field: "Date",
         headerName: "Date",
-        width: 170,
+        width: 160,
+        align: "center",
+        headerAlign: "center",
+        sortable: false,
       },
       {
         field: "status",
         headerName: "Status",
         width: 150,
+        align: "center",
+        headerAlign: "center",
+        sortable: false,
         cellClassName: (params) => {
           if (params.value !== "Rejected") {
             return "";
@@ -184,38 +205,59 @@ const PersonalLoanLeadDetails = () => {
       {
         field: "Name",
         headerName: "Name",
-        width: 180,
+        width: 200,
+        align: "center",
+        headerAlign: "center",
+        sortable: false,
       },
       {
         field: "CustomerMobile",
         headerName: "Mobile Number",
-        width: 190,
+        width: 180,
+        align: "center",
+        headerAlign: "center",
+        sortable: false,
         valueGetter: NumberFormat,
       },
       {
         field: "CityId",
         headerName: "City",
         width: 180,
+        align: "center",
+        headerAlign: "center",
+        sortable: false,
       },
       {
         field: "FINCode",
         headerName: "FINCode",
-        width: 190,
+        width: 180,
+        align: "center",
+        headerAlign: "center",
+        sortable: false,
       },
       {
         field: "sub_product_id",
         headerName: "Product",
         width: 160,
+        align: "center",
+        headerAlign: "center",
+        sortable: false,
       },
       {
         field: "Date",
         headerName: "Date",
-        width: 170,
+        width: 160,
+        align: "center",
+        headerAlign: "center",
+        sortable: false,
       },
       {
         field: "status",
         headerName: "Status",
-        width: 75,
+        width: 150,
+        align: "center",
+        headerAlign: "center",
+        sortable: false,
         cellClassName: (params) => {
           if (params.value !== "Rejected") {
             return "";
@@ -250,10 +292,6 @@ const PersonalLoanLeadDetails = () => {
     <>
       <div className="container">
         <div className="tab-content" id="pills-tabContent">
-          <h1 className="main-heading">
-            <span>Lead Details</span>
-          </h1>
-
           <div className="filterdiv">
             <div className="left">
               {subproduct.map((obj) => (
@@ -285,7 +323,7 @@ const PersonalLoanLeadDetails = () => {
 
           <Box
             container
-            style={{ height: 371, width: "100%", margin: "0 0 5ch 0" }}
+            style={{ height: 500, width: "100%", margin: "0 0 5ch 0" }}
             sx={{
               "& .super-app.positive": {
                 backgroundColor: "#FF0000",
@@ -296,10 +334,13 @@ const PersonalLoanLeadDetails = () => {
           >
             <DataGrid
               rows={rows}
-              rowHeight={40}
+              disableColumnMenu
+              disableColumnFilter
+              disableColumnSelector
+              rowHeight={38}
               columns={col}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
+              pageSize={10}
+              rowsPerPageOptions={[10]}
               getRowId={(row) => row.Id + row.FINCode}
             />
           </Box>

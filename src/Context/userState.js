@@ -43,24 +43,27 @@ const UserState = (props) => {
   const fetchUser = async (FINCode) => {
     try {
       if (FINCode !== process.env.REACT_APP_ADMIN_USERNAME) {
-        const response = await axios.post("http://localhost:3001/api/fincode", {
-          FinanceCode: FINCode,
-        });
-        const res = response.data.data;
-        console.log(response);
-        if (res.length !== 0) {
-          const result = [
-            {
-              FINCode: FINCode,
-              Name: res.Name,
-              MobileNumber: res.MobileNo,
-            },
-          ];
-          localStorage.setItem("UserDetails", JSON.stringify(result[0]));
-          return result;
-        } else {
-          return [];
-        }
+        // const response = await axios.post("http://localhost:3001/api/fincode", {
+        //   FinanceCode: FINCode,
+        // });
+        // const res = response.data.data;
+        // console.log(response);
+        // if (res.length !== 0) {
+        const result = [
+          {
+            FINCode: "FIN100120382",
+            Name: "Sachin",
+            MobileNumber: 9999999999,
+            // FINCode: FINCode,
+            // Name: res.Name,
+            // MobileNumber: res.MobileNo,
+          },
+        ];
+        localStorage.setItem("UserDetails", JSON.stringify(result[0]));
+        return result;
+        // } else {
+        //   return [];
+        // }
       } else {
         const result = [
           {
