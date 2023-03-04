@@ -217,7 +217,7 @@ const PersonalLoan = (props) => {
   return (
     <>
       <div className="tab-content" id="pills-tabContent">
-        <Box id="personal-info" role="tabpanel" aria-labelledby="">
+        <Box id="personal-info" role="tabpanel">
           <form
             id="my-form"
             onSubmit={formikInput.handleSubmit}
@@ -229,76 +229,93 @@ const PersonalLoan = (props) => {
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
-              <h1 className="main-heading">Personal Loan</h1>
-
-              {Alert === true ? (
-                <div className="alert alert-success" role="alert">
-                  Lead is generated successfully!
+              <div className="card form">
+                <div className="leftImg pl">
+                  <h2>Personal Loan</h2>
+                  <p>
+                    Unlock Best Personal Loan Offers suitable for your needs
+                    from 30+ Lenders
+                  </p>
+                  <div className="img"></div>
                 </div>
-              ) : (
-                <></>
-              )}
-
-              <div className="row">
-                {Object.entries(inputField).map(([key, item]) => (
-                  <>
-                    <div className="form-group col-lg-4">
-                      <TextField
-                        key={key}
-                        fullWidth
-                        id={item[0]}
-                        select={item[6]}
-                        name={item[0]}
-                        label={item[1]}
-                        placeholder={item[2]}
-                        value={item[3]}
-                        InputProps={{
-                          inputProps: {
-                            maxLength: item[8],
-                            style: {
-                              height: "15px",
-                            },
-                          },
-                        }}
-                        onChange={(e) => {
-                          checkNumber(e);
-                          formikInput.handleChange(e);
-                        }}
-                        error={item[4]}
-                        helperText={item[5]}
-                      >
-                        <MenuItem value="">{item[1]}</MenuItem>
-                        {item[7].map((value, key) => (
-                          <MenuItem name={item[1]} key={key} value={value[0]}>
-                            {value[1]}
-                          </MenuItem>
-                        ))}
-                      </TextField>
+                <div className="right">
+                  {Alert === true ? (
+                    <div className="alert alert-success" role="alert">
+                      Lead is generated successfully!
                     </div>
-                  </>
-                ))}
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12">
-                <div className="service-footer">
-                  <div className="service-footer-btn">
-                    <button
-                      type="button"
-                      className="btn btn-outline-secondary"
-                      onClick={formikInput.handleReset}
-                      form="my-form"
-                    >
-                      Reset
-                    </button>
+                  ) : (
+                    <></>
+                  )}
 
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      onClick={formikInput.handleSubmit}
-                    >
-                      Submit Request
-                    </button>
+                  <div className="row">
+                    {Object.entries(inputField).map(([key, item]) => (
+                      <>
+                        <div className="form-group col-lg-6">
+                          <TextField
+                            key={key}
+                            fullWidth
+                            id={item[0]}
+                            select={item[6]}
+                            name={item[0]}
+                            label={item[1]}
+                            placeholder={item[2]}
+                            value={item[3]}
+                            InputProps={{
+                              inputProps: {
+                                maxLength: item[8],
+                                style: {
+                                  height: "15px",
+                                },
+                              },
+                            }}
+                            onChange={(e) => {
+                              checkNumber(e);
+                              formikInput.handleChange(e);
+                            }}
+                            error={item[4]}
+                            helperText={item[5]}
+                          >
+                            <MenuItem value="">
+                              <em>{item[1]}</em>
+                            </MenuItem>
+                            {item[7].map((value, key) => (
+                              <MenuItem
+                                name={item[1]}
+                                key={key}
+                                value={value[0]}
+                              >
+                                {value[1]}
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                        </div>
+                      </>
+                    ))}
+                  </div>
+
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="service-footer">
+                        <div className="service-footer-btn">
+                          <button
+                            type="button"
+                            className="btn btn-outline-secondary"
+                            onClick={formikInput.handleReset}
+                            form="my-form"
+                          >
+                            Reset
+                          </button>
+
+                          <button
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={formikInput.handleSubmit}
+                          >
+                            Submit Request
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

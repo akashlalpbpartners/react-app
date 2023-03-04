@@ -4,13 +4,13 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/system";
 import Cookies from "js-cookie";
 import clsx from "clsx";
-import { format } from "date-fns";
 
 const PersonalLoanLeadDetails = () => {
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);
   const context = useContext(userContext);
   const { user, city } = context;
   const [rows, setRows] = useState([]);
+  const [searchFinCode, setSearchFinCode] = useState("");
   const subproduct = [
     {
       SubProductId: 1,
@@ -33,6 +33,26 @@ const PersonalLoanLeadDetails = () => {
   ];
   const [filterValue, setFilterValue] = useState([]);
 
+  const dateConversion = (date) => {
+    const [yy, mm] = date.split(/-/g);
+    const month = {
+      "01": "Jan",
+      "02": "Feb",
+      "03": "Mar",
+      "04": "Apr",
+      "05": "May",
+      "06": "Jun",
+      "07": "Jul",
+      "08": "Aug",
+      "09": "Sep",
+      "10": "Oct",
+      "11": "Nov",
+      "12": "Dec",
+    };
+    const newDate = `${month[mm]} ${yy}`;
+    return newDate;
+  };
+
   useEffect(() => {
     if (loanLeadDetails.length === 0) fetchLeads();
     setRows(
@@ -47,9 +67,7 @@ const PersonalLoanLeadDetails = () => {
           NetMonthlyIncome: detail.NetMonthlyIncome,
           status: detail.IsPresent === 1 ? "Rejected" : "-",
           sub_product_id: subproduct[detail.SubProductId - 1].ListName,
-          // Date: format(toString(detail.CreatedAt.slice(0, 10)), "mm-yyyy"),
-          Date: format(new Date(), "mmm-yyyy"),
-          // Date: detail.CreatedAt.slice(0, 10),
+          Date: dateConversion(detail.CreatedAt.slice(0, 10)),
         };
       })
     );
@@ -87,44 +105,94 @@ const PersonalLoanLeadDetails = () => {
     return result;
   };
   useEffect(() => {
-    setRows(
-      loanLeadDetails
-        .filter((row) => filterValue.includes(row.SubProductId))
-        .map(function(detail) {
-          return {
-            Id: detail.Id,
-            FINCode: detail.FINCode,
-            Name: detail.Name,
-            CustomerMobile: detail.CustomerMobile,
-            CityId: city[detail.CityId - 1].City,
-            LoanAmount: detail.LoanAmount,
-            NetMonthlyIncome: detail.NetMonthlyIncome,
-            status: detail.IsPresent === 1 ? "Rejected" : "-",
-            sub_product_id: subproduct[detail.SubProductId - 1].ListName,
-            Date: detail.CreatedAt,
-          };
-        })
-    );
-    if (filterValue.length === 0) {
+    if (searchFinCode !== "") {
       setRows(
-        loanLeadDetails.map(function(detail) {
-          return {
-            Id: detail.Id,
-            FINCode: detail.FINCode,
-            Name: detail.Name,
-            CustomerMobile: detail.CustomerMobile,
-            CityId: city[detail.CityId].City,
-            LoanAmount: detail.LoanAmount,
-            NetMonthlyIncome: detail.NetMonthlyIncome,
-            status: detail.IsPresent === 1 ? "Rejected" : "-",
-            sub_product_id: subproduct[detail.SubProductId - 1].ListName,
-            Date: detail.CreatedAt,
-          };
-        })
+        loanLeadDetails
+          .filter(
+            (row) =>
+              filterValue.includes(row.SubProductId) &&
+              row.FINCode.includes(searchFinCode)
+          )
+          .map(function(detail) {
+            return {
+              Id: detail.Id,
+              FINCode: detail.FINCode,
+              Name: detail.Name,
+              CustomerMobile: detail.CustomerMobile,
+              CityId: city[detail.CityId - 1].City,
+              LoanAmount: detail.LoanAmount,
+              NetMonthlyIncome: detail.NetMonthlyIncome,
+              status: detail.IsPresent === 1 ? "Rejected" : "-",
+              sub_product_id: subproduct[detail.SubProductId - 1].ListName,
+              Date: dateConversion(detail.CreatedAt.slice(0, 10)),
+            };
+          })
       );
+      if (filterValue.length === 0) {
+        setRows(
+          loanLeadDetails
+            .filter((row) => row.FINCode.includes(searchFinCode))
+            .map(function(detail) {
+              return {
+                Id: detail.Id,
+                FINCode: detail.FINCode,
+                Name: detail.Name,
+                CustomerMobile: detail.CustomerMobile,
+                CityId: city[detail.CityId].City,
+                LoanAmount: detail.LoanAmount,
+                NetMonthlyIncome: detail.NetMonthlyIncome,
+                status: detail.IsPresent === 1 ? "Rejected" : "-",
+                sub_product_id: subproduct[detail.SubProductId - 1].ListName,
+                Date: dateConversion(detail.CreatedAt.slice(0, 10)),
+              };
+            })
+        );
+      }
+    } else {
+      setRows(
+        loanLeadDetails
+          .filter((row) => filterValue.includes(row.SubProductId))
+          .map(function(detail) {
+            return {
+              Id: detail.Id,
+              FINCode: detail.FINCode,
+              Name: detail.Name,
+              CustomerMobile: detail.CustomerMobile,
+              CityId: city[detail.CityId].City,
+              LoanAmount: detail.LoanAmount,
+              NetMonthlyIncome: detail.NetMonthlyIncome,
+              status: detail.IsPresent === 1 ? "Rejected" : "-",
+              sub_product_id: subproduct[detail.SubProductId - 1].ListName,
+              Date: dateConversion(detail.CreatedAt.slice(0, 10)),
+            };
+          })
+      );
+      if (filterValue.length === 0) {
+        setRows(
+          loanLeadDetails.map(function(detail) {
+            return {
+              Id: detail.Id,
+              FINCode: detail.FINCode,
+              Name: detail.Name,
+              CustomerMobile: detail.CustomerMobile,
+              CityId: city[detail.CityId].City,
+              LoanAmount: detail.LoanAmount,
+              NetMonthlyIncome: detail.NetMonthlyIncome,
+              status: detail.IsPresent === 1 ? "Rejected" : "-",
+              sub_product_id: subproduct[detail.SubProductId - 1].ListName,
+              Date: dateConversion(detail.CreatedAt.slice(0, 10)),
+            };
+          })
+        );
+      }
     }
-  }, [filterValue]);
+  }, [filterValue, searchFinCode]);
   var col = [];
+  const priorityFormater = (value) => {
+    if (value === "Rejected")
+      return <span className="rejectedlead">Rejected</span>;
+    else return "-";
+  };
   if (
     JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
     process.env.REACT_APP_ADMIN_USERNAME
@@ -134,68 +202,61 @@ const PersonalLoanLeadDetails = () => {
       {
         field: "Name",
         headerName: "Name",
-        width: 200,
-        align: "center",
         headerAlign: "center",
+        align: "center",
         sortable: false,
+        width: 250,
       },
       {
         field: "CustomerMobile",
         headerName: "Mobile Number",
-        width: 180,
         valueGetter: NumberFormat,
-        align: "center",
         headerAlign: "center",
+        align: "center",
         sortable: false,
+        width: 180,
       },
       {
         field: "CityId",
         headerName: "City",
-        width: 180,
-        align: "center",
         headerAlign: "center",
+        align: "center",
         sortable: false,
+        width: 180,
       },
       {
         field: "LoanAmount",
         headerName: "Loan Amount",
-        width: 180,
-        align: "center",
         headerAlign: "center",
+        align: "center",
         sortable: false,
+        width: 180,
       },
       {
         field: "sub_product_id",
         headerName: "Product",
-        width: 160,
-        align: "center",
         headerAlign: "center",
+        align: "center",
         sortable: false,
+        width: 180,
       },
       {
         field: "Date",
         headerName: "Date",
-        width: 160,
-        align: "center",
         headerAlign: "center",
+        align: "center",
         sortable: false,
+        width: 120,
       },
       {
         field: "status",
         headerName: "Status",
-        width: 150,
-        align: "center",
         headerAlign: "center",
+        align: "center",
         sortable: false,
-        cellClassName: (params) => {
-          if (params.value !== "Rejected") {
-            return "";
-          }
-
-          return clsx("super-app", {
-            positive: params.value === "Rejected",
-            // positive: params.value > 0,
-          });
+        width: 180,
+        renderCell: (params) => {
+          return priorityFormater(params.value);
         },
       },
     ];
@@ -205,68 +266,61 @@ const PersonalLoanLeadDetails = () => {
       {
         field: "Name",
         headerName: "Name",
-        width: 200,
-        align: "center",
         headerAlign: "center",
+        align: "center",
         sortable: false,
+        width: 250,
       },
       {
         field: "CustomerMobile",
         headerName: "Mobile Number",
-        width: 180,
-        align: "center",
-        headerAlign: "center",
-        sortable: false,
         valueGetter: NumberFormat,
+        headerAlign: "center",
+        align: "center",
+        sortable: false,
+        width: 180,
       },
       {
         field: "CityId",
         headerName: "City",
-        width: 180,
-        align: "center",
         headerAlign: "center",
+        align: "center",
         sortable: false,
+        width: 180,
       },
       {
         field: "FINCode",
         headerName: "FINCode",
-        width: 180,
-        align: "center",
         headerAlign: "center",
+        align: "center",
         sortable: false,
+        width: 180,
       },
       {
         field: "sub_product_id",
         headerName: "Product",
-        width: 160,
-        align: "center",
         headerAlign: "center",
+        align: "center",
         sortable: false,
+        width: 180,
       },
       {
         field: "Date",
         headerName: "Date",
-        width: 160,
-        align: "center",
         headerAlign: "center",
+        align: "center",
         sortable: false,
+        width: 120,
       },
       {
         field: "status",
         headerName: "Status",
-        width: 150,
-        align: "center",
         headerAlign: "center",
+        align: "center",
         sortable: false,
-        cellClassName: (params) => {
-          if (params.value !== "Rejected") {
-            return "";
-          }
-
-          return clsx("super-app", {
-            positive: params.value === "Rejected",
-            // positive: params.value > 0,
-          });
+        width: 180,
+        renderCell: (params) => {
+          return priorityFormater(params.value);
         },
       },
     ];
@@ -288,10 +342,17 @@ const PersonalLoanLeadDetails = () => {
         );
     }
   };
+  const handleSearchChange = (event) => {
+    setSearchFinCode(event.target.value);
+  };
   return (
     <>
       <div className="container">
         <div className="tab-content" id="pills-tabContent">
+          {/* <h1 className="main-heading">
+            <span>Lead Details</span>
+          </h1> */}
+
           <div className="filterdiv">
             <div className="left">
               {subproduct.map((obj) => (
@@ -313,22 +374,42 @@ const PersonalLoanLeadDetails = () => {
                 </div>
               ))}
             </div>
-            <div className="right">
-              <div className="search">
-                <input className="form-control" placeholder="Search ..." />
-                <i className="fa fa-search" aria-hidden="true"></i>
+            {JSON.parse(localStorage.getItem("UserDetails")).FINCode ===
+            process.env.REACT_APP_ADMIN_USERNAME ? (
+              <div className="right">
+                <div className="search">
+                  <input
+                    className="form-control"
+                    placeholder="Search ..."
+                    onChange={handleSearchChange}
+                  />
+                  <i className="fa fa-search" aria-hidden="true"></i>
+                </div>
               </div>
-            </div>
+            ) : (
+              <></>
+            )}
           </div>
 
           <Box
             container
-            style={{ height: 500, width: "100%", margin: "0 0 5ch 0" }}
+            style={{ height: 490, width: "100%", margin: "0 0 1ch 0" }}
             sx={{
               "& .super-app.positive": {
-                backgroundColor: "#FF0000",
-                color: "white",
-                fontWeight: "600",
+                minWidth: "auto !important",
+                maxWidth: "none !important",
+                minHeight: "auto !important",
+                maxHeight: "none !important",
+                backgroundColor: "#fef6f6",
+                color: "red",
+                fontSize: "11px",
+                borderRadius: "10px",
+                // border: "none",
+                fontWeight: "normal",
+                padding: "3px 10px",
+                position: "absolute",
+                right: "-120px",
+                top: "9px",
               },
             }}
           >

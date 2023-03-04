@@ -7,7 +7,7 @@ const FinancialServicesNavbar = (props) => {
 
   return (
     <>
-      <ul className="nav nav-pills flex-column" id="pills-tab" role="tablist">
+      <ul className="nav nav-pills innerTab" id="pills-tab" role="tablist">
         <li className="nav-item" role="presentation">
           <button
             className={`nav-link ${props.ToggleSubForm === "1" ? "active" : ""
@@ -16,7 +16,8 @@ const FinancialServicesNavbar = (props) => {
             type="button"
             onClick={handleClick}
           >
-            <i class="fa fa-money" aria-hidden="true"></i> Personal Loan
+            <i class="fa fa-money" aria-hidden="true"></i>
+            Personal Loan
           </button>
         </li>
         <li className="nav-item" role="presentation">
