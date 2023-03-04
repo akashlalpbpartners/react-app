@@ -30,9 +30,11 @@ const PersonalLoanLeadDetails = () => {
     },
   ];
   const [filterValue, setFilterValue] = useState([]);
-
   useEffect(() => {
-    if (loanLeadDetails.length === 0) fetchLeads();
+    if (loanLeadDetails.length === 0 ) 
+    {fetchLeads();
+     
+    }
     else
       setRows(
         loanLeadDetails.map(function(detail) {
@@ -41,7 +43,7 @@ const PersonalLoanLeadDetails = () => {
             FINCode: detail.FINCode,
             Name: detail.Name,
             CustomerMobile: detail.CustomerMobile,
-            CityId: city[detail.CityId - 1].City,
+            CityId: city[detail.CityId].City,
             LoanAmount: detail.LoanAmount,
             NetMonthlyIncome: detail.NetMonthlyIncome,
             employment_type: empType[detail.EmploymentType].EmploymentType,
@@ -65,7 +67,6 @@ const PersonalLoanLeadDetails = () => {
     if (
       JSON.parse(localStorage.getItem("UserDetails")).FINCode !== "ADMIN@123456"
     ) {
-      console.log("agent");
       response = await fetch(
         `http://localhost:3001/product/readallfinancialservices/${
           JSON.parse(Cookies.get("userCookie")).FINCode
@@ -73,7 +74,6 @@ const PersonalLoanLeadDetails = () => {
         requestOptions
       );
     } else {
-      console.log("admin");
       response = await fetch(
         `http://localhost:3001/product/readfinancialservices`,
         requestOptions
@@ -81,6 +81,7 @@ const PersonalLoanLeadDetails = () => {
     }
     const result = await response.json();
     setLoanLeadDetails(result);
+
   };
   useEffect(() => {
     if (searchFinCode !== "") {
@@ -100,7 +101,6 @@ const PersonalLoanLeadDetails = () => {
               CityId: city[detail.CityId - 1].City,
               LoanAmount: detail.LoanAmount,
               NetMonthlyIncome: detail.NetMonthlyIncome,
-              employment_type: empType[detail.EmploymentType].EmploymentType,
               is_present: detail.IsPresent,
               sub_product_id: subproduct[detail.SubProductId - 1].ListName,
             };
@@ -119,7 +119,6 @@ const PersonalLoanLeadDetails = () => {
                 CityId: city[row.CityId].City,
                 LoanAmount: row.LoanAmount,
                 NetMonthlyIncome: row.NetMonthlyIncome,
-                employment_type: empType[row.EmploymentType].EmploymentType,
                 is_present: row.IsPresent,
                 sub_product_id: row.SubProductId,
               };
@@ -136,10 +135,9 @@ const PersonalLoanLeadDetails = () => {
               FINCode: detail.FINCode,
               Name: detail.Name,
               CustomerMobile: detail.CustomerMobile,
-              CityId: city[detail.CityId - 1].City,
+              CityId: city[detail.CityId].City,
               LoanAmount: detail.LoanAmount,
               NetMonthlyIncome: detail.NetMonthlyIncome,
-              employment_type: empType[detail.EmploymentType].EmploymentType,
               is_present: detail.IsPresent,
               sub_product_id: subproduct[detail.SubProductId - 1].ListName,
             };
@@ -156,7 +154,6 @@ const PersonalLoanLeadDetails = () => {
               CityId: city[row.CityId].City,
               LoanAmount: row.LoanAmount,
               NetMonthlyIncome: row.NetMonthlyIncome,
-              employment_type: empType[row.EmploymentType].EmploymentType,
               is_present: row.IsPresent,
               sub_product_id: row.SubProductId,
             };

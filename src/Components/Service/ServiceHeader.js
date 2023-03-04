@@ -14,6 +14,7 @@ function ServiceHeader(props) {
 
   function handleClick(e) {
     props.setTogglePage(e.target.id);
+    console.log(props.togglePage)
   }
 
   return (
@@ -53,6 +54,18 @@ function ServiceHeader(props) {
                       Lead Details
                     </a>
                   </li>
+                  <li className="nav-item">
+                    <a
+                      className={`nav-link ${
+                        props.togglePage === "dashboard" ? "active" : ""
+                      }`}
+                      href="#"
+                      id="dashboard"
+                      onClick={handleClick}
+                    >
+                      Dashboard
+                    </a>
+                  </li>
                 </ul>
               ) : (
                 <ul className="navbar-nav">
@@ -66,7 +79,21 @@ function ServiceHeader(props) {
                       Lead Details
                     </a>
                   </li>
+
+                  <li className="nav-item">
+                    <a
+                      className={`nav-link ${
+                        props.togglePage === "Dashboard" ? "active" : ""
+                      }`}
+                      href="#"
+                      id="dashboard"
+                      onClick={handleClick}
+                    >
+                      Dashboard
+                    </a>
+                  </li>
                 </ul>
+                
               )}
             </div>
             <form className="d-flex">

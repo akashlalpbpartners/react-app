@@ -6,9 +6,10 @@ import HomeLoan from "./forms/HomeLoan";
 import BusinessLoan from "./forms/BusinessLoan";
 
 import { useState } from "react";
+import Dashboard from "./Dashboard";
 const FinancialServices = (props) => {
   const [ToggleSubForm, setToggleSubForm] = useState("1");
-
+  console.log(props.togglePage);
   function renderElement(ToggleSubForm) {
     if (
       JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
@@ -58,6 +59,10 @@ const FinancialServices = (props) => {
                   {renderElement(ToggleSubForm)}
                 </div>
               </>
+            ) : props.togglePage === "dashboard" ? (
+              <div className="sub-services d-flex align-items-start p-0">
+                <Dashboard />
+              </div>
             ) : (
               <>
                 <div className="sub-services d-flex align-items-start p-0">
@@ -66,6 +71,8 @@ const FinancialServices = (props) => {
               </>
             )}
           </>
+        ) : props.togglePage === "dashboard" ? (
+          <Dashboard />
         ) : (
           <>
             <div className="sub-services d-flex align-items-start p-0">
