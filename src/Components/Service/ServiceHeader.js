@@ -14,6 +14,7 @@ function ServiceHeader(props) {
 
   function handleClick(e) {
     props.setTogglePage(e.target.id);
+    console.log(props.togglePage);
   }
 
   return (
@@ -39,10 +40,19 @@ function ServiceHeader(props) {
 
             <div className="collapse navbar-collapse" id="navbarNav">
               {JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
-              process.env.REACT_APP_ADMIN_USERNAME ? (
+              "ADMIN@123456" ? (
                 <ul className="navbar-nav topmenu">
                   <li className="nav-item">
-                    <a className="nav-link">Dashboard</a>
+                    <a
+                      className={`nav-link ${
+                        props.togglePage === "dashboard" ? "active" : ""
+                      }`}
+                      href="#"
+                      id="dashboard"
+                      onClick={handleClick}
+                    >
+                      Dashboard
+                    </a>
                   </li>
                   <li className="nav-item">
                     <a
@@ -74,7 +84,21 @@ function ServiceHeader(props) {
                 <ul className="navbar-nav topmenu">
                   <li className="nav-item">
                     <a
-                      className="nav-link active"
+                      className={`nav-link ${
+                        props.togglePage === "dashboard" ? "active" : ""
+                      }`}
+                      href="#"
+                      id="dashboard"
+                      onClick={handleClick}
+                    >
+                      Dashboard
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className={`nav-link ${
+                        props.togglePage === "leaddetails" ? "active" : ""
+                      }`}
                       href="#"
                       id="leaddetails"
                       onClick={handleClick}
