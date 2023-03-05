@@ -78,21 +78,43 @@ const Dashboard = () => {
       setDetails(result);
     }
   };
-
+  const options = {
+    scales: {
+      x: {
+        type: 'category', // explicitly specify category axis
+        labels: [
+          "Apr 2022",
+          "May 2022",
+          "Jun 2022",
+          "Jul 2022",
+          "Aug 2022",
+          "Sep 2022",
+          "Oct 2022",
+          "Nov 2022",
+          "Dec 2022",
+          "Jan 2023",
+          "Feb 2023",
+          "Mar 2023",
+        ],      },
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
   const [chartData, setChartData] = useState({
     labels: [
-      "April 22",
-      "May 22",
-      "June 22",
-      "July 22",
-      "August 22",
-      "September 22",
-      "October 22",
-      "November 22",
-      "December 22",
-      "January 23",
-      "February 23",
-      "March 23",
+      "Apr 2022",
+      "May 2022",
+      "Jun 2022",
+      "Jul 2022",
+      "Aug 2022",
+      "Sep 2022",
+      "Oct 2022",
+      "Nov 2022",
+      "Dec 2022",
+      "Jan 2023",
+      "Feb 2023",
+      "Mar 2023",
     ],
     datasets: [
       {
@@ -107,7 +129,7 @@ const Dashboard = () => {
 
   return (
     <div className="container">
-      <Bar data={chartData} />
+      <Bar data={chartData} options={options}/>
     </div>
   );
 };
