@@ -58,7 +58,7 @@ const UserState = (props) => {
         // if (res.length !== 0) {
         const result = [
           {
-            FINCode: "FIN100120382",
+            FINCode: FINCode,
             Name: "Sachin",
             MobileNumber: 9999999999,
             // FINCode: FINCode,
@@ -133,7 +133,8 @@ const UserState = (props) => {
     try {
       // id number name email
       await fetch(
-        `http://localhost:3001/api/logout/${JSON.parse(Cookies.get("userCookie")).Id
+        `http://localhost:3001/api/logout/${
+          JSON.parse(Cookies.get("userCookie")).Id
         }`,
         {
           method: "PUT",
