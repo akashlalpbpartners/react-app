@@ -3,7 +3,6 @@ import userContext from "../../../Context/userContext";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/system";
 import Cookies from "js-cookie";
-import clsx from "clsx";
 
 const PersonalLoanLeadDetails = () => {
   const [loanLeadDetails, setLoanLeadDetails] = useState([]);

@@ -103,7 +103,7 @@ const PersonalLoan = (props) => {
     onSubmit: async (values) => {
       setToggleModal(true);
       const isPresent = [];
-      loanLeadDetails.filter((row) => {
+      loanLeadDetails.for((row) => {
         if (row.CustomerMobile === parseInt(values.Mobile_no))
           isPresent.push(row);
       });

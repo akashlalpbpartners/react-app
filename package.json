@@ -22,13 +22,12 @@
     "mysql2": "^3.1.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
-    "react-chartjs-2": "^5.2.0",
+    "react-chartjs-2": "^4.3.1",
     "react-dom": "^18.2.0",
     "react-number-format": "^5.1.3",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.5.0",
     "react-scripts": "^2.1.3",
-    "recharts": "^2.4.3",
     "sass": "^1.57.0",
     "sequelize-auto": "^0.8.8",
     "styled-components": "^5.3.6",
@@ -64,6 +63,8 @@
     "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@babel/preset-env": "^7.20.2",
-    "@babel/preset-typescript": "^7.21.0"
+    "@babel/preset-typescript": "^7.21.0",
+    "@faker-js/faker": "^7.6.0",
+    "faker": "^5.5.3"
   }
 }
