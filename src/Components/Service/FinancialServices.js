@@ -45,7 +45,7 @@ const FinancialServices = (props) => {
         aria-labelledby="pills-home-tab"
       >
         {JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
-          process.env.REACT_APP_ADMIN_USERNAME ? (
+        process.env.REACT_APP_ADMIN_USERNAME ? (
           <>
             {props.togglePage === "leadrequest" ? (
               <>

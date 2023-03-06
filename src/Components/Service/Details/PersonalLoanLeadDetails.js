@@ -201,8 +201,8 @@ const PersonalLoanLeadDetails = () => {
       {
         field: "Name",
         headerName: "Name",
-        headerAlign: "center",
-        align: "center",
+        headerAlign: "left",
+        align: "left",
         sortable: false,
         width: 210,
       },
@@ -265,8 +265,8 @@ const PersonalLoanLeadDetails = () => {
       {
         field: "Name",
         headerName: "Name",
-        headerAlign: "center",
-        align: "center",
+        headerAlign: "left",
+        align: "left",
         sortable: false,
         width: 210,
       },

@@ -111,7 +111,7 @@ const Dashboard = () => {
     scales: {
       x: {
         grid: {
-          display: false
+          display: false,
         },
         type: "category", // explicitly specify category axis
         labels: [
@@ -131,7 +131,7 @@ const Dashboard = () => {
       },
       y: {
         grid: {
-          display: false
+          display: false,
         },
         beginAtZero: true,
       },
