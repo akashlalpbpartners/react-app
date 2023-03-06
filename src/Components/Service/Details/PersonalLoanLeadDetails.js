@@ -205,7 +205,7 @@ const PersonalLoanLeadDetails = () => {
         headerAlign: "center",
         align: "center",
         sortable: false,
-        width: 250,
+        width: 210,
       },
       {
         field: "CustomerMobile",
@@ -214,7 +214,7 @@ const PersonalLoanLeadDetails = () => {
         headerAlign: "center",
         align: "center",
         sortable: false,
-        width: 180,
+        width: 140,
       },
       {
         field: "CityId",
@@ -222,7 +222,7 @@ const PersonalLoanLeadDetails = () => {
         headerAlign: "center",
         align: "center",
         sortable: false,
-        width: 180,
+        width: 140,
       },
       {
         field: "LoanAmount",
@@ -246,7 +246,7 @@ const PersonalLoanLeadDetails = () => {
         headerAlign: "center",
         align: "center",
         sortable: false,
-        width: 120,
+        width: 100,
       },
       {
         field: "status",
@@ -254,7 +254,7 @@ const PersonalLoanLeadDetails = () => {
         headerAlign: "center",
         align: "center",
         sortable: false,
-        width: 180,
+        width: 140,
         renderCell: (params) => {
           return priorityFormater(params.value);
         },
@@ -269,7 +269,7 @@ const PersonalLoanLeadDetails = () => {
         headerAlign: "center",
         align: "center",
         sortable: false,
-        width: 250,
+        width: 210,
       },
       {
         field: "CustomerMobile",
@@ -278,7 +278,7 @@ const PersonalLoanLeadDetails = () => {
         headerAlign: "center",
         align: "center",
         sortable: false,
-        width: 180,
+        width: 140,
       },
       {
         field: "CityId",
@@ -286,7 +286,7 @@ const PersonalLoanLeadDetails = () => {
         headerAlign: "center",
         align: "center",
         sortable: false,
-        width: 180,
+        width: 140,
       },
       {
         field: "FINCode",
@@ -310,7 +310,7 @@ const PersonalLoanLeadDetails = () => {
         headerAlign: "center",
         align: "center",
         sortable: false,
-        width: 120,
+        width: 100,
       },
       {
         field: "status",
@@ -318,7 +318,7 @@ const PersonalLoanLeadDetails = () => {
         headerAlign: "center",
         align: "center",
         sortable: false,
-        width: 180,
+        width: 140,
         renderCell: (params) => {
           return priorityFormater(params.value);
         },
