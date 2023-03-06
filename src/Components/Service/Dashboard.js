@@ -101,15 +101,18 @@ const Dashboard = () => {
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        position: "bottom",
       },
       title: {
         display: true,
-        text: "Chart.js Bar Chart",
+        // text: "Chart.js Bar Chart",
       },
     },
     scales: {
       x: {
+        grid: {
+          display: false
+        },
         type: "category", // explicitly specify category axis
         labels: [
           "Apr 2022",
@@ -127,6 +130,9 @@ const Dashboard = () => {
         ],
       },
       y: {
+        grid: {
+          display: false
+        },
         beginAtZero: true,
       },
     },
@@ -158,8 +164,8 @@ const Dashboard = () => {
   });
 
   return (
-    <div className="container">
-      <Bar data={chartData} options={options} />
+    <div className="card">
+      <Bar data={chartData} options={options} height={"125px"} />
     </div>
   );
 };

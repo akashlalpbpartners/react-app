@@ -45,7 +45,7 @@ const FinancialServices = (props) => {
         aria-labelledby="pills-home-tab"
       >
         {JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
-        process.env.REACT_APP_ADMIN_USERNAME ? (
+          process.env.REACT_APP_ADMIN_USERNAME ? (
           <>
             {props.togglePage === "leadrequest" ? (
               <>
@@ -58,7 +58,7 @@ const FinancialServices = (props) => {
                 </div>
               </>
             ) : props.togglePage === "dashboard" ? (
-              <div className="sub-services d-flex align-items-start p-0">
+              <div className="sub-services dashboardChart">
                 <Dashboard />
               </div>
             ) : (
