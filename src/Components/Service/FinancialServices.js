@@ -4,7 +4,7 @@ import PersonalLoan from "./forms/PersonalLoan";
 import PersonalLoanLeadDetails from "./Details/PersonalLoanLeadDetails";
 import HomeLoan from "./forms/HomeLoan";
 import BusinessLoan from "./forms/BusinessLoan";
-import Dashboard from "./Dashboardtest";
+import Dashboard from "./Dashboard";
 const FinancialServices = (props) => {
   const [ToggleSubForm, setToggleSubForm] = useState("1");
   console.log(props.togglePage);
@@ -70,7 +70,9 @@ const FinancialServices = (props) => {
             )}
           </>
         ) : props.togglePage === "dashboard" ? (
-          <Dashboard />
+          <div className="sub-services d-flex align-items-start p-0">
+            <Dashboard />
+          </div>
         ) : (
           <>
             <div className="sub-services">{renderElement(ToggleSubForm)}</div>

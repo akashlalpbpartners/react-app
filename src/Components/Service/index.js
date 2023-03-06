@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import FinancialServices from "./FinancialServices";
 
 function ServiceIndex() {
-  const [togglePage, setTogglePage] = useState("leaddetails");
+  const [togglePage, setTogglePage] = useState("dashboard");
   return (
     <>
       <div className="wrapper">

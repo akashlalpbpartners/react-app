@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Bar } from "react-chartjs-2";
 import userContext from "../../Context/userContext";
-import "./styles.css";
+import Cookies from "js-cookie";
 
 const Dashboard = () => {
   const context = useContext(userContext);
@@ -45,7 +45,7 @@ const Dashboard = () => {
       ],
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [Details]);
+  }, [Details.length]);
   var records = Array.from({ length: 12 }, () => 0); // Initialize array with 12 elements and set all values to zero
   const Token = JSON.parse(user).Token;
   const calculateDetails = async () => {
@@ -62,7 +62,8 @@ const Dashboard = () => {
     var response;
 
     if (
-      JSON.parse(localStorage.getItem("UserDetails")).FINCode !== "ADMIN@123456"
+      JSON.parse(localStorage.getItem("UserDetails")).FINCode !==
+      process.env.REACT_APP_ADMIN_USERNAME
     ) {
       response = await fetch(
         `http://localhost:3001/product/dashboard`,
@@ -79,44 +80,21 @@ const Dashboard = () => {
       setDetails(result);
     }
   };
-  const options = {
-    scales: {
-      x: {
-        type: "category", // explicitly specify category axis
-        labels: [
-          "Apr 2022",
-          "May 2022",
-          "Jun 2022",
-          "Jul 2022",
-          "Aug 2022",
-          "Sep 2022",
-          "Oct 2022",
-          "Nov 2022",
-          "Dec 2022",
-          "Jan 2023",
-          "Feb 2023",
-          "Mar 2023",
-        ],
-      },
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
+
   const [chartData, setChartData] = useState({
     labels: [
-      "Apr 2022",
-      "May 2022",
-      "Jun 2022",
-      "Jul 2022",
-      "Aug 2022",
-      "Sep 2022",
-      "Oct 2022",
-      "Nov 2022",
-      "Dec 2022",
-      "Jan 2023",
-      "Feb 2023",
-      "Mar 2023",
+      "April 22",
+      "May 22",
+      "June 22",
+      "July 22",
+      "August 22",
+      "September 22",
+      "October 22",
+      "November 22",
+      "December 22",
+      "January 23",
+      "February 23",
+      "March 23",
     ],
     datasets: [
       {
@@ -131,7 +109,7 @@ const Dashboard = () => {
 
   return (
     <div className="container">
-      <Bar data={chartData} options={options} />
+      <Bar data={chartData} />
     </div>
   );
 };
