@@ -11,27 +11,31 @@ const PersonalLoanLeadDetails = () => {
   const { user, city } = context;
   const [rows, setRows] = useState([]);
   const [searchFinCode, setSearchFinCode] = useState("");
-  const subproduct = [
+  const [subproduct,setSubproduct] =useState( [
     {
       SubProductId: 1,
       docId: "1p",
       SubProductName: "PersonalLoan",
       ListName: "Personal Loan",
+      check:"true"
     },
     {
       SubProductId: 2,
       docId: "2h",
       SubProductName: "HomeLoan",
       ListName: "Home Loan",
+      check:"true"
     },
     {
       SubProductId: 3,
       docId: "3b",
       SubProductName: "BusinessLoan",
       ListName: "Business Loan",
+      check:"true"
     },
-  ];
-  const [filterValue, setFilterValue] = useState([]);
+  ])
+  
+  const [filterValue, setFilterValue] = useState([1,2,3]);
 
   const dateConversion = (date) => {
     const [yy, mm] = date.split(/-/g);
@@ -104,6 +108,29 @@ const PersonalLoanLeadDetails = () => {
 
   };
   useEffect(() => {
+    setSubproduct([
+        {
+          SubProductId: 1,
+          docId: "1p",
+          SubProductName: "PersonalLoan",
+          ListName: "Personal Loan",
+          check:filterValue.includes(1)?"true":"false"
+        },
+        {
+          SubProductId: 2,
+          docId: "2h",
+          SubProductName: "HomeLoan",
+          ListName: "Home Loan",
+          check:filterValue.includes(2)?"true":"false"
+        },
+        {
+          SubProductId: 3,
+          docId: "3b",
+          SubProductName: "BusinessLoan",
+          ListName: "Business Loan",
+          check:filterValue.includes(3)?"true":"false"
+        },
+      ])
     if (searchFinCode !== "") {
       setRows(
         loanLeadDetails
@@ -185,6 +212,7 @@ const PersonalLoanLeadDetails = () => {
         );
       }
     }
+    console.log(filterValue)
   }, [filterValue, searchFinCode]);
   var col = [];
   const priorityFormater = (value) => {
@@ -331,10 +359,9 @@ const PersonalLoanLeadDetails = () => {
 
   const handleFilterChange = (event) => {
     let checkbox = document.getElementById(event.target.id);
-    if (checkbox.checked) {
       if (!filterValue.includes(parseInt(event.target.value)))
         setFilterValue([...filterValue, parseInt(event.target.value)]);
-    } else {
+    else {
       if (filterValue.includes(parseInt(event.target.value)))
         setFilterValue(
           filterValue.filter((value) => value !== parseInt(event.target.value))
@@ -362,6 +389,7 @@ const PersonalLoanLeadDetails = () => {
                     id={obj.docId}
                     value={obj.SubProductId}
                     onChange={handleFilterChange}
+                    checked={obj.check}
                   />
                   <label
                     className="form-check-label"
