@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Bar } from "react-chartjs-2";
 import userContext from "../../Context/userContext";
+import "./styles.css";
 
 const Dashboard = () => {
   const context = useContext(userContext);
@@ -81,7 +82,7 @@ const Dashboard = () => {
   const options = {
     scales: {
       x: {
-        type: 'category', // explicitly specify category axis
+        type: "category", // explicitly specify category axis
         labels: [
           "Apr 2022",
           "May 2022",
@@ -95,7 +96,8 @@ const Dashboard = () => {
           "Jan 2023",
           "Feb 2023",
           "Mar 2023",
-        ],      },
+        ],
+      },
       y: {
         beginAtZero: true,
       },
@@ -129,7 +131,7 @@ const Dashboard = () => {
 
   return (
     <div className="container">
-      <Bar data={chartData} options={options}/>
+      <Bar data={chartData} options={options} />
     </div>
   );
 };
