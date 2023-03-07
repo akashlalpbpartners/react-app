@@ -135,10 +135,8 @@ const LoginSignUpForm = () => {
             <></>
           )}
           <h1>
-            Login to your seller account
-            <small>
-              If you don't have an account, register with your mobile number
-            </small>
+            Sign In
+            <small>To your service provider account!</small>
           </h1>
 
           <form action="">
@@ -194,8 +192,9 @@ const LoginSignUpForm = () => {
                     {minutes < 10 ? `0${minutes}` : minutes}:
                     {seconds < 10 ? `0${seconds}` : seconds}
                     <a
-                      className={`resend-otp text-decoration-none d-${seconds > 0 || minutes > 0 ? "none" : "inline"
-                        } `}
+                      className={`resend-otp text-decoration-none d-${
+                        seconds > 0 || minutes > 0 ? "none" : "inline"
+                      } `}
                       href="#x"
                       onClick={() => {
                         setMinutes(0);

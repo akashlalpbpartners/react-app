@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import userContext from "./userContext";
 import axios from "axios";
+
 const UserState = (props) => {
   const [user, setUser] = useState([]);
   const [state, setState] = useState([]);
   const [city, setCity] = useState([]);
   const [empType, setEmpType] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (Cookies.get("userCookie")) {
@@ -16,7 +15,7 @@ const UserState = (props) => {
       fetchState();
       fetchCity();
       loadEmpType();
-      navigate("/service");
+      // navigate("/service");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
@@ -47,7 +46,6 @@ const UserState = (props) => {
           FinanceCode: FINCode,
         });
         const res = response.data.data;
-        console.log(response);
         if (res.length !== 0) {
           const result = [
             {
@@ -127,13 +125,12 @@ const UserState = (props) => {
       // id number name email
       await fetch(
         `http://localhost:3001/api/logout/${
-          JSON.parse(Cookies.get("userCookie")).Id
+          JSON.parse(Cookies.get("userCookie")).token.Id
         }`,
         {
           method: "PUT",
         }
       );
-      // console.log(JSON.parse(Cookies.get("userCookie")).Id);
       console.log("Logout Api called");
       setUser([]);
       localStorage.clear();

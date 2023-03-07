@@ -108,7 +108,7 @@ const OtpModal = (props) => {
   };
   return (
     <>
-      <Modal id="otpModal" show={show} onHide={modalClose}>
+      <Modal id="otpModal" className="fade" show={show} onHide={modalClose}>
         <div className="modal-header">
           <h6 className="modal-title">Enter OTP</h6>
           <button

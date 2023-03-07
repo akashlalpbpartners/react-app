@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../../src/images/logo.png";
+// import logo from "../../../src/images/logo.png";
 
 const HeaderHome = () => {
   return (
@@ -8,7 +8,11 @@ const HeaderHome = () => {
         <div className="container">
           <div className="navbar-header">
             <a className="navbar-brand" href="/service">
-              <img src={logo} width="205" alt="" />
+              <img
+                src="https://www.paisabazaar.com/PBHP/assets/images/paisabazaar-logo.svg"
+                width="205"
+                alt=""
+              />
             </a>
           </div>
         </div>

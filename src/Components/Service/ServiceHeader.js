@@ -3,6 +3,7 @@ import logo from "../../images/logo.png";
 import userContext from "../../Context/userContext";
 import imguser from "../../../src/images/img-user.png";
 import downarrow from "../../../src/images/icon-arrow.png";
+import Cookies from "js-cookie";
 
 function ServiceHeader(props) {
   const context = useContext(userContext);
@@ -14,7 +15,6 @@ function ServiceHeader(props) {
 
   function handleClick(e) {
     props.setTogglePage(e.target.id);
-    console.log(props.togglePage);
   }
 
   return (
@@ -23,7 +23,7 @@ function ServiceHeader(props) {
         <div className="container">
           <div className="navbar-header">
             <button
-              class="navbar-toggler"
+              className="navbar-toggler"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarNav"
@@ -31,7 +31,7 @@ function ServiceHeader(props) {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              <span class="navbar-toggler-icon"></span>
+              <span className="navbar-toggler-icon"></span>
             </button>
 
             <a className="navbar-brand" href="/service">
@@ -134,7 +134,14 @@ function ServiceHeader(props) {
                         <h6>
                           {JSON.parse(localStorage.getItem("UserDetails")).Name}
                           <small className="lastlogin">
-                            <strong>Last Login -</strong> 2023-02-27 11:02:04
+                            <strong>Last Login -</strong>{" "}
+                            {JSON.parse(
+                              Cookies.get("userCookie")
+                            ).lastLogin.slice(0, 10) +
+                              " " +
+                              JSON.parse(
+                                Cookies.get("userCookie")
+                              ).lastLogin.slice(11, 19)}
                           </small>
                         </h6>
                       </div>

@@ -10,20 +10,22 @@ const FinancialServicesNavbar = (props) => {
       <ul className="nav nav-pills innerTab" id="pills-tab" role="tablist">
         <li className="nav-item" role="presentation">
           <button
-            className={`nav-link ${props.ToggleSubForm === "1" ? "active" : ""
-              }`}
+            className={`nav-link ${
+              props.ToggleSubForm === "1" ? "active" : ""
+            }`}
             id="1"
             type="button"
             onClick={handleClick}
           >
-            <i class="fa fa-money" aria-hidden="true"></i>
+            <i className="fa fa-money" aria-hidden="true"></i>
             Personal Loan
           </button>
         </li>
         <li className="nav-item" role="presentation">
           <button
-            className={`nav-link ${props.ToggleSubForm === "2" ? "active" : ""
-              }`}
+            className={`nav-link ${
+              props.ToggleSubForm === "2" ? "active" : ""
+            }`}
             id="2"
             type="button"
             onClick={handleClick}
@@ -33,13 +35,14 @@ const FinancialServicesNavbar = (props) => {
         </li>
         <li className="nav-item" role="presentation">
           <button
-            className={`nav-link ${props.ToggleSubForm === "3" ? "active" : ""
-              }`}
+            className={`nav-link ${
+              props.ToggleSubForm === "3" ? "active" : ""
+            }`}
             id="3"
             type="button"
             onClick={handleClick}
           >
-            <i class="fa fa-briefcase" aria-hidden="true"></i> Business Loan
+            <i className="fa fa-briefcase" aria-hidden="true"></i> Business Loan
           </button>
         </li>
       </ul>

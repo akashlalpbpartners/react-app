@@ -41,7 +41,6 @@ const PersonalLoan = (props) => {
 
   const insertLead = async () => {
     setVerified(false);
-    console.log(APIRequest);
     await fetch(
       "http://localhost:3001/product/insertfinancialservices",
       APIRequest
@@ -51,7 +50,7 @@ const PersonalLoan = (props) => {
     setTimeOutFalse();
     formikInput.handleReset();
   };
-  const Token = JSON.parse(user).Token;
+  const Token = JSON.parse(user).token.Token;
   const fetchLeads = async () => {
     const SubProductId = 3;
     const requestOptions = {
@@ -62,7 +61,7 @@ const PersonalLoan = (props) => {
       },
     };
     const response = await fetch(
-      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${JSON.parse(Cookies.get("userCookie")).FINCode
+      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${JSON.parse(Cookies.get("userCookie")).token.FINCode
       }`,
       requestOptions
     );
@@ -111,12 +110,11 @@ const PersonalLoan = (props) => {
           LoanAmount: parseInt(values.Loan_amount_required),
           NetMonthlyIncome: 0,
           EmploymentType: values.Employment_type,
-          FINCode: JSON.parse(Cookies.get("userCookie")).FINCode,
+          FINCode: JSON.parse(Cookies.get("userCookie")).token.FINCode,
           GrossSales: parseInt(values.Gross_sales),
           IsPresent: isPresent.length === 0 ? 0 : 1,
         }),
       };
-      console.log(JSON.parse(requestOptions.body));
       setAPIRequest(requestOptions);
     },
   });

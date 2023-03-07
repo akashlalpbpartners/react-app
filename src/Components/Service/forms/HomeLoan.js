@@ -17,7 +17,7 @@ const validationSchemaInput = Yup.object({
     .test(
       "test-name",
       "Loan Amount must be ranged between 100000 to 5 crores.",
-      function (value) {
+      function(value) {
         const loan = parseInt(value);
         if (loan <= 50000000 && loan >= 100000) return true;
         else return false;
@@ -60,7 +60,7 @@ const PersonalLoan = (props) => {
     });
     formikInput.handleReset();
   };
-  const Token = JSON.parse(user).Token;
+  const Token = JSON.parse(user).token.Token;
   const fetchLeads = async () => {
     const SubProductId = 2;
     const requestOptions = {
@@ -71,7 +71,8 @@ const PersonalLoan = (props) => {
       },
     };
     const response = await fetch(
-      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${JSON.parse(Cookies.get("userCookie")).FINCode
+      `http://localhost:3001/product/readfinancialservices/${SubProductId}/${
+        JSON.parse(Cookies.get("userCookie")).token.FINCode
       }`,
       requestOptions
     );
@@ -120,7 +121,7 @@ const PersonalLoan = (props) => {
           LoanAmount: parseInt(values.Loan_amount_required),
           NetMonthlyIncome: parseInt(values.Net_monthly_income),
           EmploymentType: values.Employment_type,
-          FINCode: JSON.parse(Cookies.get("userCookie")).FINCode,
+          FINCode: JSON.parse(Cookies.get("userCookie")).token.FINCode,
           GrossSales: 0,
           IsPresent: isPresent.length === 0 ? 0 : 1,
         }),
@@ -168,9 +169,9 @@ const PersonalLoan = (props) => {
       "Enter Loan amount required",
       formikInput.values.Loan_amount_required,
       formikInput.touched.Loan_amount_required &&
-      Boolean(formikInput.errors.Loan_amount_required),
+        Boolean(formikInput.errors.Loan_amount_required),
       formikInput.touched.Loan_amount_required &&
-      formikInput.errors.Loan_amount_required,
+        formikInput.errors.Loan_amount_required,
       false,
       [],
     ],
@@ -180,9 +181,9 @@ const PersonalLoan = (props) => {
       "Enter Net monthly income",
       formikInput.values.Net_monthly_income,
       formikInput.touched.Net_monthly_income &&
-      Boolean(formikInput.errors.Net_monthly_income),
+        Boolean(formikInput.errors.Net_monthly_income),
       formikInput.touched.Net_monthly_income &&
-      formikInput.errors.Net_monthly_income,
+        formikInput.errors.Net_monthly_income,
       false,
       [],
     ],
@@ -192,7 +193,7 @@ const PersonalLoan = (props) => {
       "Enter Employment type",
       formikInput.values.Employment_type,
       formikInput.touched.Employment_type &&
-      Boolean(formikInput.errors.Employment_type),
+        Boolean(formikInput.errors.Employment_type),
       formikInput.touched.Employment_type && formikInput.errors.Employment_type,
       true,
       empTypeList,
@@ -228,12 +229,13 @@ const PersonalLoan = (props) => {
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
-
               <div className="card form">
                 <div className="leftImg hl">
                   <h2>Home Loan</h2>
-                  <p>Unlock Best Personal Loan Offers suitable
-                    for your needs from 30+ Lenders</p>
+                  <p>
+                    Unlock Best Personal Loan Offers suitable for your needs
+                    from 30+ Lenders
+                  </p>
                   <div className="img"></div>
                 </div>
                 <div className="right">
@@ -277,7 +279,11 @@ const PersonalLoan = (props) => {
                               <em>{item[1]}</em>
                             </MenuItem>
                             {item[7].map((value, key) => (
-                              <MenuItem name={item[1]} key={key} value={value[0]}>
+                              <MenuItem
+                                name={item[1]}
+                                key={key}
+                                value={value[0]}
+                              >
                                 {value[1]}
                               </MenuItem>
                             ))}

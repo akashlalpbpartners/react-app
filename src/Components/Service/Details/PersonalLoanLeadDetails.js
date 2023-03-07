@@ -73,7 +73,7 @@ const PersonalLoanLeadDetails = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loanLeadDetails]);
-  const Token = JSON.parse(user).Token;
+  const Token = JSON.parse(user).token.Token;
   const fetchLeads = async () => {
     const requestOptions = {
       method: "POST",
@@ -89,7 +89,7 @@ const PersonalLoanLeadDetails = () => {
     ) {
       response = await fetch(
         `http://localhost:3001/product/readallfinancialservices/${
-          JSON.parse(Cookies.get("userCookie")).FINCode
+          JSON.parse(Cookies.get("userCookie")).token.FINCode
         }`,
         requestOptions
       );
@@ -104,7 +104,7 @@ const PersonalLoanLeadDetails = () => {
     return result;
   };
   useEffect(() => {
-    if (searchFinCode !== "") {
+    if (searchFinCode.length === 12) {
       setRows(
         loanLeadDetails
           .filter(
@@ -137,7 +137,7 @@ const PersonalLoanLeadDetails = () => {
                 FINCode: detail.FINCode,
                 Name: detail.Name,
                 CustomerMobile: detail.CustomerMobile,
-                CityId: city[detail.CityId].City,
+                CityId: city[detail.CityId - 1].City,
                 LoanAmount: detail.LoanAmount,
                 NetMonthlyIncome: detail.NetMonthlyIncome,
                 status: detail.IsPresent === 1 ? "Rejected" : "-",
@@ -157,7 +157,7 @@ const PersonalLoanLeadDetails = () => {
               FINCode: detail.FINCode,
               Name: detail.Name,
               CustomerMobile: detail.CustomerMobile,
-              CityId: city[detail.CityId].City,
+              CityId: city[detail.CityId - 1].City,
               LoanAmount: detail.LoanAmount,
               NetMonthlyIncome: detail.NetMonthlyIncome,
               status: detail.IsPresent === 1 ? "Rejected" : "-",
@@ -174,7 +174,7 @@ const PersonalLoanLeadDetails = () => {
               FINCode: detail.FINCode,
               Name: detail.Name,
               CustomerMobile: detail.CustomerMobile,
-              CityId: city[detail.CityId].City,
+              CityId: city[detail.CityId - 1].City,
               LoanAmount: detail.LoanAmount,
               NetMonthlyIncome: detail.NetMonthlyIncome,
               status: detail.IsPresent === 1 ? "Rejected" : "-",
@@ -340,6 +340,7 @@ const PersonalLoanLeadDetails = () => {
           filterValue.filter((value) => value !== parseInt(event.target.value))
         );
     }
+    console.log(filterValue);
   };
   const handleSearchChange = (event) => {
     setSearchFinCode(event.target.value);
@@ -391,7 +392,6 @@ const PersonalLoanLeadDetails = () => {
           </div>
 
           <Box
-            container
             style={{ height: 490, width: "100%", margin: "0 0 1ch 0" }}
             sx={{
               "& .super-app.positive": {

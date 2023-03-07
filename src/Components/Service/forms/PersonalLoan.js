@@ -60,7 +60,7 @@ const PersonalLoan = (props) => {
     });
     formikInput.handleReset();
   };
-  const Token = JSON.parse(user).Token;
+  const Token = JSON.parse(user).token.Token;
   const fetchLeads = async () => {
     const SubProductId = 1;
     const requestOptions = {
@@ -72,7 +72,7 @@ const PersonalLoan = (props) => {
     };
     const response = await fetch(
       `http://localhost:3001/product/readfinancialservices/${SubProductId}/${
-        JSON.parse(Cookies.get("userCookie")).FINCode
+        JSON.parse(Cookies.get("userCookie")).token.FINCode
       }`,
       requestOptions
     );
@@ -103,7 +103,7 @@ const PersonalLoan = (props) => {
     onSubmit: async (values) => {
       setToggleModal(true);
       const isPresent = [];
-      loanLeadDetails.for((row) => {
+      loanLeadDetails.filter((row) => {
         if (row.CustomerMobile === parseInt(values.Mobile_no))
           isPresent.push(row);
       });
@@ -121,7 +121,7 @@ const PersonalLoan = (props) => {
           LoanAmount: parseInt(values.Loan_amount_required),
           NetMonthlyIncome: parseInt(values.Net_monthly_income),
           EmploymentType: values.Employment_type,
-          FINCode: JSON.parse(Cookies.get("userCookie")).FINCode,
+          FINCode: JSON.parse(Cookies.get("userCookie")).token.FINCode,
           GrossSales: 0,
           IsPresent: isPresent.length === 0 ? 0 : 1,
         }),

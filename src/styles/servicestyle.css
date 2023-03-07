@@ -78,7 +78,8 @@ option {
   padding-bottom: 50px;
 }
 
-.wrapper .what-we-offer .offer-cards {}
+.wrapper .what-we-offer .offer-cards {
+}
 
 .wrapper .what-we-offer .offer-cards .offer-card {
   width: 525px;
@@ -137,7 +138,6 @@ option {
 }
 
 @media (min-width: 992px) {
-
   .wrapper #kycModal .modal-lg,
   .wrapper #kycModal .modal-xl {
     max-width: 1010px;
@@ -152,7 +152,7 @@ option {
   padding: 0;
 }
 
-.wrapper #kycModal .modal-content .pb-form-floating>.form-select {
+.wrapper #kycModal .modal-content .pb-form-floating > .form-select {
   height: 58px;
   border-radius: 8px;
 }
@@ -227,13 +227,21 @@ option {
   cursor: pointer;
 }
 
-.wrapper #kycModal .custom-radio-btn .form-check.form-check-inline .form-check-input {
+.wrapper
+  #kycModal
+  .custom-radio-btn
+  .form-check.form-check-inline
+  .form-check-input {
   position: absolute;
   left: 40px;
   top: 12px;
 }
 
-.wrapper #kycModal .custom-radio-btn .form-check.form-check-inline.checked label {
+.wrapper
+  #kycModal
+  .custom-radio-btn
+  .form-check.form-check-inline.checked
+  label {
   color: #0065ff;
   border: 1px solid #0065ff;
 }
@@ -327,7 +335,12 @@ option {
     border-radius: 8px;
   }
 
-  .wrapper #kycModal .modal-dialog .modal-body div#v-pills-tab .nav-link.active {
+  .wrapper
+    #kycModal
+    .modal-dialog
+    .modal-body
+    div#v-pills-tab
+    .nav-link.active {
     background: 0% 0% no-repeat padding-box padding-box #e0edff;
   }
 
@@ -406,7 +419,14 @@ option {
   border-radius: 0;
 }
 
-.wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link i.fa {
+.wrapper
+  .services-with-bg
+  .services
+  .sub-services
+  ul#pills-tab
+  li
+  .nav-link
+  i.fa {
   position: absolute;
   left: 5px;
   top: 13px;
@@ -417,16 +437,30 @@ option {
   line-height: 1.8375em;
 }
 
-.form-group .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
+.form-group
+  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
   padding: 12.5px 14px;
 }
 
-.wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link i.fa.fa-briefcase {
+.wrapper
+  .services-with-bg
+  .services
+  .sub-services
+  ul#pills-tab
+  li
+  .nav-link
+  i.fa.fa-briefcase {
   font-size: 13px;
   top: 14px;
 }
 
-.wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link.active {
+.wrapper
+  .services-with-bg
+  .services
+  .sub-services
+  ul#pills-tab
+  li
+  .nav-link.active {
   color: #0d6efd;
   background: none;
   border-bottom: 2px solid #0d6efd;
@@ -530,12 +564,20 @@ option {
   color: red;
 }
 
-.wrapper .services-with-bg .sub-services .tab-content .css-1e2bxag-MuiDataGrid-root {
+.wrapper
+  .services-with-bg
+  .sub-services
+  .tab-content
+  .css-1e2bxag-MuiDataGrid-root {
   background: #fff;
   font-size: 13px;
 }
 
-.wrapper .services-with-bg .sub-services .tab-content .css-z8fhq1-MuiDataGrid-columnHeaders {
+.wrapper
+  .services-with-bg
+  .sub-services
+  .tab-content
+  .css-z8fhq1-MuiDataGrid-columnHeaders {
   background: #f1f1f1;
   color: #6d7b99;
   min-height: 44px !important;
@@ -543,11 +585,22 @@ option {
   line-height: 44px !important;
 }
 
-.wrapper .services-with-bg .sub-services .tab-content .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-columnSeparator--sideRight svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiDataGrid-iconSeparator.css-i4bv87-MuiSvgIcon-root {
+.wrapper
+  .services-with-bg
+  .sub-services
+  .tab-content
+  .css-1e2bxag-MuiDataGrid-root
+  .MuiDataGrid-columnSeparator--sideRight
+  svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiDataGrid-iconSeparator.css-i4bv87-MuiSvgIcon-root {
   display: none;
 }
 
-.wrapper .services-with-bg .sub-services .tab-content .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-row {
+.wrapper
+  .services-with-bg
+  .sub-services
+  .tab-content
+  .css-1e2bxag-MuiDataGrid-root
+  .MuiDataGrid-row {
   position: relative;
 }
 
@@ -563,7 +616,11 @@ option {
   padding: 3px 10px;
 }
 
-.wrapper .services-with-bg .sub-services .tab-content .css-levciy-MuiTablePagination-displayedRows {
+.wrapper
+  .services-with-bg
+  .sub-services
+  .tab-content
+  .css-levciy-MuiTablePagination-displayedRows {
   margin-bottom: 0;
 }
 
@@ -585,7 +642,12 @@ option {
   justify-content: space-between;
 }
 
-.wrapper .services-with-bg .sub-services .service-footer .service-footer-btn .btn {
+.wrapper
+  .services-with-bg
+  .sub-services
+  .service-footer
+  .service-footer-btn
+  .btn {
   border-radius: 4px;
   font-size: 13px;
   padding: 8px 15px;
@@ -605,25 +667,52 @@ option {
   align-items: center;
 }
 
-.wrapper .services-with-bg .sub-services .tab-content .filterdiv .left .form-check {
+.wrapper
+  .services-with-bg
+  .sub-services
+  .tab-content
+  .filterdiv
+  .left
+  .form-check {
   min-height: auto;
   margin-bottom: 0;
   margin-right: 10px;
 }
 
-.wrapper .services-with-bg .sub-services .tab-content .filterdiv .right {}
+.wrapper .services-with-bg .sub-services .tab-content .filterdiv .right {
+}
 
-.wrapper .services-with-bg .sub-services .tab-content .filterdiv .right .search {
+.wrapper
+  .services-with-bg
+  .sub-services
+  .tab-content
+  .filterdiv
+  .right
+  .search {
   position: relative;
 }
 
-.wrapper .services-with-bg .sub-services .tab-content .filterdiv .right .search .form-control {
+.wrapper
+  .services-with-bg
+  .sub-services
+  .tab-content
+  .filterdiv
+  .right
+  .search
+  .form-control {
   padding-right: 30px;
   padding: 0.475rem 30px 0.475rem 0.75rem;
   font-size: 12px;
 }
 
-.wrapper .services-with-bg .sub-services .tab-content .filterdiv .right .search i {
+.wrapper
+  .services-with-bg
+  .sub-services
+  .tab-content
+  .filterdiv
+  .right
+  .search
+  i {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -666,7 +755,13 @@ option {
   line-height: 24px;
 }
 
-.wrapper .services-with-bg .services .sub-services .card.form .leftImg h2:after {
+.wrapper
+  .services-with-bg
+  .services
+  .sub-services
+  .card.form
+  .leftImg
+  h2:after {
   content: "";
   position: absolute;
   background: blue;
@@ -701,11 +796,24 @@ option {
   margin-top: 60px;
 }
 
-.wrapper .services-with-bg .services .sub-services .card.form .right .form-group {
+.wrapper
+  .services-with-bg
+  .services
+  .sub-services
+  .card.form
+  .right
+  .form-group {
   margin-bottom: 30px;
 }
 
-.wrapper .services-with-bg .services .sub-services .card.form .right .form-group .css-1wc848c-MuiFormHelperText-root {
+.wrapper
+  .services-with-bg
+  .services
+  .sub-services
+  .card.form
+  .right
+  .form-group
+  .css-1wc848c-MuiFormHelperText-root {
   font-size: 11px;
   margin-left: 0;
 }
@@ -715,7 +823,7 @@ option {
     margin-left: auto;
   }
 
-  nav.navbar ul.navbar-nav.nav-user li.nav-item.user>a.circle-icon span.name {
+  nav.navbar ul.navbar-nav.nav-user li.nav-item.user > a.circle-icon span.name {
     display: none;
   }
 
@@ -751,7 +859,12 @@ option {
     margin-right: 5px;
   }
 
-  .wrapper .services-with-bg .services .sub-services ul#pills-tab li:last-child {
+  .wrapper
+    .services-with-bg
+    .services
+    .sub-services
+    ul#pills-tab
+    li:last-child {
     margin-right: 0;
   }
 
@@ -761,7 +874,14 @@ option {
     padding-left: 20px;
   }
 
-  .wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link i.fa {
+  .wrapper
+    .services-with-bg
+    .services
+    .sub-services
+    ul#pills-tab
+    li
+    .nav-link
+    i.fa {
     left: 2px;
   }
 }
@@ -771,17 +891,28 @@ option {
     font-size: 11px;
   }
 
-  .wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link i.fa {
+  .wrapper
+    .services-with-bg
+    .services
+    .sub-services
+    ul#pills-tab
+    li
+    .nav-link
+    i.fa {
     top: 10px;
   }
 
-  .wrapper .services-with-bg .services .sub-services ul#pills-tab li .nav-link i.fa.fa-briefcase {
+  .wrapper
+    .services-with-bg
+    .services
+    .sub-services
+    ul#pills-tab
+    li
+    .nav-link
+    i.fa.fa-briefcase {
     top: 11px;
   }
 }
-
-
-
 
 .wrapper .services-with-bg .services .sub-services.dashboardChart .card {
   border-radius: 10px;
@@ -789,4 +920,5 @@ option {
   background: #fff;
   border-color: #f6f6f6;
   padding: 40px 80px;
+  height: 100%;
 }
